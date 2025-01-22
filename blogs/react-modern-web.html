@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代Web开发 - 我的个人网站</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../backlinks.js"></script>
+    <script src="../js/template-loader.js"></script>
+</head>
+<body class="essays-page">
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="nav-section">
+                <h3>导航</h3>
+                <div class="nav-item"><a href="../index.html">首页</a></div>
+                <div class="nav-item"><a href="../essays.html">文章</a></div>
+                <div class="nav-item"><a href="../blog.html">博客</a></div>
+                <div class="nav-item"><a href="../projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="../philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="../music.html">音乐</a></div>
+                <div class="nav-item"><a href="../art.html">绘画</a></div>
+                <div class="nav-item"><a href="../wechat.html">公众号</a></div>
+            </div>
+
+            <div class="nav-section">
+                <h3>技术分类</h3>
+                <div class="nav-item"><a href="../blog.html#frontend" class="active">前端开发</a></div>
+                <div class="nav-item"><a href="../blog.html#engineering">工程实践</a></div>
+            </div>
+            
+            <nav class="nav-toc">
+                <h2>文章目录</h2>
+                <ul class="toc-list">
+                    <li>
+                        <a href="#intro">
+                            <span class="toc-number">1.</span>
+                            <span class="toc-text">引言</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#components">
+                            <span class="toc-number">2.</span>
+                            <span class="toc-text">组件设计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#state">
+                            <span class="toc-number">3.</span>
+                            <span class="toc-text">状态管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#performance">
+                            <span class="toc-number">4.</span>
+                            <span class="toc-text">性能优化</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </nav>
+        
+        <main class="content">
+            <h1>使用React构建现代Web应用</h1>
+            
+            <div class="article-meta">
+                <span class="article-date">2024年3月15日</span>
+                <span class="article-category">前端开发</span>
+            </div>
+
+            <article class="article-content">
+                <h2 id="intro">引言</h2>
+                <p>React已经成为构建现代Web应用的主流框架之一。本文将分享使用React构建高质量Web应用的经验和最佳实践。</p>
+
+                <h2 id="components">组件设计</h2>
+                <p>好的组件设计原则：</p>
+                <ul>
+                    <li>单一职责</li>
+                    <li>可复用性</li>
+                    <li>可测试性</li>
+                    <li>可维护性</li>
+                </ul>
+
+                <h2 id="state">状态管理</h2>
+                <p>状态管理的关键点：</p>
+                <ul>
+                    <li>合理的状态结构</li>
+                    <li>状态更新策略</li>
+                    <li>性能优化</li>
+                    <li>副作用处理</li>
+                </ul>
+
+                <h2 id="performance">性能优化</h2>
+                <p>性能优化的方法：</p>
+                <ul>
+                    <li>组件拆分</li>
+                    <li>懒加载</li>
+                    <li>缓存策略</li>
+                    <li>渲染优化</li>
+                </ul>
+            </article>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

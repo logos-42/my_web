@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端优化 - 我的个人网站</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../backlinks.js"></script>
+    <script src="../js/template-loader.js"></script>
+</head>
+<body class="essays-page">
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="nav-section">
+                <h3>导航</h3>
+                <div class="nav-item"><a href="../index.html">首页</a></div>
+                <div class="nav-item"><a href="../essays.html">文章</a></div>
+                <div class="nav-item"><a href="../blog.html">博客</a></div>
+                <div class="nav-item"><a href="../projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="../philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="../music.html">音乐</a></div>
+                <div class="nav-item"><a href="../art.html">绘画</a></div>
+                <div class="nav-item"><a href="../wechat.html">公众号</a></div>
+            </div>
+
+            <div class="nav-section">
+                
+                <div class="nav-item"><a href="../blog.html#frontend" class="active">前端开发</a></div>
+                <div class="nav-item"><a href="../blog.html#engineering">工程实践</a></div>
+            </div>
+            
+            <nav class="nav-toc">
+                <h2>文章目录</h2>
+                <ul class="toc-list">
+                    <li>
+                        <a href="#intro">
+                            <span class="toc-number">1.</span>
+                            <span class="toc-text">引言</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#loading">
+                            <span class="toc-number">2.</span>
+                            <span class="toc-text">加载性能优化</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#runtime">
+                            <span class="toc-number">3.</span>
+                            <span class="toc-text">运行时优化</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#monitoring">
+                            <span class="toc-number">4.</span>
+                            <span class="toc-text">性能监控</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </nav>
+        
+        <main class="content">
+           
+            <article class="article-content">
+                <h2 id="intro">引言</h2>
+                <p>前端性能优化是提升用户体验的关键。本文将分享一系列实用的前端性能优化技巧，从加载到运行时的各个方面进行探讨。</p>
+
+                <h2 id="loading">加载性能优化</h2>
+                <p>提升资源加载速度：</p>
+                <ul>
+                    <li>资源压缩与合并</li>
+                    <li>懒加载策略</li>
+                    <li>缓存优化</li>
+                    <li>CDN加速</li>
+                </ul>
+
+                <h2 id="runtime">运行时优化</h2>
+                <p>优化代码执行效率：</p>
+                <ul>
+                    <li>代码分割</li>
+                    <li>虚拟列表</li>
+                    <li>防抖与节流</li>
+                    <li>内存管理</li>
+                </ul>
+
+                <h2 id="monitoring">性能监控</h2>
+                <p>性能监控与分析：</p>
+                <ul>
+                    <li>性能指标采集</li>
+                    <li>监控系统搭建</li>
+                    <li>性能报告分析</li>
+                    <li>优化效果评估</li>
+                </ul>
+            </article>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

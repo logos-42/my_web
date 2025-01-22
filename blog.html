@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客 - 我的个人网站</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io (4)/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io (4)/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io (4)/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io (4)/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io (4)/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <script src="backlinks.js"></script>
+    <link rel="stylesheet" href="css/sidebar.css">
+    <script src="js/sidebar.js"></script>
+</head>
+<body class="essays-page">
+    <div class="layout">
+        <nav class="sidebar">
+            <button class="sidebar-toggle" aria-label="切换侧边栏">
+                <span class="toggle-icon"></span>
+            </button>
+
+            <div class="nav-section">
+                <div class="nav-item"><a href="index.html">首页</a></div>
+                <div class="nav-item"><a href="essays.html">文章</a></div>
+                <div class="nav-item"><a href="blog.html" class="active">博客</a></div>
+                <div class="nav-item"><a href="projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="music.html">音乐</a></div>
+                <div class="nav-item"><a href="art.html">绘画</a></div>
+                <div class="nav-item"><a href="wechat.html">公众号</a></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <h1>博客</h1>
+            
+            <p class="intro">这里记录我的技术探索和实践经验，AI领域的知识，如果感兴趣也可以移步知识星球。你也可以查看我的<a href="essays.html" onclick="addLink('blog.html', 'essays.html')">文章</a>获取更系统的内容。</p>
+            
+            <div class="article-category-section">
+                
+                <div class="essays-list">
+                    <div class="essay-item">
+                        <a href="blogs/react-modern-web.html" class="essay-title">使用Cursor构建现代Web应用</a>
+                        <span class="essay-date">2025年1月16日</span>
+                    </div>
+                    
+                    <div class="essay-item">
+                        <a href="blogs/typescript-practice.html" class="essay-title">AI开发实践总结</a>
+                        <span class="essay-date">2025年1月16日</span>
+                    </div>
+                    
+                    <div class="essay-item">
+                        <a href="blogs/frontend-optimization.html" class="essay-title">提示词技巧</a>
+                        <span class="essay-date">2025年1月16日</span>
+                    </div>
+                
+                    <div class="essay-item">
+                        <a href="blogs/git-workflow.html" class="essay-title">智能体工作流最佳实践</a>
+                        <span class="essay-date">2025年1月16日</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

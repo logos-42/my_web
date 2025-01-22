@@ -1,0 +1,2 @@
+markdown==3.4.1
+watchdog==2.1.9
