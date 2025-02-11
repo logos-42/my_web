@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ prefix }}favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ prefix }}favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ prefix }}favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ prefix }}favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="{{ prefix }}favicon_io/site.webmanifest">
     <link rel="stylesheet" href="{{ prefix }}styles.css">
+    <script src="{{ prefix }}backlinks.js"></script>
+    <script src="{{ prefix }}js/template-loader.js"></script>
     <link rel="stylesheet" href="{{ prefix }}css/sidebar.css">
-    <script src="{{ prefix }}js/backlinks.js"></script>
-    <script src="{{ prefix }}js/nav.js"></script>
+    <script src="{{ prefix }}js/sidebar.js"></script>
 </head>
-<body>
+<body class="article-page">
     <div class="layout">
-        <button class="sidebar-toggle" aria-label="切换侧边栏">
-            <span class="toggle-icon"></span>
-        </button>
         <nav class="sidebar">
+            <button class="sidebar-toggle" aria-label="切换侧边栏">
+                <span class="toggle-icon"></span>
+            </button>
+
             <div class="nav-section">
                 <div class="nav-item"><a href="{{ prefix }}index.html">首页</a></div>
                 <div class="nav-item"><a href="{{ prefix }}essays.html">文章</a></div>
@@ -39,9 +44,5 @@
             </section>
         </main>
     </div>
-    <script>
-        // 根据当前页面的深度设置反向链接的基础路径
-        window.backlinksBasePath = '{{ prefix }}';
-    </script>
 </body>
 </html> 
