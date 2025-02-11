@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ prefix }}favicon.ico">
+    <link rel="stylesheet" href="{{ prefix }}styles.css">
+    <link rel="stylesheet" href="{{ prefix }}css/sidebar.css">
+    <script src="{{ prefix }}js/backlinks.js"></script>
+    <script src="{{ prefix }}js/nav.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <button class="sidebar-toggle" aria-label="切换侧边栏">
+            <span class="toggle-icon"></span>
+        </button>
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-item"><a href="{{ prefix }}index.html">首页</a></div>
+                <div class="nav-item"><a href="{{ prefix }}essays.html">文章</a></div>
+                <div class="nav-item"><a href="{{ prefix }}blog.html">博客</a></div>
+                <div class="nav-item"><a href="{{ prefix }}projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="{{ prefix }}philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="{{ prefix }}music.html">音乐</a></div>
+                <div class="nav-item"><a href="{{ prefix }}art.html">绘画</a></div>
+                <div class="nav-item"><a href="{{ prefix }}wechat.html">公众号</a></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                {{ content | safe }}
+            </article>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 根据当前页面的深度设置反向链接的基础路径
+        window.backlinksBasePath = '{{ prefix }}';
+    </script>
+</body>
+</html> 

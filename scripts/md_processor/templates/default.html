@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/backlinks.js"></script>
+    <script src="../js/nav.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <button class="sidebar-toggle" aria-label="切换侧边栏">
+            <span class="toggle-icon"></span>
+        </button>
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-item"><a href="../index.html">首页</a></div>
+                <div class="nav-item"><a href="../essays.html">文章</a></div>
+                <div class="nav-item"><a href="../blog.html">博客</a></div>
+                <div class="nav-item"><a href="../projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="../philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="../music.html">音乐</a></div>
+                <div class="nav-item"><a href="../art.html">绘画</a></div>
+                <div class="nav-item"><a href="../wechat.html">公众号</a></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                {{ content | safe }}
+            </article>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 
+ 

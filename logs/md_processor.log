@@ -1,0 +1,635 @@
+2025-02-11 13:36:15,694 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 13:36:15,715 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 13:36:15,717 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 13:36:15,717 - root - INFO - 没有发现新的或修改的文件
+2025-02-11 13:36:38,375 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 13:36:38,388 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 13:36:38,390 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 13:36:38,391 - root - INFO - 发现 1 个新的或修改的文件
+2025-02-11 13:36:38,392 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 13:36:38,397 - root - INFO - 修复了 0 个无效链接
+2025-02-11 13:36:38,398 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 13:37:46,004 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 13:37:46,018 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 13:37:46,020 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 13:37:46,025 - root - INFO - 发现 1 个新的或修改的文件
+2025-02-11 13:37:46,025 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 13:37:46,029 - root - INFO - 修复了 0 个无效链接
+2025-02-11 13:37:46,030 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:17:14,520 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:17:14,542 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:17:14,544 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:17:14,548 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:17:14,549 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:17:14,553 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:17:14,555 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:17:14,559 - root - ERROR - 更新首页时出错: name 'frontmatter' is not defined
+2025-02-11 14:17:14,559 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:17:14,562 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:17:14,563 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:17:14,566 - root - ERROR - 更新首页时出错: name 'frontmatter' is not defined
+2025-02-11 14:17:30,175 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:17:30,187 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:17:30,189 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:17:30,192 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:17:30,192 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:17:30,196 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:17:30,197 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:17:30,203 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:17:30,204 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:17:30,207 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:17:30,208 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:17:30,220 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 14:18:21,646 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:18:21,659 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:18:21,661 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:18:21,664 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:18:21,664 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:18:21,669 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:18:21,670 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:18:21,673 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:18:21,674 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:18:21,676 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:18:21,678 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:18:21,682 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 14:19:49,688 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:19:49,702 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:19:49,704 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:19:49,707 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:19:49,708 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:19:49,712 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:19:49,713 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:19:49,717 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:19:49,717 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:19:49,720 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:19:49,721 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:19:49,725 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 14:20:13,822 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:20:13,837 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:20:13,840 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:20:13,843 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:20:13,843 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:20:13,848 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:20:13,851 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:20:13,852 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:20:13,855 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:20:13,855 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:20:13,859 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 14:21:31,599 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:21:31,613 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:21:31,614 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:21:31,617 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:21:31,617 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:21:31,621 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:21:31,626 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:21:31,626 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:21:31,628 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:21:31,629 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:21:31,645 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 14:22:01,165 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 14:22:01,178 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 14:22:01,180 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 14:22:01,184 - root - INFO - 发现 2 个新的或修改的文件
+2025-02-11 14:22:01,184 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 14:22:01,188 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 14:22:01,194 - root - INFO - 已将文章 我的第一篇文章 添加到首页
+2025-02-11 14:22:01,194 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 14:22:01,196 - root - INFO - 修复了 0 个无效链接
+2025-02-11 14:22:01,197 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 14:22:01,212 - root - INFO - 已将文章 测试文章 添加到首页
+2025-02-11 15:08:16,141 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:08:16,168 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:08:16,170 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:08:16,174 - root - INFO - 发现 9 个新的或修改的文件
+2025-02-11 15:08:16,174 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:08:16,178 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:08:16,184 - root - INFO - 已将文章 绘画 添加到首页
+2025-02-11 15:08:16,184 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:08:16,187 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:08:16,201 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:08:16,201 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:08:16,204 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:08:16,208 - root - INFO - 已将文章 博客 添加到首页
+2025-02-11 15:08:16,208 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:08:16,213 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:08:16,214 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:08:16,228 - root - INFO - 已将文章 文章 添加到首页
+2025-02-11 15:08:16,228 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:08:16,232 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:08:16,245 - root - INFO - 已将文章 音乐 添加到首页
+2025-02-11 15:08:16,246 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:08:16,250 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:08:16,252 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:08:16,265 - root - INFO - 已将文章 哲科 添加到首页
+2025-02-11 15:08:16,266 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:08:16,269 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:08:16,283 - root - INFO - 已将文章 新奇项目 添加到首页
+2025-02-11 15:08:16,283 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:08:16,286 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:08:16,287 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:08:16,300 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:08:16,301 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:08:16,305 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:08:16,310 - root - INFO - 已将文章 公众号 添加到首页
+2025-02-11 15:14:02,346 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:14:02,368 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:14:02,371 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:14:02,377 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:14:02,378 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:14:02,383 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:14:02,388 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:14:02,389 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:14:02,392 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:14:02,396 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:14:02,396 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:14:02,400 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:14:02,404 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:14:02,404 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:14:02,408 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:14:02,410 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:14:02,414 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:14:02,414 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:14:02,418 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:14:02,421 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:14:02,421 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:14:02,425 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:14:02,427 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:14:02,431 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:14:02,431 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:14:02,435 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:14:02,439 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:14:02,439 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:14:02,441 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:14:02,442 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:14:02,447 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:14:02,447 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:14:02,449 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:14:02,453 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:14:02,453 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:14:02,456 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:14:02,456 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:14:02,464 - root - INFO - 已将文章 生态系统思维 添加到首页
+2025-02-11 15:14:02,464 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:14:02,468 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:14:02,469 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:14:02,496 - root - INFO - 已将文章 学习技术的方法 添加到首页
+2025-02-11 15:14:02,497 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:14:02,501 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:14:02,502 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:14:02,517 - root - INFO - 已将文章 编程的乐趣 添加到首页
+2025-02-11 15:14:02,518 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:14:02,522 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:14:02,523 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:14:02,538 - root - INFO - 已将文章 技术选择的艺术 添加到首页
+2025-02-11 15:14:02,539 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:14:02,544 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:14:02,546 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:14:02,560 - root - INFO - 已将文章 技术演化规律 添加到首页
+2025-02-11 15:14:02,561 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:14:02,566 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:14:02,567 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:14:02,581 - root - INFO - 已将文章 写作与思考 添加到首页
+2025-02-11 15:14:02,582 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:14:02,586 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:14:02,587 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:14:02,601 - root - INFO - 已将文章 前端性能优化 添加到首页
+2025-02-11 15:14:02,601 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:14:02,606 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:14:02,607 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:14:02,622 - root - INFO - 已将文章 Git工作流程 添加到首页
+2025-02-11 15:14:02,623 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:14:02,628 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:14:02,630 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:14:02,645 - root - INFO - 已将文章 现代Web开发与React 添加到首页
+2025-02-11 15:14:02,646 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:14:02,651 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:14:02,652 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:14:02,667 - root - INFO - 已将文章 TypeScript实践经验 添加到首页
+2025-02-11 15:18:22,144 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:18:22,162 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:18:22,164 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:18:22,169 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:18:22,171 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:18:22,174 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:18:22,180 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:18:22,181 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:18:22,184 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:18:22,189 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:18:22,189 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:18:22,193 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:18:22,197 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:18:22,197 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:18:22,204 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,205 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:18:22,209 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:18:22,209 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:18:22,212 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:18:22,218 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:18:22,218 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:18:22,224 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:18:22,225 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:18:22,229 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:18:22,229 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:18:22,233 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:18:22,237 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:18:22,238 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:18:22,241 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:18:22,243 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:18:22,247 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:18:22,247 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:18:22,250 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:18:22,253 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:18:22,254 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:18:22,259 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:18:22,260 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:18:22,266 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:18:22,266 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:18:22,271 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,272 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:18:22,276 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:18:22,276 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:18:22,283 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,284 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:18:22,288 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:18:22,288 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:18:22,292 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,293 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:18:22,298 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:18:22,299 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:18:22,302 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,303 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:18:22,308 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:18:22,308 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:18:22,313 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:18:22,315 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:18:22,319 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:18:22,320 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:18:22,324 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,325 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:18:22,329 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:18:22,330 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:18:22,335 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,336 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:18:22,340 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:18:22,340 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:18:22,345 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,347 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:18:22,351 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:18:22,351 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:18:22,357 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:18:22,358 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:18:22,362 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页
+2025-02-11 15:20:58,986 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:20:59,000 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:20:59,002 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:20:59,007 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:20:59,010 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:20:59,013 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:20:59,018 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:20:59,019 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:20:59,022 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:20:59,027 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:20:59,028 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:20:59,031 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:20:59,035 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:20:59,036 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:20:59,042 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,043 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:20:59,047 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:20:59,047 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:20:59,050 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:20:59,054 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:20:59,055 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:20:59,061 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:20:59,062 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:20:59,066 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:20:59,066 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:20:59,070 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:20:59,074 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:20:59,075 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:20:59,078 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:20:59,079 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:20:59,083 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:20:59,084 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:20:59,087 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:20:59,092 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:20:59,092 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:20:59,097 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:20:59,098 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:20:59,102 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:20:59,102 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:20:59,107 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,108 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:20:59,112 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:20:59,112 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:20:59,118 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:20:59,119 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:20:59,124 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:20:59,124 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:20:59,128 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,130 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:20:59,134 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:20:59,134 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:20:59,139 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,139 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:20:59,143 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:20:59,144 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:20:59,148 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:20:59,150 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:20:59,156 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:20:59,156 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:20:59,161 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,162 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:20:59,167 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:20:59,167 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:20:59,172 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,173 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:20:59,177 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:20:59,177 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:20:59,183 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,184 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:20:59,188 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:20:59,188 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:20:59,194 - root - INFO - 修复了 2 个无效链接
+2025-02-11 15:20:59,196 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:20:59,200 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页
+2025-02-11 15:24:51,595 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:24:51,616 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:24:51,618 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:24:51,623 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:24:51,628 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:24:51,632 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:24:51,638 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:24:51,639 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:24:51,643 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:24:51,644 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:24:51,649 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:24:51,649 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:24:51,656 - root - INFO - 修复了 4 个无效链接
+2025-02-11 15:24:51,657 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:24:51,661 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:24:51,661 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:24:51,667 - root - INFO - 修复了 6 个无效链接
+2025-02-11 15:24:51,669 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:24:51,672 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:24:51,673 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:24:51,675 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:24:51,680 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:24:51,680 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:24:51,688 - root - INFO - 修复了 3 个无效链接
+2025-02-11 15:24:51,688 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:24:51,692 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:24:51,693 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:24:51,695 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:24:51,699 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:24:51,700 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:24:51,703 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:24:51,704 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:24:51,708 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:24:51,708 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:24:51,712 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:24:51,718 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:24:51,718 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:24:51,722 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:24:51,724 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:24:51,729 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:24:51,730 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:24:51,733 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:24:51,737 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:24:51,738 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:24:51,742 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:24:51,743 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:24:51,748 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:24:51,748 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:24:51,751 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:24:51,756 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:24:51,756 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:24:51,760 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:24:51,761 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:24:51,765 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:24:51,766 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:24:51,770 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:24:51,771 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:24:51,775 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:24:51,776 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:24:51,779 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:24:51,783 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:24:51,783 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:24:51,786 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:24:51,790 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:24:51,790 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:24:51,793 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:24:51,798 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:24:51,798 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:24:51,801 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:24:51,805 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页
+2025-02-11 15:27:12,963 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:27:12,979 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:27:12,981 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:27:12,985 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:27:12,988 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:27:12,992 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:27:13,005 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:27:13,005 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:27:13,008 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:27:13,010 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:27:13,014 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:27:13,014 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:27:13,019 - root - INFO - 修复了 4 个无效链接
+2025-02-11 15:27:13,020 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:27:13,025 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:27:13,025 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:27:13,031 - root - INFO - 修复了 6 个无效链接
+2025-02-11 15:27:13,033 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:27:13,038 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:27:13,038 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:27:13,041 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:27:13,045 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:27:13,045 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:27:13,054 - root - INFO - 修复了 3 个无效链接
+2025-02-11 15:27:13,055 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:27:13,059 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:27:13,059 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:27:13,063 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:27:13,067 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:27:13,067 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:27:13,070 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:27:13,072 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:27:13,076 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:27:13,076 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:27:13,080 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:27:13,084 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:27:13,084 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:27:13,088 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:27:13,089 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:27:13,094 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:27:13,094 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:27:13,098 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:27:13,102 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:27:13,103 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:27:13,108 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:27:13,109 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:27:13,113 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:27:13,113 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:27:13,117 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:27:13,121 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:27:13,122 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:27:13,125 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:27:13,126 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:27:13,131 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:27:13,131 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:27:13,134 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:27:13,136 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:27:13,140 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:27:13,140 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:27:13,143 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:27:13,147 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:27:13,148 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:27:13,151 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:27:13,156 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:27:13,156 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:27:13,160 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:27:13,164 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:27:13,164 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:27:13,168 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:27:13,172 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页
+2025-02-11 15:33:50,869 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:33:50,891 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:33:50,893 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:33:50,899 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:33:50,904 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:33:50,908 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:33:50,922 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:33:50,923 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:33:50,927 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:33:50,928 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:33:50,933 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:33:50,934 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:33:50,939 - root - INFO - 修复了 4 个无效链接
+2025-02-11 15:33:50,940 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:33:50,944 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:33:50,945 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:33:50,951 - root - INFO - 修复了 6 个无效链接
+2025-02-11 15:33:50,953 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:33:50,957 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:33:50,957 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:33:50,961 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:33:50,965 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:33:50,966 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:33:50,975 - root - INFO - 修复了 3 个无效链接
+2025-02-11 15:33:50,976 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:33:50,980 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:33:50,981 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:33:50,984 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:33:50,988 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:33:50,988 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:33:50,991 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:33:50,992 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:33:50,997 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:33:50,997 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:33:51,001 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:33:51,005 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:33:51,005 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:33:51,010 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:33:51,011 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:33:51,016 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:33:51,016 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:33:51,020 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:33:51,025 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:33:51,026 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:33:51,030 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:33:51,031 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:33:51,036 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:33:51,036 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:33:51,039 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:33:51,044 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:33:51,044 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:33:51,048 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:33:51,050 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:33:51,055 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:33:51,055 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:33:51,059 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:33:51,060 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:33:51,064 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:33:51,065 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:33:51,068 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:33:51,072 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:33:51,072 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:33:51,075 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:33:51,080 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:33:51,080 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:33:51,084 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:33:51,088 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:33:51,089 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:33:51,092 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:33:51,096 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页
+2025-02-11 15:37:37,248 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-02-11 15:37:37,265 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-02-11 15:37:37,266 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-02-11 15:37:37,270 - root - INFO - 发现 19 个新的或修改的文件
+2025-02-11 15:37:37,275 - root - INFO - 处理文件: markdown\art.md
+2025-02-11 15:37:37,279 - root - INFO - 成功生成HTML文件: html\art.html
+2025-02-11 15:37:37,296 - root - INFO - 文章 绘画 的链接已存在于首页
+2025-02-11 15:37:37,296 - root - INFO - 处理文件: markdown\article1.md
+2025-02-11 15:37:37,301 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:37:37,302 - root - INFO - 成功生成HTML文件: html\article1.html
+2025-02-11 15:37:37,307 - root - INFO - 文章 我的第一篇文章 的链接已存在于首页
+2025-02-11 15:37:37,307 - root - INFO - 处理文件: markdown\blog.md
+2025-02-11 15:37:37,315 - root - INFO - 修复了 4 个无效链接
+2025-02-11 15:37:37,316 - root - INFO - 成功生成HTML文件: html\blog.html
+2025-02-11 15:37:37,321 - root - INFO - 文章 博客 的链接已存在于首页
+2025-02-11 15:37:37,321 - root - INFO - 处理文件: markdown\essays.md
+2025-02-11 15:37:37,330 - root - INFO - 修复了 6 个无效链接
+2025-02-11 15:37:37,331 - root - INFO - 成功生成HTML文件: html\essays.html
+2025-02-11 15:37:37,336 - root - INFO - 文章 文章 的链接已存在于首页
+2025-02-11 15:37:37,336 - root - INFO - 处理文件: markdown\music.md
+2025-02-11 15:37:37,340 - root - INFO - 成功生成HTML文件: html\music.html
+2025-02-11 15:37:37,345 - root - INFO - 文章 音乐 的链接已存在于首页
+2025-02-11 15:37:37,346 - root - INFO - 处理文件: markdown\philosophy.md
+2025-02-11 15:37:37,356 - root - INFO - 修复了 3 个无效链接
+2025-02-11 15:37:37,357 - root - INFO - 成功生成HTML文件: html\philosophy.html
+2025-02-11 15:37:37,363 - root - INFO - 文章 哲科 的链接已存在于首页
+2025-02-11 15:37:37,363 - root - INFO - 处理文件: markdown\projects.md
+2025-02-11 15:37:37,367 - root - INFO - 成功生成HTML文件: html\projects.html
+2025-02-11 15:37:37,372 - root - INFO - 文章 新奇项目 的链接已存在于首页
+2025-02-11 15:37:37,372 - root - INFO - 处理文件: markdown\test.md
+2025-02-11 15:37:37,377 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:37:37,378 - root - INFO - 成功生成HTML文件: html\test.html
+2025-02-11 15:37:37,384 - root - INFO - 文章 我的梦想 的链接已存在于首页
+2025-02-11 15:37:37,385 - root - INFO - 处理文件: markdown\wechat.md
+2025-02-11 15:37:37,390 - root - INFO - 成功生成HTML文件: html\wechat.html
+2025-02-11 15:37:37,394 - root - INFO - 文章 公众号 的链接已存在于首页
+2025-02-11 15:37:37,395 - root - INFO - 处理文件: markdown\articles\ecosystem.md
+2025-02-11 15:37:37,398 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:37:37,399 - root - INFO - 成功生成HTML文件: html\ecosystem.html
+2025-02-11 15:37:37,403 - root - INFO - 文章 生态系统思维 的链接已存在于首页
+2025-02-11 15:37:37,404 - root - INFO - 处理文件: markdown\articles\learning-tech.md
+2025-02-11 15:37:37,408 - root - INFO - 成功生成HTML文件: html\learning-tech.html
+2025-02-11 15:37:37,414 - root - INFO - 文章 学习技术的方法 的链接已存在于首页
+2025-02-11 15:37:37,414 - root - INFO - 处理文件: markdown\articles\programming-joy.md
+2025-02-11 15:37:37,419 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:37:37,420 - root - INFO - 成功生成HTML文件: html\programming-joy.html
+2025-02-11 15:37:37,424 - root - INFO - 文章 编程的乐趣 的链接已存在于首页
+2025-02-11 15:37:37,425 - root - INFO - 处理文件: markdown\articles\tech-choice.md
+2025-02-11 15:37:37,428 - root - INFO - 成功生成HTML文件: html\tech-choice.html
+2025-02-11 15:37:37,432 - root - INFO - 文章 技术选择的艺术 的链接已存在于首页
+2025-02-11 15:37:37,432 - root - INFO - 处理文件: markdown\articles\tech-evolution.md
+2025-02-11 15:37:37,436 - root - INFO - 修复了 1 个无效链接
+2025-02-11 15:37:37,437 - root - INFO - 成功生成HTML文件: html\tech-evolution.html
+2025-02-11 15:37:37,442 - root - INFO - 文章 技术演化规律 的链接已存在于首页
+2025-02-11 15:37:37,442 - root - INFO - 处理文件: markdown\articles\writing-thinking.md
+2025-02-11 15:37:37,446 - root - INFO - 修复了 0 个无效链接
+2025-02-11 15:37:37,447 - root - INFO - 成功生成HTML文件: html\writing-thinking.html
+2025-02-11 15:37:37,451 - root - INFO - 文章 写作与思考 的链接已存在于首页
+2025-02-11 15:37:37,452 - root - INFO - 处理文件: markdown\blogs\frontend-optimization.md
+2025-02-11 15:37:37,455 - root - INFO - 成功生成HTML文件: html\frontend-optimization.html
+2025-02-11 15:37:37,459 - root - INFO - 文章 前端性能优化 的链接已存在于首页
+2025-02-11 15:37:37,460 - root - INFO - 处理文件: markdown\blogs\git-workflow.md
+2025-02-11 15:37:37,463 - root - INFO - 成功生成HTML文件: html\git-workflow.html
+2025-02-11 15:37:37,467 - root - INFO - 文章 Git工作流程 的链接已存在于首页
+2025-02-11 15:37:37,467 - root - INFO - 处理文件: markdown\blogs\react-modern-web.md
+2025-02-11 15:37:37,471 - root - INFO - 成功生成HTML文件: html\react-modern-web.html
+2025-02-11 15:37:37,476 - root - INFO - 文章 现代Web开发与React 的链接已存在于首页
+2025-02-11 15:37:37,476 - root - INFO - 处理文件: markdown\blogs\typescript-practice.md
+2025-02-11 15:37:37,480 - root - INFO - 成功生成HTML文件: html\typescript-practice.html
+2025-02-11 15:37:37,484 - root - INFO - 文章 TypeScript实践经验 的链接已存在于首页

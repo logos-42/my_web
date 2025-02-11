@@ -1,3 +1,4 @@
 @echo off
-pip install -r requirements.txt
-python md_processor.py
+cd %~dp0
+python -m md_processor.main
+pause
