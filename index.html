@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的个人网站</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
     <link rel="stylesheet" href="styles.css">
+    <script src="backlinks.js"></script>
+    <script src="js/template-loader.js"></script>
     <link rel="stylesheet" href="css/sidebar.css">
-    <script src="js/backlinks.js"></script>
-    <script src="js/nav.js"></script>
+    <script src="js/sidebar.js"></script>
 </head>
-<body>
+<body class="home-page">
     <div class="layout">
-        <button class="sidebar-toggle" aria-label="切换侧边栏">
-            <span class="toggle-icon"></span>
-        </button>
         <nav class="sidebar">
+            <button class="sidebar-toggle" aria-label="切换侧边栏">
+                <span class="toggle-icon"></span>
+            </button>
+
             <div class="nav-section">
                 <div class="nav-item"><a href="index.html" class="active">首页</a></div>
                 <div class="nav-item"><a href="essays.html">文章</a></div>
@@ -46,15 +51,17 @@
 <li><a href="html/blogs\typescript-practice.html">TypeScript实践经验</a> - 2024-08-05</li>
 <li><a href="html/blogs\react-modern-web.html">现代Web开发与React</a> - 2024-07-20</li>
 <li><a href="html/blogs\git-workflow.html">Git工作流程</a> - 2024-06-15</li>
-<li><a href="html/art.html">绘画</a> - 2024-02-11</li>
-<li><a href="html/article1.html">我的第一篇文章</a> - 2024-02-11</li>
-<li><a href="html/blog.html">博客</a> - 2024-02-11</li>
-<li><a href="html/essays.html">文章</a> - 2024-02-11</li>
-<li><a href="html/music.html">音乐</a> - 2024-02-11</li>
-<li><a href="html/philosophy.html">哲科</a> - 2024-02-11</li>
-<li><a href="html/projects.html">新奇项目</a> - 2024-02-11</li>
-<li><a href="html/test.html">我的梦想</a> - 2024-02-11</li>
-<li><a href="html/wechat.html">公众号</a> - 2024-02-11</li>
+<li><a href="html/art\ai-art.html">AI艺术探索</a> - 2024-02-11</li>
+<li><a href="html/art\generative-art.html">生成艺术作品集</a> - 2024-02-11</li>
+<li><a href="html/articles\article1.html">我的第一篇文章</a> - 2024-02-11</li>
+<li><a href="html/music\algorithmic.html">算法作曲实验</a> - 2024-02-11</li>
+<li><a href="html/music\electronic.html">电子音乐作品集</a> - 2024-02-11</li>
+<li><a href="html/philosophy\ai-philosophy.html">人工智能的哲学思考</a> - 2024-02-11</li>
+<li><a href="html/philosophy\complexity-science.html">复杂科学导论</a> - 2024-02-11</li>
+<li><a href="html/projects\ai-assistant.html">AI助手开发</a> - 2024-02-11</li>
+<li><a href="html/projects\markdown-generator.html">Markdown网站生成器</a> - 2024-02-11</li>
+<li><a href="html/projects\test.html">我的梦想</a> - 2024-02-11</li>
+<li><a href="html/projects\wechat.html">公众号</a> - 2024-02-11</li>
                     </ul>
                 </section>
                 
@@ -70,6 +77,11 @@
                             <img src="images/zsxq-qrcode.jpg" alt="知识星球二维码" width="200" height="200">
                         </div>
                     </div>
+                </section>
+
+                <section class="backlinks">
+                    <h3>反向链接</h3>
+                    <ul id="backlinks-list"></ul>
                 </section>
             </article>
         </main>
