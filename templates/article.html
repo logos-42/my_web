@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ prefix }}favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ prefix }}favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ prefix }}favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="{{ prefix }}favicon_io/site.webmanifest">
+    <link rel="stylesheet" href="{{ prefix }}styles.css">
+    <script src="{{ prefix }}backlinks.js"></script>
+    <script src="{{ prefix }}js/template-loader.js"></script>
+    <link rel="stylesheet" href="{{ prefix }}css/sidebar.css">
+    <script src="{{ prefix }}js/sidebar.js"></script>
+</head>
+<body class="article-page">
+    <div class="layout">
+        <nav class="sidebar">
+            <button class="sidebar-toggle" aria-label="切换侧边栏">
+                <span class="toggle-icon"></span>
+            </button>
+
+            <div class="nav-section">
+                <div class="nav-item"><a href="{{ prefix }}index.html">首页</a></div>
+                <div class="nav-item"><a href="{{ prefix }}essays.html">文章</a></div>
+                <div class="nav-item"><a href="{{ prefix }}blog.html">博客</a></div>
+                <div class="nav-item"><a href="{{ prefix }}projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="{{ prefix }}philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="{{ prefix }}music.html">音乐</a></div>
+                <div class="nav-item"><a href="{{ prefix }}art.html">绘画</a></div>
+                <div class="nav-item"><a href="{{ prefix }}wechat.html">公众号</a></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                {{ content | safe }}
+
+                {% if category %}
+                <div class="article-meta">
+                    <p>分类：{{ category }}</p>
+                    {% if date %}
+                    <p>发布日期：{{ date }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </article>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 

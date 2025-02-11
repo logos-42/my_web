@@ -29,7 +29,13 @@ class MarkdownProcessor:
         self.env = Environment(
             loader=FileSystemLoader(templates_dir)
         )
-        self.template = self.env.get_template('default.html')
+        # 加载不同类型的模板
+        self.templates = {
+            'article': self.env.get_template('article.html'),
+            'blog': self.env.get_template('blog.html'),
+            'page': self.env.get_template('page.html'),
+            'default': self.env.get_template('default.html')
+        }
         self.article_list = []
         
     def _fix_links(self, content: str, md_file: Path) -> str:
@@ -79,6 +85,38 @@ class MarkdownProcessor:
         
         return content
         
+    def _get_template(self, md_file: Path, metadata: Dict) -> Template:
+        """
+        根据文件路径和元数据选择合适的模板
+        
+        Args:
+            md_file: Markdown文件路径
+            metadata: 文档元数据
+            
+        Returns:
+            对应的模板
+        """
+        # 从元数据中获取类型
+        page_type = metadata.get('type', '')
+        if page_type:
+            return self.templates.get(page_type, self.templates['default'])
+            
+        # 根据文件路径判断类型
+        relative_path = md_file.relative_to(Path(self.config['markdown_dir']))
+        parts = relative_path.parts
+        
+        if len(parts) > 1:
+            if parts[0] == 'articles':
+                return self.templates['article']
+            elif parts[0] == 'blogs':
+                return self.templates['blog']
+                
+        # 如果是基础页面（如about.md, projects.md等）
+        if len(parts) == 1 and not parts[0].startswith('_'):
+            return self.templates['page']
+            
+        return self.templates['default']
+        
     def _apply_template(self, content: str, metadata: Dict, md_file: Path) -> str:
         """
         将HTML内容应用到模板中
@@ -103,8 +141,11 @@ class MarkdownProcessor:
             **metadata  # 添加其他元数据
         }
         
+        # 选择合适的模板
+        template = self._get_template(md_file, metadata)
+        
         # 应用模板
-        return self.template.render(**template_vars)
+        return template.render(**template_vars)
         
     def process_file(self, md_file: Path) -> Optional[str]:
         """
