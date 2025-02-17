@@ -49,12 +49,12 @@ category: 技术探索
 
 ### 进阶路径
 
-- [编程的乐趣](programming-joy.html)
+- [编程的乐趣](../../html/articles/programming-joy.html)
 - [技术选择的艺术](tech-choice.html)
 
 ## 相关文章
 
 ### 引用本文的文章
 
-- [编程的乐趣](programming-joy.html)
+- [编程的乐趣](../../html/articles/programming-joy.html)
 - [技术选择的艺术](tech-choice.html) 

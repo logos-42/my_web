@@ -49,5 +49,5 @@ category: 思考随笔
 
 ### 相关阅读
 
-- [编程的乐趣](programming-joy.html)
+- [编程的乐趣](../../html/articles/programming-joy.html)
 - [学习技术的方法](learning-tech.html) 

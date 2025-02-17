@@ -1,12 +1,11 @@
 """
 链接处理器模块
-负责链接的提取、验证、修复和反向链接生成
+负责处理文档间的链接关系
 """
 
 import re
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
-from difflib import SequenceMatcher
+from typing import Dict, Set, List
 
 class LinkProcessor:
     def __init__(self, config: dict):
@@ -14,137 +13,22 @@ class LinkProcessor:
         初始化链接处理器
         
         Args:
-            config: 配置字典，包含必要的路径和设置
+            config: 配置字典
         """
         self.config = config
-        self.link_graph: Dict[str, Set[str]] = {}
-        self.backlinks: Dict[str, Set[str]] = {}
+        self.backlinks = {}  # 存储反向链接关系
         
-    def extract_links(self, content: str) -> List[str]:
+    def get_backlinks(self, file_path: str) -> Set[str]:
         """
-        从内容中提取所有链接
+        获取指向特定文件的反向链接
         
         Args:
-            content: Markdown或HTML内容
+            file_path: 文件路径
             
         Returns:
-            提取到的链接列表
+            指向该文件的文件路径集合
         """
-        # Markdown链接模式：[text](url)
-        md_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
-        # HTML链接模式：<a href="url">text</a>
-        html_pattern = r'<a[^>]+href=["\'](.*?)["\']'
-        
-        links = []
-        # 提取Markdown链接
-        md_links = re.findall(md_pattern, content)
-        links.extend([link[1] for link in md_links])  # 只保留链接部分
-        # 提取HTML链接
-        html_links = re.findall(html_pattern, content)
-        links.extend(html_links)
-        
-        return list(set(links))
-        
-    def validate_links(self, links: List[str], base_path: Path) -> Tuple[List[str], List[str]]:
-        """
-        验证链接的有效性
-        
-        Args:
-            links: 链接列表
-            base_path: 基础路径
-            
-        Returns:
-            有效链接和无效链接的元组
-        """
-        valid_links = []
-        invalid_links = []
-        
-        for link in links:
-            # 移除html/前缀
-            if link.startswith('html/'):
-                link = link[5:]
-            target_path = base_path / link
-                
-            if target_path.exists():
-                valid_links.append(link)
-            else:
-                invalid_links.append(link)
-                
-        return valid_links, invalid_links
-        
-    def fix_invalid_links(self, invalid_links: List[str], base_path: Path) -> Dict[str, str]:
-        """
-        尝试修复无效链接
-        
-        Args:
-            invalid_links: 无效链接列表
-            base_path: 基础路径
-            
-        Returns:
-            原始链接到修复后链接的映射
-        """
-        fixes = {}
-        all_files = list(base_path.rglob('*.html'))  # 获取所有HTML文件
-        
-        for invalid_link in invalid_links:
-            best_match = None
-            best_ratio = 0
-            
-            # 获取无效链接的文件名部分
-            invalid_name = Path(invalid_link).name
-            
-            # 寻找最佳匹配
-            for file_path in all_files:
-                ratio = SequenceMatcher(None, invalid_name, file_path.name).ratio()
-                if ratio > best_ratio and ratio > 0.8:  # 设置相似度阈值
-                    best_ratio = ratio
-                    best_match = file_path
-                    
-            if best_match:
-                # 使用相对于html目录的路径
-                fixed_link = best_match.name
-                fixes[invalid_link] = fixed_link
-                
-        return fixes
-        
-    def update_link_graph(self, source_file: str, links: List[str]):
-        """
-        更新链接关系图
-        
-        Args:
-            source_file: 源文件路径
-            links: 该文件中的链接列表
-        """
-        self.link_graph[source_file] = set(links)
-        self._update_backlinks()
-        
-    def _update_backlinks(self):
-        """
-        更新反向链接关系
-        """
-        self.backlinks.clear()
-        
-        # 遍历所有链接关系
-        for source, targets in self.link_graph.items():
-            for target in targets:
-                # 移除html/前缀
-                if target.startswith('html/'):
-                    target = target[5:]
-                if target not in self.backlinks:
-                    self.backlinks[target] = set()
-                self.backlinks[target].add(source)
-                
-    def get_backlinks(self, target_file: str) -> Set[str]:
-        """
-        获取指定文件的反向链接
-        
-        Args:
-            target_file: 目标文件路径
-            
-        Returns:
-            指向该文件的所有文件路径集合
-        """
-        return self.backlinks.get(target_file, set())
+        return self.backlinks.get(file_path, set())
         
     def add_backlinks_section(self, content: str, backlinks: Set[str]) -> str:
         """
