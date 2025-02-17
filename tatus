@@ -1,0 +1,60 @@
+[33mcommit 256561b9a94dcc55ae1932b58f3a468ac2029282[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmarkdown[m[33m, [m[1;31morigin/markdown[m[33m)[m
+Author: AI Developer <ai@example.com>
+Date:   Tue Feb 11 17:20:30 2025 +0800
+
+    更新网站内容：1. 新增艺术、音乐、哲学等板块 2. 更新已有文章页面 3. 优化网站结构
+
+M	html/art.html
+A	html/art/ai-art.html
+A	html/art/generative-art.html
+M	html/article1.html
+M	html/articles/article1.html
+M	html/articles/ecosystem.html
+M	html/articles/learning-tech.html
+M	html/articles/programming-joy.html
+M	html/articles/tech-choice.html
+M	html/articles/tech-evolution.html
+M	html/articles/writing-thinking.html
+M	html/blog.html
+M	html/blogs/frontend-optimization.html
+M	html/blogs/git-workflow.html
+M	html/blogs/intelligence-gap.html
+M	html/blogs/react-modern-web.html
+M	html/blogs/typescript-practice.html
+M	html/essays.html
+M	html/music.html
+A	html/music/algorithmic.html
+A	html/music/electronic.html
+M	html/philosophy.html
+A	html/philosophy/ai-philosophy.html
+A	html/philosophy/complexity-science.html
+M	html/projects.html
+A	html/projects/ai-assistant.html
+A	html/projects/markdown-generator.html
+A	html/projects/test.html
+A	html/projects/wechat.html
+M	html/test.html
+M	html/wechat.html
+M	index.html
+D	markdown/art.md
+A	markdown/art/ai-art.md
+A	markdown/art/generative-art.md
+R100	markdown/article1.md	markdown/articles/article1.md
+D	markdown/blog.md
+D	markdown/essays.md
+D	markdown/music.md
+A	markdown/music/algorithmic.md
+A	markdown/music/electronic.md
+D	markdown/philosophy.md
+A	markdown/philosophy/ai-philosophy.md
+A	markdown/philosophy/complexity-science.md
+D	markdown/projects.md
+A	markdown/projects/ai-assistant.md
+A	markdown/projects/markdown-generator.md
+R100	markdown/test.md	markdown/projects/test.md
+R100	markdown/wechat.md	markdown/projects/wechat.md
+M	scripts/md_processor/__pycache__/markdown_processor.cpython-313.pyc
+M	scripts/md_processor/markdown_processor.py
+A	templates/article.html
+A	templates/blog.html
+A	templates/page.html
