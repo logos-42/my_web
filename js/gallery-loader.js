@@ -1,7 +1,7 @@
 /**
  * 画廊图片自动加载脚本
  * 自动扫描finish文件夹中的图片并显示在画廊中
- * 支持分页加载和外部图床
+ * 支持分页加载、外部图床和收藏功能
  */
 
 // 配置对象
@@ -36,15 +36,23 @@ const config = {
     
     // 性能配置
     batchSize: 10,  // 每批加载的图片数量
-    delay: 10  // 批次间延迟（毫秒）(减少延迟提高加载速度)
+    delay: 10,  // 批次间延迟（毫秒）(减少延迟提高加载速度)
+    
+    // 排序配置
+    sortMode: 'popular',  // 默认排序模式: 'popular', 'random', 'newest'
+    popularityWeight: 3,  // 受欢迎度权重系数（影响随机排序时的权重计算）
 };
 
 // 全局变量
 let allImagePaths = [];  // 存储所有找到的图片路径
 let totalImages = 0;  // 图片总数
+let wantedItems = {};  // 存储想要的作品数据 {imageNumber: wantCount}
 
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
+    // 加载已保存的"想要"数据
+    loadWantedData();
+    
     // 获取画廊容器
     const gallery = document.querySelector(config.gallerySelector);
     if (!gallery) {
@@ -61,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 添加全屏查看器
     addFullscreenViewer();
     
+    // 设置排序按钮事件
+    setupSortButtons();
+    
     // 根据来源类型加载图片
     if (config.sourceType === 'remote' && config.remoteCDN.enabled) {
         loadRemoteImages();
@@ -69,6 +80,159 @@ document.addEventListener('DOMContentLoaded', function() {
         scanLocalImages();
     }
 });
+
+/**
+ * 加载保存的"想要"数据
+ */
+function loadWantedData() {
+    const savedData = localStorage.getItem('gallery_wanted_items');
+    if (savedData) {
+        try {
+            wantedItems = JSON.parse(savedData);
+        } catch (e) {
+            console.error('无法解析保存的想要数据', e);
+            wantedItems = {};
+        }
+    }
+}
+
+/**
+ * 保存"想要"数据到localStorage
+ */
+function saveWantedData() {
+    localStorage.setItem('gallery_wanted_items', JSON.stringify(wantedItems));
+}
+
+/**
+ * 设置排序按钮事件
+ */
+function setupSortButtons() {
+    const sortButtons = document.querySelectorAll('.sort-button');
+    
+    sortButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // 更新活动按钮样式
+            sortButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 获取排序模式
+            const sortMode = this.getAttribute('data-sort');
+            config.sortMode = sortMode;
+            
+            // 重新排序并显示
+            if (allImagePaths.length > 0) {
+                sortAndDisplayImages();
+            }
+        });
+    });
+}
+
+/**
+ * 根据当前排序模式对图片进行排序并显示
+ */
+function sortAndDisplayImages() {
+    let sortedImages = [...allImagePaths];
+    
+    switch (config.sortMode) {
+        case 'popular':
+            // 按受欢迎度排序
+            sortedImages.sort((a, b) => {
+                const aWants = wantedItems[a.number] || 0;
+                const bWants = wantedItems[b.number] || 0;
+                return bWants - aWants;
+            });
+            break;
+            
+        case 'random':
+            // 随机排序（受欢迎度有更高权重）
+            sortedImages = weightedRandomSort(sortedImages);
+            break;
+            
+        case 'newest':
+            // 按编号倒序排序（假设编号越大越新）
+            sortedImages.sort((a, b) => b.number - a.number);
+            break;
+    }
+    
+    // 如果启用分页，更新分页数据并显示第一页
+    if (config.pagination.enabled) {
+        allImagePaths = sortedImages;
+        config.pagination.currentPage = 1;
+        displayPage(1);
+        
+        // 更新分页按钮状态
+        updatePaginationButtons(1);
+    } else {
+        // 直接显示所有排序后的图片
+        displaySortedImages(sortedImages);
+    }
+}
+
+/**
+ * 带权重的随机排序
+ * @param {Array} images - 图片数组
+ * @returns {Array} - 排序后的数组
+ */
+function weightedRandomSort(images) {
+    // 创建带权重的图片数组
+    const weightedImages = images.map(img => {
+        // 计算权重：基础权重1 + 想要数量 * 权重系数
+        const wants = wantedItems[img.number] || 0;
+        const weight = 1 + wants * config.popularityWeight;
+        return { ...img, weight };
+    });
+    
+    // Fisher-Yates随机排序，但考虑权重
+    for (let i = weightedImages.length - 1; i > 0; i--) {
+        // 生成带权重的随机索引
+        let weightSum = 0;
+        for (let j = 0; j <= i; j++) {
+            weightSum += weightedImages[j].weight;
+        }
+        
+        let random = Math.random() * weightSum;
+        let j = 0;
+        for (weightSum = weightedImages[0].weight; weightSum < random && j < i; j++) {
+            weightSum += weightedImages[j + 1].weight;
+        }
+        
+        // 交换元素
+        [weightedImages[i], weightedImages[j]] = [weightedImages[j], weightedImages[i]];
+    }
+    
+    // 返回排序后的原始图片数组（不带权重属性）
+    return weightedImages.map(img => ({ number: img.number, path: img.path }));
+}
+
+/**
+ * 直接显示排序后的图片
+ * @param {Array} sortedImages - 已排序的图片数组
+ */
+function displaySortedImages(sortedImages) {
+    const gallery = document.querySelector(config.gallerySelector);
+    gallery.innerHTML = '';
+    
+    // 按批次添加图片以防止浏览器卡顿
+    const totalBatches = Math.ceil(sortedImages.length / config.batchSize);
+    
+    function addBatch(batchIndex) {
+        if (batchIndex >= totalBatches) return;
+        
+        const start = batchIndex * config.batchSize;
+        const end = Math.min(start + config.batchSize, sortedImages.length);
+        
+        for (let i = start; i < end; i++) {
+            const img = sortedImages[i];
+            addImageToGallery(img.path, img.number);
+        }
+        
+        // 添加下一批
+        setTimeout(() => addBatch(batchIndex + 1), config.delay);
+    }
+    
+    // 开始添加第一批
+    addBatch(0);
+}
 
 /**
  * 添加加载指示器
@@ -81,30 +245,6 @@ function addLoadingIndicator(container) {
         <div class="loading-spinner"></div>
         <p>正在加载图片，请稍候...</p>
     `;
-    loading.style.cssText = `
-        text-align: center;
-        padding: 30px;
-        width: 100%;
-    `;
-    
-    // 添加旋转动画样式
-    const style = document.createElement('style');
-    style.textContent = `
-        .loading-spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    `;
-    document.head.appendChild(style);
     
     container.appendChild(loading);
 }
@@ -115,26 +255,8 @@ function addLoadingIndicator(container) {
 function addFullscreenViewer() {
     const viewer = document.createElement('div');
     viewer.className = 'fullscreen-viewer';
-    viewer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        cursor: pointer;
-    `;
     
     const img = document.createElement('img');
-    img.style.cssText = `
-        max-width: 90%;
-        max-height: 90%;
-        object-fit: contain;
-    `;
     
     viewer.appendChild(img);
     document.body.appendChild(viewer);
@@ -172,13 +294,12 @@ function scanLocalImages() {
             const loadingIndicator = document.querySelector('.loading-indicator');
             if (loadingIndicator) loadingIndicator.remove();
             
+            // 对图片进行排序
+            sortAndDisplayImages();
+            
             // 设置分页
             if (config.pagination.enabled) {
                 setupPagination();
-                displayPage(1);
-            } else {
-                // 显示所有图片
-                displayAllImages();
             }
             
             console.log(`图片扫描完成，共找到 ${loadedCount} 张图片`);
@@ -240,12 +361,12 @@ function loadRemoteImages() {
         const loadingIndicator = document.querySelector('.loading-indicator');
         if (loadingIndicator) loadingIndicator.remove();
         
+        // 对图片进行排序
+        sortAndDisplayImages();
+        
         // 设置分页
         if (config.pagination.enabled) {
             setupPagination();
-            displayPage(1);
-        } else {
-            displayAllImages();
         }
     } else {
         // 如果需要，这里可以添加从远程API获取文件列表的逻辑
@@ -266,13 +387,6 @@ function setupPagination() {
     // 创建分页容器
     const paginationContainer = document.createElement('div');
     paginationContainer.className = 'pagination';
-    paginationContainer.style.cssText = `
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 20px 0;
-        gap: 5px;
-    `;
     
     // 计算总页数
     const totalPages = Math.ceil(totalImages / config.pagination.itemsPerPage);
@@ -343,13 +457,6 @@ function setupPagination() {
     // 添加分页信息
     const pageInfo = document.createElement('div');
     pageInfo.className = 'page-info';
-    pageInfo.style.cssText = `
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 14px;
-        color: #666;
-    `;
     pageInfo.textContent = `共 ${totalImages} 张图片，${totalPages} 页`;
     paginationContainer.appendChild(pageInfo);
     
@@ -527,65 +634,74 @@ function addImageToGallery(imgPath, number) {
     const gallery = document.querySelector(config.gallerySelector);
     if (!gallery) return;
     
+    // 获取想要数量
+    const wantCount = wantedItems[number] || 0;
+    
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    item.style.cssText = `
-        margin-bottom: 20px;
-        break-inside: avoid;
-    `;
     
     const img = document.createElement('img');
     img.src = imgPath;
     img.alt = `作品 #${number}`;
     img.loading = 'lazy';
-    img.style.width = '100%';
-    img.style.borderRadius = '4px';
-    img.style.transition = 'transform 0.3s';
     
     // 添加点击图片全屏显示
     img.style.cursor = 'pointer';
     img.onclick = () => showFullscreen(imgPath);
     
-    // 添加悬停效果
-    img.addEventListener('mouseover', () => {
-        img.style.transform = 'scale(1.02)';
-    });
-    img.addEventListener('mouseout', () => {
-        img.style.transform = 'scale(1)';
-    });
-    
     const info = document.createElement('div');
     info.className = 'gallery-item-info';
-    info.style.padding = '10px 0';
     
     const title = document.createElement('h3');
     title.className = 'gallery-item-title';
     title.textContent = `作品 #${number}`;
-    title.style.margin = '0 0 10px 0';
-    title.style.fontSize = '1rem';
+    
+    // 创建按钮容器
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'gallery-buttons';
+    
+    // 添加"想要"按钮
+    const wantButton = document.createElement('button');
+    wantButton.className = 'want-button';
+    if (wantCount > 0) {
+        wantButton.classList.add('active');
+    }
+    
+    wantButton.innerHTML = `<i class="fa-solid fa-heart"></i> 想要 <span class="want-count">${wantCount > 0 ? wantCount : ''}</span>`;
+    
+    wantButton.onclick = () => {
+        // 获取当前"想要"数量
+        let currentWants = wantedItems[number] || 0;
+        
+        if (wantButton.classList.contains('active')) {
+            // 如果已经想要过，减少数量
+            currentWants = Math.max(0, currentWants - 1);
+            if (currentWants === 0) {
+                wantButton.classList.remove('active');
+            }
+        } else {
+            // 如果没想要过，增加数量
+            currentWants += 1;
+            wantButton.classList.add('active');
+        }
+        
+        // 更新显示和存储数据
+        wantedItems[number] = currentWants;
+        wantButton.querySelector('.want-count').textContent = currentWants > 0 ? currentWants : '';
+        
+        // 保存数据
+        saveWantedData();
+    };
     
     // 添加显示唯一凭证的按钮
     const certButton = document.createElement('button');
     certButton.className = 'certificate-toggle';
     certButton.textContent = '显示唯一凭证';
-    certButton.style.cssText = `
-        background: #f1f1f1;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 5px 10px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        margin-right: 5px;
-    `;
     
     // 创建唯一凭证容器
     const certContainer = document.createElement('div');
     certContainer.className = 'certificate-contents';
     certContainer.style.display = 'none';
-    certContainer.style.marginTop = '10px';
-    certContainer.style.padding = '10px';
-    certContainer.style.backgroundColor = '#f9f9f9';
-    certContainer.style.borderRadius = '4px';
     
     // 生成唯一凭证
     const uniqueId = generateUniqueId(imgPath, number);
@@ -594,23 +710,12 @@ function addImageToGallery(imgPath, number) {
     const certId = document.createElement('div');
     certId.className = 'certificate-id';
     certId.textContent = `ID: ${uniqueId}`;
-    certId.style.marginBottom = '10px';
-    certId.style.fontFamily = 'monospace';
     certContainer.appendChild(certId);
     
     // 添加验证按钮
     const verifyButton = document.createElement('button');
     verifyButton.className = 'verify-button';
     verifyButton.textContent = '验证唯一凭证';
-    verifyButton.style.cssText = `
-        background: #268bd2;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 5px 10px;
-        cursor: pointer;
-        font-size: 0.8rem;
-    `;
     verifyButton.onclick = () => verifyArtwork(uniqueId, number, imgPath);
     certContainer.appendChild(verifyButton);
     
@@ -621,9 +726,14 @@ function addImageToGallery(imgPath, number) {
         certButton.textContent = isHidden ? '隐藏唯一凭证' : '显示唯一凭证';
     };
     
+    // 组装元素
+    buttonContainer.appendChild(wantButton);
+    buttonContainer.appendChild(certButton);
+    
     info.appendChild(title);
-    info.appendChild(certButton);
+    info.appendChild(buttonContainer);
     info.appendChild(certContainer);
+    
     item.appendChild(img);
     item.appendChild(info);
     gallery.appendChild(item);
