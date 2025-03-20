@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绘画 - 我的个人网站</title>
+    <title>绘画作品集 - 我的个人网站</title>
     <link rel="icon" type="image/x-icon" href="favicon_io (4)/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io (4)/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io (4)/favicon-32x32.png">
@@ -13,6 +13,7 @@
     <script src="backlinks.js"></script>
     <link rel="stylesheet" href="css/sidebar.css">
     <script src="js/sidebar.js"></script>
+    <script src="js/gallery.js"></script>
 </head>
 <body class="essays-page">
     <div class="layout">
@@ -34,22 +35,12 @@
         </nav>
         
         <main class="content">
-            <h1>绘画</h1>
+            <h1>我的绘画作品集</h1>
             
-            <p class="intro">这里展示我的艺术创作，包括AI辅助创作和生成艺术实验。每一幅作品都是技术与艺术的完美融合。</p>
+            <p class="intro">这里展示了我的个人绘画作品集。每一幅作品都配有唯一凭证，类似于NFT但不依赖区块链技术。您可以点击图片查看大图，也可以点击"显示唯一凭证"来查看和验证每幅作品的唯一性。</p>
             
-            <div class="article-category-section">
-                <div class="essays-list">
-                    <div class="essay-item">
-                        <a href="html/art/ai-art.html" class="essay-title">AI艺术探索</a>
-                        <span class="essay-date">2024-02-11</span>
-                    </div>
-                    
-                    <div class="essay-item">
-                        <a href="html/art/generative-art.html" class="essay-title">生成艺术作品集</a>
-                        <span class="essay-date">2024-02-11</span>
-                    </div>
-                </div>
+            <div class="gallery">
+                <!-- 图片将由gallery-loader.js自动加载 -->
             </div>
 
             <section class="backlinks">
@@ -58,5 +49,7 @@
             </section>
         </main>
     </div>
+    
+    <script src="js/gallery-loader.js"></script>
 </body>
 </html>
