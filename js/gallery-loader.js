@@ -7,40 +7,43 @@
 // 配置对象
 const config = {
     // 文件来源配置
-    sourceType: 'local',  // 'local' 或 'remote'
-    folderPath: 'finish',  // 本地图片文件夹路径
+    sourceType: 'static',  // 改为static模式
     
-    // 远程图床配置 (当sourceType为'remote'时使用)
-    remoteCDN: {
-        enabled: false,
-        baseUrl: 'https://yourdomain.com/images/',  // 替换为你的远程图床URL
-        fileList: []  // 可以在这里手动添加文件名列表，或者通过API获取
+    // 静态图片列表配置
+    staticImages: {
+        enabled: true,
+        images: [
+            // 在这里手动添加所有图片的信息
+            // { number: 1, path: 'finish/thumbnail_1.jpg' },
+            // { number: 2, path: 'finish/thumbnail_2.jpg' },
+            // 更多图片...
+        ]
     },
     
-    // 文件命名配置
-    filePrefix: 'thumbnail_',  // 文件名前缀
-    fileExt: '.jpg',  // 文件扩展名
+    // 远程图床配置
+    remoteCDN: {
+        enabled: false,
+        baseUrl: '',
+        fileList: []
+    },
     
     // 画廊配置
-    gallerySelector: '.gallery',  // 画廊容器选择器
-    maxAttempts: 2500,  // 最大尝试次数 (提高到2500以适应更多图片)
-    startFrom: 1,  // 起始编号
+    gallerySelector: '.gallery',
     
     // 分页配置
     pagination: {
-        enabled: true,  // 启用分页
-        itemsPerPage: 24,  // 每页显示的图片数量
-        currentPage: 1,  // 当前页码
-        paginationSelector: '.pagination'  // 分页控件选择器
+        enabled: true,
+        itemsPerPage: 24,
+        currentPage: 1
     },
     
     // 性能配置
-    batchSize: 10,  // 每批加载的图片数量
-    delay: 10,  // 批次间延迟（毫秒）(减少延迟提高加载速度)
+    batchSize: 10,
+    delay: 10,
     
     // 排序配置
-    sortMode: 'popular',  // 默认排序模式: 'popular', 'random', 'newest'
-    popularityWeight: 3,  // 受欢迎度权重系数（影响随机排序时的权重计算）
+    sortMode: 'popular',
+    popularityWeight: 3
 };
 
 // 全局变量
@@ -48,8 +51,8 @@ let allImagePaths = [];  // 存储所有找到的图片路径
 let totalImages = 0;  // 图片总数
 let wantedItems = {};  // 存储想要的作品数据 {imageNumber: wantCount}
 
-// 等待DOM加载完成
-document.addEventListener('DOMContentLoaded', function() {
+// 初始化函数
+function initGallery() {
     // 加载已保存的"想要"数据
     loadWantedData();
     
@@ -72,14 +75,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // 设置排序按钮事件
     setupSortButtons();
     
-    // 根据来源类型加载图片
-    if (config.sourceType === 'remote' && config.remoteCDN.enabled) {
-        loadRemoteImages();
-    } else {
-        // 开始加载图片
-        scanLocalImages();
+    // 自动生成图片列表（如果未手动配置）
+    if (config.staticImages.images.length === 0) {
+        generateImageList();
     }
-});
+    
+    // 加载图片
+    loadImages();
+}
+
+// 生成图片列表
+function generateImageList() {
+    // 这里可以根据实际情况设置图片数量
+    const totalImages = 100; // 假设有100张图片
+    
+    for (let i = 1; i <= totalImages; i++) {
+        config.staticImages.images.push({
+            number: i,
+            path: `finish/thumbnail_${i}.jpg`
+        });
+    }
+}
+
+// 加载图片
+function loadImages() {
+    allImagePaths = [...config.staticImages.images];
+    totalImages = allImagePaths.length;
+    
+    // 移除加载指示器
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.remove();
+    }
+    
+    // 对图片进行排序
+    sortAndDisplayImages();
+    
+    // 设置分页
+    if (config.pagination.enabled) {
+        setupPagination();
+    }
+}
+
+// 等待DOM加载完成后初始化
+document.addEventListener('DOMContentLoaded', initGallery);
 
 /**
  * 加载保存的"想要"数据
@@ -276,108 +315,6 @@ function showFullscreen(imgSrc) {
     const img = viewer.querySelector('img');
     img.src = imgSrc;
     viewer.style.display = 'flex';
-}
-
-/**
- * 扫描本地图片
- */
-function scanLocalImages() {
-    let currentNumber = config.startFrom;
-    let loadedCount = 0;
-    
-    function tryLoadImage() {
-        if (currentNumber > config.maxAttempts || loadedCount >= 2500) {  // 设置上限防止无限循环
-            // 完成扫描
-            totalImages = loadedCount;
-            
-            // 移除加载指示器
-            const loadingIndicator = document.querySelector('.loading-indicator');
-            if (loadingIndicator) loadingIndicator.remove();
-            
-            // 对图片进行排序
-            sortAndDisplayImages();
-            
-            // 设置分页
-            if (config.pagination.enabled) {
-                setupPagination();
-            }
-            
-            console.log(`图片扫描完成，共找到 ${loadedCount} 张图片`);
-            return;
-        }
-        
-        const fileName = `${config.filePrefix}${currentNumber}${config.fileExt}`;
-        const imgPath = `${config.folderPath}/${fileName}`;
-        
-        // 检查图片是否存在
-        checkImageExists(imgPath)
-            .then(exists => {
-                if (exists) {
-                    // 将找到的图片路径添加到数组
-                    allImagePaths.push({
-                        number: currentNumber,
-                        path: imgPath
-                    });
-                    loadedCount++;
-                    
-                    // 更新加载指示器
-                    const loadingText = document.querySelector('.loading-indicator p');
-                    if (loadingText) {
-                        loadingText.textContent = `正在加载图片，已找到 ${loadedCount} 张...`;
-                    }
-                }
-                
-                // 继续检查下一个编号
-                currentNumber++;
-                setTimeout(tryLoadImage, 0);
-            })
-            .catch(error => {
-                console.error(`检查图片 ${imgPath} 时出错:`, error);
-                currentNumber++;
-                setTimeout(tryLoadImage, 0);
-            });
-    }
-    
-    // 开始尝试加载图片
-    tryLoadImage();
-}
-
-/**
- * 加载远程图床上的图片
- */
-function loadRemoteImages() {
-    // 如果已有文件列表，直接使用
-    if (config.remoteCDN.fileList.length > 0) {
-        allImagePaths = config.remoteCDN.fileList.map((fileName, index) => {
-            return {
-                number: index + 1,
-                path: config.remoteCDN.baseUrl + fileName
-            };
-        });
-        
-        totalImages = allImagePaths.length;
-        
-        // 移除加载指示器
-        const loadingIndicator = document.querySelector('.loading-indicator');
-        if (loadingIndicator) loadingIndicator.remove();
-        
-        // 对图片进行排序
-        sortAndDisplayImages();
-        
-        // 设置分页
-        if (config.pagination.enabled) {
-            setupPagination();
-        }
-    } else {
-        // 如果需要，这里可以添加从远程API获取文件列表的逻辑
-        console.error('远程图床配置中没有文件列表');
-        
-        // 显示错误信息
-        const gallery = document.querySelector(config.gallerySelector);
-        if (gallery) {
-            gallery.innerHTML = '<p style="text-align: center; color: red;">无法加载远程图片，请检查配置</p>';
-        }
-    }
 }
 
 /**
