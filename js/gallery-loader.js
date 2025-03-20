@@ -87,7 +87,7 @@ function initGallery() {
 // 生成图片列表
 function generateImageList() {
     // 这里可以根据实际情况设置图片数量
-    const totalImages = 200; // 假设有100张图片
+    const totalImages = 2000; // 假设有100张图片
     
     for (let i = 1; i <= totalImages; i++) {
         config.staticImages.images.push({
