@@ -127,11 +127,16 @@
 <li>文字协议示例</li>
 </ol>
 <p>原始Efficode指令</p>
-<p>@DID:did:efficode:a1b2c3d4   </p>
+<ul>
+<li>@DID:did:efficode:a1b2c3d4   </li>
+<li>
 <h1>REQ:SENSOR?type=temperature</h1>
-<p>#COMPRESS:zstd<br />
+</li>
+<li>
+<h1>COMPRESS:zstd</h1>
  !SEND
-翻译为中文（仅示意，实际无需自然语言）</p>
+翻译为中文（仅示意，实际无需自然语言）</li>
+</ul>
 <p>身份：did:efficode:a1b2c3d4  </p>
 <p>请求传感器数据?类型=温度<br />
 压缩算法：zstd<br />
@@ -156,24 +161,23 @@
 <p>AI-B接收</p>
 </li>
 </ol>
-<p>@DID
+<p>`@DID
 指令后，从区块链查询</p>
 <p>did:efficode:a1b2c3d4</p>
-<p>的公钥，验证签名合法性。</p>
+<p>的公钥，验证签名合法性。`</p>
 <ol>
 <li>指令执行</li>
 </ol>
-<p>解析</p>
-<h1>REQ:SENSOR?type=temperature</h1>
-<p>提取传感器类型为温度。
+<p>解析
+- #REQ:SENSOR?type=temperature
+提取传感器类型为温度。
 3. 数据压缩与响应</p>
-<pre><code>AI-B用Zstandard算法压缩数据（压缩率85%），返回格式：
-</code></pre>
-<p>Plaintext
-  @DID:did:efficode:x5y6z7<br />
+<p>` AI-B用Zstandard算法压缩数据（压缩率85%），返回格式：</p>
+<p>@DID:did:efficode:x5y6z7<br />
   #DATA:temperature=26.5°C <br />
   #CHECKSUM:89A2C1 <br />
-  !END</p>
+  !END
+`</p>
 <p>为什么这是第一性原理的终极形态？</p>
 <p>消灭冗余：用#REQ替代“Please send me data”，信息密度提升20倍；</p>
 <p>消灭延迟：自解压数据块+硬解码芯片，解析时间从毫秒级降至微秒级；</p>

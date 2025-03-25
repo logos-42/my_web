@@ -114,9 +114,9 @@ did:efficode:<hash>
 
 原始Efficode指令
 
-@DID:did:efficode:a1b2c3d4   
-#REQ:SENSOR?type=temperature  
- #COMPRESS:zstd  
+- @DID:did:efficode:a1b2c3d4   
+- #REQ:SENSOR?type=temperature  
+- #COMPRESS:zstd  
  !SEND
 翻译为中文（仅示意，实际无需自然语言）
 
@@ -153,28 +153,27 @@ did:efficode:<hash>
 
     AI-B接收
 
-@DID
+`@DID
 指令后，从区块链查询
 
 did:efficode:a1b2c3d4
 
-的公钥，验证签名合法性。
+的公钥，验证签名合法性。`
 
 2. 指令执行
 
 解析
-#REQ:SENSOR?type=temperature
+- #REQ:SENSOR?type=temperature
 提取传感器类型为温度。
 3. 数据压缩与响应
 
-    AI-B用Zstandard算法压缩数据（压缩率85%），返回格式：
+` AI-B用Zstandard算法压缩数据（压缩率85%），返回格式：
 
-Plaintext
   @DID:did:efficode:x5y6z7  
   #DATA:temperature=26.5°C   
   #CHECKSUM:89A2C1   
   !END
-
+`
 
 
 
