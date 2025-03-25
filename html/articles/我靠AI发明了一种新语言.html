@@ -126,17 +126,12 @@
 <ol>
 <li>文字协议示例</li>
 </ol>
-<p>原始Efficode指令</p>
-<ul>
-<li>@DID:did:efficode:a1b2c3d4   </li>
-<li>
-<h1>REQ:SENSOR?type=temperature</h1>
-</li>
-<li>
-<h1>COMPRESS:zstd</h1>
- !SEND
-翻译为中文（仅示意，实际无需自然语言）</li>
-</ul>
+<p>原始Efficode指令
+<code>- @DID:did:efficode:a1b2c3d4   
+- #REQ:SENSOR?type=temperature  
+- #COMPRESS:zstd  
+ !SEND</code>
+翻译为中文（仅示意，实际无需自然语言）</p>
 <p>身份：did:efficode:a1b2c3d4  </p>
 <p>请求传感器数据?类型=温度<br />
 压缩算法：zstd<br />

@@ -113,11 +113,12 @@ did:efficode:<hash>
 1. 文字协议示例
 
 原始Efficode指令
-
+`
 - @DID:did:efficode:a1b2c3d4   
 - #REQ:SENSOR?type=temperature  
 - #COMPRESS:zstd  
  !SEND
+ `
 翻译为中文（仅示意，实际无需自然语言）
 
 身份：did:efficode:a1b2c3d4  
