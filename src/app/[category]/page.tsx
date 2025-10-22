@@ -28,6 +28,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   const categoryNames: Record<string, string> = {
     articles: '文章',
+    essays: '随笔',
     philosophy: '哲科',
     music: '音乐',
     blogs: '博客',

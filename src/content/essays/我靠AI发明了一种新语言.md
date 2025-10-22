@@ -1,7 +1,7 @@
 ---
 title: 我靠AI发明了一种新语言
 date: 2025-03-1
-category: articles
+category: essays
 tags: [自动化, 语言, AI]
 ---
 

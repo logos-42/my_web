@@ -58,7 +58,7 @@ export function getAllArticles(): Article[] {
             slug,
             title: data.title || slug,
             date: data.date || new Date().toISOString().split('T')[0],
-            category, // 使用目录名作为category，确保路由正确
+            category: data.category || category, // 优先使用文件中的category，否则使用目录名
             content,
             excerpt,
             htmlContent

@@ -1,7 +1,7 @@
 ---
 title: 生成艺术作品集
 date: 2024-02-11
-category: 数字艺术
+category: articles
 ---
 
 # 生成艺术作品集

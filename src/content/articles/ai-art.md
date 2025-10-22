@@ -1,7 +1,7 @@
 ---
 title: AI艺术探索
 date: 2024-02-11
-category: 数字艺术
+category: articles
 ---
 
 # AI艺术探索

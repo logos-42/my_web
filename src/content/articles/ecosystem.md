@@ -1,7 +1,7 @@
 ---
 title: 生态系统思维
 date: 2024-12-10
-category: 生活感悟
+category: articles
 ---
 
 # 生态系统思维
