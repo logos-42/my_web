@@ -4,10 +4,8 @@ const nextConfig = {
     domains: ['localhost'],
     unoptimized: true
   },
-  // 静态导出配置，适合GitHub Pages部署
-  output: 'export',
-  trailingSlash: true,
-  distDir: 'dist'
+  // 移除静态导出配置，使用标准Next.js构建
+  trailingSlash: true
 };
 
 module.exports = nextConfig;
