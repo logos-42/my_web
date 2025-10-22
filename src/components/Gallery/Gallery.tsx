@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { GalleryImage, sortImages, getPaginatedImages, generateUniqueId, verifyArtwork } from '@/lib/gallery';
-import { trackGalleryEvent } from '@/lib/analytics';
+import { GalleryImage, sortImages, getPaginatedImages, generateUniqueId, verifyArtwork } from '../../lib/gallery';
+import { trackGalleryEvent } from '../../lib/analytics';
 
 interface GalleryProps {
   totalImages?: number;

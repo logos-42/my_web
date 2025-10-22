@@ -7,7 +7,11 @@ const nextConfig = {
   // 为GitHub Pages启用静态导出
   output: 'export',
   trailingSlash: true,
-  distDir: 'out'
+  distDir: 'out',
+  // 确保路径解析正常工作
+  experimental: {
+    esmExternals: false
+  }
 };
 
 module.exports = nextConfig;
