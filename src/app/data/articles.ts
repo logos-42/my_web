@@ -4,6 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
+import pinyin from 'pinyin';
 
 export interface Article {
   slug: string;
@@ -20,12 +21,13 @@ export interface ArticleMetadata {
   date: string;
   excerpt?: string;
   category?: string;
+  slug?: string; // 自定义slug字段
 }
 
 // 将中文字符转换为URL友好的slug
 function convertChineseToSlug(chineseText: string): string {
-  // 中文到英文的映射表
-  const chineseToEnglish: Record<string, string> = {
+  // 自定义映射表（用于特殊情况的覆盖）
+  const customMappings: Record<string, string> = {
     '财富的本质': 'essence-of-wealth',
     '我靠AI发明了一种新语言': 'ai-invented-language',
     '恭喜避免浪费时间': 'avoid-wasting-time',
@@ -41,34 +43,35 @@ function convertChineseToSlug(chineseText: string): string {
     '项目展示': 'project-showcase'
   };
   
-  // 如果找到映射，使用映射值
-  if (chineseToEnglish[chineseText]) {
-    return chineseToEnglish[chineseText];
+  // 如果找到自定义映射，使用自定义映射值
+  if (customMappings[chineseText]) {
+    return customMappings[chineseText];
   }
   
-  // 否则，将中文字符转换为拼音（简化版本）
-  return chineseText
-    .replace(/[\u4e00-\u9fff]/g, (char) => {
-      // 这里可以集成拼音库，暂时使用简单的映射
-      const pinyinMap: Record<string, string> = {
-        '财': 'cai', '富': 'fu', '的': 'de', '本': 'ben', '质': 'zhi',
-        '我': 'wo', '靠': 'kao', '发': 'fa', '明': 'ming', '了': 'le', '一': 'yi', '种': 'zhong', '新': 'xin', '语': 'yu', '言': 'yan',
-        '恭': 'gong', '喜': 'xi', '避': 'bi', '免': 'mian', '浪': 'lang', '费': 'fei', '时': 'shi', '间': 'jian',
-        '超': 'chao', '越': 'yue', '工': 'gong', '具': 'ju', '思': 'si', '维': 'wei', '范': 'fan', '式': 'shi',
-        '异': 'yi', '世': 'shi', '界': 'jie', '夺': 'duo', '舍': 'she', '指': 'zhi', '南': 'nan',
-        '复': 'fu', '杂': 'za', '科': 'ke', '学': 'xue', '导': 'dao', '论': 'lun',
-        '算': 'suan', '法': 'fa', '作': 'zuo', '曲': 'qu', '实': 'shi', '验': 'yan',
-        '电': 'dian', '子': 'zi', '音': 'yin', '乐': 'yue', '作': 'zuo', '品': 'pin', '集': 'ji',
-        '生': 'sheng', '态': 'tai', '系': 'xi', '统': 'tong', '思': 'si', '维': 'wei',
-        '艺': 'yi', '术': 'shu', '探': 'tan', '索': 'suo',
-        '博': 'bo', '客': 'ke', '文': 'wen', '章': 'zhang',
-        '项': 'xiang', '目': 'mu', '展': 'zhan', '示': 'shi'
-      };
-      return pinyinMap[char] || char;
-    })
-    .replace(/[^a-zA-Z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+  // 使用拼音库自动转换中文
+  try {
+    const pinyinArray = pinyin(chineseText, {
+      style: pinyin.STYLE_NORMAL, // 不带声调
+      heteronym: false, // 不启用多音字模式
+    });
+    
+    const slug = pinyinArray
+      .map(item => item[0]) // 取第一个拼音
+      .join('-')
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9-]/g, '-') // 移除特殊字符
+      .replace(/-+/g, '-') // 合并多个连字符
+      .replace(/^-|-$/g, ''); // 移除首尾连字符
+    
+    return slug;
+  } catch (error) {
+    // 如果拼音转换失败，使用简单的字符替换
+    console.warn('拼音转换失败，使用备用方案:', error);
+    return chineseText
+      .replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
 }
 
 // 获取所有文章
@@ -88,12 +91,13 @@ export function getAllArticles(): Article[] {
       files.forEach(file => {
         if (file.endsWith('.md')) {
           const originalSlug = file.replace('.md', '');
-          // 将中文字符转换为拼音或英文标识符
-          const slug = convertChineseToSlug(originalSlug);
           const filePath = path.join(categoryDir, file);
           const fileContent = fs.readFileSync(filePath, 'utf8');
           
           const { data, content } = matter(fileContent);
+          
+          // 优先使用frontmatter中的自定义slug，否则自动生成
+          const slug = data.slug || convertChineseToSlug(originalSlug);
           
           // 处理Markdown转HTML
           const processedContent = remark()
