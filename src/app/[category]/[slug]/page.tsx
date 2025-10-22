@@ -1,6 +1,7 @@
-import { getArticleBySlug, getAllArticles } from '@/lib/markdown';
+
+import { getArticleBySlug, getAllArticles } from '../../../lib/markdown';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import { notFound } from 'next/navigation';
-import Sidebar from '@/components/Sidebar/Sidebar';
 
 interface ArticlePageProps {
   params: {
