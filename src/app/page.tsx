@@ -1,4 +1,4 @@
-import { getAllArticles } from '../lib/markdown';
+import { getAllArticles } from './data/articles';
 import ArticleList from '../components/ArticleList/ArticleList';
 import Sidebar from '../components/Sidebar/Sidebar';
 

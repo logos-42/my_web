@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Article } from '../../lib/markdown';
+import { Article } from '../../app/data/articles';
 import { format } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 

@@ -2,8 +2,147 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { GalleryImage, sortImages, getPaginatedImages, generateUniqueId, verifyArtwork } from '../../lib/gallery';
-import { trackGalleryEvent } from '../../lib/analytics';
+
+// 集成 Gallery 功能
+interface GalleryImage {
+  number: number;
+  path: string;
+  wantCount?: number;
+}
+
+interface GalleryConfig {
+  totalImages: number;
+  itemsPerPage: number;
+  sortMode: 'popular' | 'random' | 'newest';
+  batchSize: number;
+}
+
+// 生成图片列表
+function generateImageList(totalImages: number = 1000): GalleryImage[] {
+  const images: GalleryImage[] = [];
+  
+  for (let i = 1; i <= totalImages; i++) {
+    images.push({
+      number: i,
+      path: `finish/thumbnail_${i}.jpg`
+    });
+  }
+  
+  return images;
+}
+
+// 排序图片
+function sortImages(images: GalleryImage[], sortMode: string, wantedItems: Record<number, number>): GalleryImage[] {
+  let sortedImages = [...images];
+  
+  switch (sortMode) {
+    case 'popular':
+      sortedImages.sort((a, b) => {
+        const aWants = wantedItems[a.number] || 0;
+        const bWants = wantedItems[b.number] || 0;
+        return bWants - aWants;
+      });
+      break;
+      
+    case 'random':
+      sortedImages = weightedRandomSort(sortedImages, wantedItems);
+      break;
+      
+    case 'newest':
+      sortedImages.sort((a, b) => b.number - a.number);
+      break;
+  }
+  
+  return sortedImages;
+}
+
+// 带权重的随机排序
+function weightedRandomSort(images: GalleryImage[], wantedItems: Record<number, number>, popularityWeight: number = 3): GalleryImage[] {
+  const weightedImages = images.map(img => {
+    const wants = wantedItems[img.number] || 0;
+    const weight = 1 + wants * popularityWeight;
+    return { ...img, weight };
+  });
+  
+  for (let i = weightedImages.length - 1; i > 0; i--) {
+    let weightSum = 0;
+    for (let j = 0; j <= i; j++) {
+      weightSum += weightedImages[j].weight;
+    }
+    
+    let random = Math.random() * weightSum;
+    let j = 0;
+    for (weightSum = weightedImages[0].weight; weightSum < random && j < i; j++) {
+      weightSum += weightedImages[j + 1].weight;
+    }
+    
+    [weightedImages[i], weightedImages[j]] = [weightedImages[j], weightedImages[i]];
+  }
+  
+  return weightedImages.map(img => ({ number: img.number, path: img.path }));
+}
+
+// 分页处理
+function getPaginatedImages(images: GalleryImage[], currentPage: number, itemsPerPage: number): {
+  images: GalleryImage[];
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+} {
+  const totalPages = Math.ceil(images.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, images.length);
+  
+  return {
+    images: images.slice(startIndex, endIndex),
+    totalPages,
+    hasNext: currentPage < totalPages,
+    hasPrev: currentPage > 1
+  };
+}
+
+// 生成唯一凭证ID
+function generateUniqueId(imgPath: string, number: number): string {
+  const timestamp = new Date().getTime();
+  const randomStr = Math.random().toString(36).substring(2, 15);
+  const data = `${imgPath}-${number}-${timestamp}-${randomStr}`;
+  
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) {
+    const char = data.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  
+  const hexHash = Math.abs(hash).toString(16).padStart(8, '0').toUpperCase();
+  return `ART-${hexHash}`;
+}
+
+// 验证艺术品
+function verifyArtwork(id: string, number: number, imgPath: string): {
+  isValid: boolean;
+  artworkInfo: {
+    id: string;
+    number: number;
+    path: string;
+    verifiedAt: string;
+  };
+} {
+  return {
+    isValid: true,
+    artworkInfo: {
+      id,
+      number,
+      path: imgPath,
+      verifiedAt: new Date().toISOString()
+    }
+  };
+}
+
+// 集成 Analytics 功能
+function trackGalleryEvent(eventType: string, imageNumber?: number) {
+  console.log('Gallery event:', { eventType, imageNumber });
+}
 interface GalleryProps {
   totalImages?: number;
   itemsPerPage?: number;

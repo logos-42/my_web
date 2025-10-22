@@ -1,5 +1,5 @@
 
-import { getArticleBySlug, getAllArticles } from '../../../lib/markdown';
+import { getArticleBySlug, getAllArticles } from '../../data/articles';
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import { notFound } from 'next/navigation';
 
