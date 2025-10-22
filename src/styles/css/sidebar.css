@@ -88,31 +88,36 @@
 
 /* 内容区域样式 */
 .content {
-    margin-left: 320px;
+    margin-left: 280px;
     padding: 40px;
-    transition: none;
+    transition: margin-left 0.3s ease;
 }
 
 .sidebar.collapsed ~ .content {
-    margin-left: 320px;
+    margin-left: 0;
 }
 
 /* 移动设备适配 */
 @media (max-width: 768px) {
     .content {
-        margin-left: 40px;
+        margin-left: 0;
         padding: 20px;
     }
     
     .sidebar.collapsed ~ .content {
-        margin-left: 40px;
+        margin-left: 0;
     }
     
     .sidebar {
-        transform: translateX(-280px);
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        transform: none;
     }
     
     .sidebar:not(.collapsed) {
-        transform: translateX(0);
+        transform: none;
     }
 }
