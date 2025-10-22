@@ -100,5 +100,4 @@ function addLink(sourcePage, targetPage) {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     initBacklinks();
-    showBacklinks();
 }); 
