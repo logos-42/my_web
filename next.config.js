@@ -7,7 +7,7 @@ const nextConfig = {
     unoptimized: true
   },
   // 移除静态导出配置，使用标准Next.js构建
-  trailingSlash: true,
+  trailingSlash: false,
   webpack: (config) => {
     // 配置 Webpack 别名，确保 @/ 路径在所有环境下都能正确解析
     config.resolve.alias = {

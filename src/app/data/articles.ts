@@ -28,7 +28,7 @@ export function getAllArticles(): Article[] {
   const articles: Article[] = [];
 
   // 遍历所有分类目录
-  const categories = ['articles', 'philosophy', 'music', 'blogs', 'projects'];
+  const categories = ['articles', 'essays', 'philosophy', 'music', 'blogs', 'projects'];
   
   categories.forEach(category => {
     const categoryDir = path.join(contentDir, category);
@@ -58,7 +58,7 @@ export function getAllArticles(): Article[] {
             slug,
             title: data.title || slug,
             date: data.date || new Date().toISOString().split('T')[0],
-            category: data.category || category, // 优先使用文件中的category，否则使用目录名
+            category, // 使用目录名作为category，确保路由正确
             content,
             excerpt,
             htmlContent
