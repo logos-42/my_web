@@ -1,4 +1,4 @@
-import { getAllArticles } from '../../../lib/markdown';
+import { getAllArticles } from '@/lib/markdown';
 
 export async function GET() {
   try {

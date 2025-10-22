@@ -1,7 +1,7 @@
-import { getArticlesByCategory, getAllCategories } from '../../lib/markdown';
+import { getArticlesByCategory, getAllCategories } from '@/lib/markdown';
 import { notFound } from 'next/navigation';
-import ArticleList from '../../components/ArticleList/ArticleList';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import ArticleList from '@/components/ArticleList/ArticleList';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 interface CategoryPageProps {
   params: {
