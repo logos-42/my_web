@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘画作品集 - 我的个人网站</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io (4)/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io (4)/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io (4)/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io (4)/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io (4)/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="backlinks.js"></script>
+    <link rel="stylesheet" href="css/sidebar.css">
+    <script src="js/sidebar.js"></script>
+</head>
+<body class="essays-page">
+    <div class="layout">
+        <nav class="sidebar">
+            <button class="sidebar-toggle" aria-label="切换侧边栏">
+                <span class="toggle-icon"></span>
+            </button>
+
+            <div class="nav-section">
+                <div class="nav-item"><a href="index.html">首页</a></div>
+                <div class="nav-item"><a href="essays.html">文章</a></div>
+                <div class="nav-item"><a href="blog.html">博客</a></div>
+                <div class="nav-item"><a href="projects.html">新奇项目</a></div>
+                <div class="nav-item"><a href="philosophy.html">哲科</a></div>
+                <div class="nav-item"><a href="music.html">音乐</a></div>
+                <div class="nav-item"><a href="art.html" class="active">绘画</a></div>
+                <div class="nav-item"><a href="wechat.html">公众号</a></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <h1>我的绘画作品集</h1>
+            
+            <p class="intro">这里展示了我的个人绘画作品集。每一幅作品都配有唯一凭证，类似于NFT但不依赖区块链技术。您可以点击图片查看大图，点击"想要"为您喜欢的作品投票，或点击"显示唯一凭证"查看作品的唯一性凭证。</p>
+            
+            <div class="gallery-controls">
+                <div class="sort-controls">
+                    <button class="sort-button active" data-sort="popular">按受欢迎度</button>
+                    <button class="sort-button" data-sort="random">随机排序</button>
+                    <button class="sort-button" data-sort="newest">最新作品</button>
+                </div>
+            </div>
+            
+            <div class="gallery">
+                <!-- 图片将由gallery-loader.js自动加载 -->
+            </div>
+
+            <section class="backlinks">
+                <h3>反向链接</h3>
+                <ul id="backlinks-list"></ul>
+            </section>
+        </main>
+    </div>
+    
+    <script src="js/gallery.js"></script>
+    <script src="js/gallery-loader.js"></script>
+</body>
+</html>

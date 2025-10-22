@@ -1,0 +1,49 @@
+{
+    "articles": [
+        {
+            "title": "技术演化规律",
+            "path": "markdown/articles/tech-evolution.md",
+            "date": "2025-01-15"
+        },
+        {
+            "title": "生态系统思维",
+            "path": "markdown/articles/ecosystem.md",
+            "date": "2024-12-10"
+        },
+        {
+            "title": "编程的乐趣",
+            "path": "markdown/articles/programming-joy.md",
+            "date": "2024-11-15"
+        },
+        {
+            "title": "写作与思考",
+            "path": "markdown/articles/writing-thinking.md",
+            "date": "2024-10-05"
+        },
+        {
+            "title": "学习技术的方法",
+            "path": "markdown/articles/learning-tech.md",
+            "date": "2024-09-20"
+        },
+        {
+            "title": "技术选择的艺术",
+            "path": "markdown/articles/tech-choice.md",
+            "date": "2024-08-25"
+        },
+        {
+            "title": "测试Markdown工作流",
+            "path": "markdown/blogs/test-workflow.md",
+            "date": "2024-03-15"
+        },
+        {
+            "title": "我的第一篇文章",
+            "path": "markdown/articles/article1.md",
+            "date": "2024-02-11"
+        },
+        {
+            "title": "恭喜避免浪费时间",
+            "path": "markdown/articles/恭喜避免浪费时间.md",
+            "date": "2024-01-01"
+        }
+    ]
+} 
