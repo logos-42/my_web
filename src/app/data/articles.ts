@@ -1,4 +1,9 @@
 // 文章数据和工具函数
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { remark } from 'remark';
+import remarkHtml from 'remark-html';
 
 export interface Article {
   slug: string;
@@ -19,63 +24,49 @@ export interface ArticleMetadata {
 
 // 获取所有文章
 export function getAllArticles(): Article[] {
-  // 在构建时使用静态数据，避免文件系统操作
-  const articles: Article[] = [
-    {
-      slug: '财富的本质',
-      title: '财富的本质',
-      date: '2025-03-26',
-      category: 'articles',
-      content: '# 财富的本质\n\n财富不仅仅是金钱...',
-      excerpt: '财富不仅仅是金钱，更是一种思维方式和价值观念。',
-      htmlContent: '<h1>财富的本质</h1><p>财富不仅仅是金钱...</p>'
-    },
-    {
-      slug: '我靠AI发明了一种新语言',
-      title: '我靠AI发明了一种新语言',
-      date: '2025-03-25',
-      category: 'articles',
-      content: '# 我靠AI发明了一种新语言\n\n通过AI的帮助...',
-      excerpt: '通过AI的帮助，我创造了一种全新的语言系统。',
-      htmlContent: '<h1>我靠AI发明了一种新语言</h1><p>通过AI的帮助...</p>'
-    },
-    {
-      slug: '恭喜避免浪费时间',
-      title: '恭喜避免浪费时间',
-      date: '2025-03-24',
-      category: 'articles',
-      content: '# 恭喜避免浪费时间\n\n时间管理的重要性...',
-      excerpt: '时间管理是成功的关键因素之一。',
-      htmlContent: '<h1>恭喜避免浪费时间</h1><p>时间管理的重要性...</p>'
-    },
-    {
-      slug: 'ai-art',
-      title: 'AI艺术',
-      date: '2025-03-23',
-      category: 'articles',
-      content: '# AI艺术\n\n人工智能在艺术创作中的应用...',
-      excerpt: '探索AI在艺术创作中的无限可能。',
-      htmlContent: '<h1>AI艺术</h1><p>人工智能在艺术创作中的应用...</p>'
-    },
-    {
-      slug: 'ecosystem',
-      title: '生态系统',
-      date: '2025-03-22',
-      category: 'articles',
-      content: '# 生态系统\n\n生态系统的平衡与保护...',
-      excerpt: '了解生态系统的重要性及其保护方法。',
-      htmlContent: '<h1>生态系统</h1><p>生态系统的平衡与保护...</p>'
-    },
-    {
-      slug: 'generative-art',
-      title: '生成艺术',
-      date: '2025-03-21',
-      category: 'articles',
-      content: '# 生成艺术\n\n算法生成的艺术作品...',
-      excerpt: '探索算法如何创造独特的艺术作品。',
-      htmlContent: '<h1>生成艺术</h1><p>算法生成的艺术作品...</p>'
+  const contentDir = path.join(process.cwd(), 'src/content');
+  const articles: Article[] = [];
+
+  // 遍历所有分类目录
+  const categories = ['articles', 'philosophy', 'music', 'blogs', 'projects'];
+  
+  categories.forEach(category => {
+    const categoryDir = path.join(contentDir, category);
+    
+    if (fs.existsSync(categoryDir)) {
+      const files = fs.readdirSync(categoryDir);
+      
+      files.forEach(file => {
+        if (file.endsWith('.md')) {
+          const slug = file.replace('.md', '');
+          const filePath = path.join(categoryDir, file);
+          const fileContent = fs.readFileSync(filePath, 'utf8');
+          
+          const { data, content } = matter(fileContent);
+          
+          // 处理Markdown转HTML
+          const processedContent = remark()
+            .use(remarkHtml)
+            .processSync(content);
+          
+          const htmlContent = processedContent.toString();
+          
+          // 生成摘要（取前150个字符）
+          const excerpt = content.replace(/[#*`]/g, '').substring(0, 150) + '...';
+          
+          articles.push({
+            slug,
+            title: data.title || slug,
+            date: data.date || new Date().toISOString().split('T')[0],
+            category,
+            content,
+            excerpt,
+            htmlContent
+          });
+        }
+      });
     }
-  ];
+  });
   
   return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
