@@ -1,6 +1,6 @@
 
-import { getArticleBySlug, getAllArticles } from '../../data/articles';
-import Sidebar from '../../../components/Sidebar/Sidebar';
+import { getArticleBySlug, getAllArticles } from '@/app/data/articles';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import { notFound } from 'next/navigation';
 
 interface ArticlePageProps {

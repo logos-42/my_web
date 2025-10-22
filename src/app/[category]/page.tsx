@@ -1,7 +1,7 @@
 
-import { getArticlesByCategory, getAllCategories } from '../data/articles';
-import ArticleList from '../../components/ArticleList/ArticleList';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import { getArticlesByCategory, getAllCategories } from '@/app/data/articles';
+import ArticleList from '@/components/ArticleList/ArticleList';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import { notFound } from 'next/navigation';
 
 

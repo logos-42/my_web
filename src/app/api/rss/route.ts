@@ -1,4 +1,4 @@
-import { getAllArticles } from '../../data/articles';
+import { getAllArticles } from '@/app/data/articles';
 
 export async function GET() {
   try {

@@ -1,6 +1,6 @@
-import { getAllArticles } from './data/articles';
-import ArticleList from '../components/ArticleList/ArticleList';
-import Sidebar from '../components/Sidebar/Sidebar';
+import { getAllArticles } from '@/app/data/articles';
+import ArticleList from '@/components/ArticleList/ArticleList';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 export default function HomePage() {
   const articles = getAllArticles();

@@ -1,6 +1,6 @@
-import { getArticlesByCategory } from '../data/articles';
-import ArticleList from '../../components/ArticleList/ArticleList';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import { getArticlesByCategory } from '@/app/data/articles';
+import ArticleList from '@/components/ArticleList/ArticleList';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 export default function PhilosophyPage() {
   const articles = getArticlesByCategory('philosophy');
