@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import GoogleAnalytics from '@/components/SEO/GoogleAnalytics'
 
 export const metadata: Metadata = {
   title: '我的个人网站',
@@ -31,7 +30,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png" />
         <link rel="manifest" href="/favicon_io/site.webmanifest" />
-        <GoogleAnalytics />
       </head>
       <body>
         {children}
