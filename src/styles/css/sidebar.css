@@ -49,19 +49,19 @@
 }
 
 /* 侧边栏展开时的按钮样式 */
-.sidebar:not(.collapsed) ~ .sidebar-toggle {
-    right: 280px;
+.sidebar:not(.collapsed) .sidebar-toggle {
+    right: 20px;
 }
 
-.sidebar:not(.collapsed) ~ .sidebar-toggle .toggle-icon {
+.sidebar:not(.collapsed) .toggle-icon {
     background-color: transparent;
 }
 
-.sidebar:not(.collapsed) ~ .sidebar-toggle .toggle-icon::before {
+.sidebar:not(.collapsed) .toggle-icon::before {
     transform: rotate(45deg);
 }
 
-.sidebar:not(.collapsed) ~ .sidebar-toggle .toggle-icon::after {
+.sidebar:not(.collapsed) .toggle-icon::after {
     transform: rotate(-45deg);
 }
 
@@ -87,14 +87,20 @@
 }
 
 /* 内容区域样式 */
-.content {
-    margin-left: 280px;
-    padding: 40px;
+.layout {
     transition: margin-left 0.3s ease;
 }
 
-.sidebar.collapsed ~ .content {
+.layout:not(.sidebar-collapsed) .content {
+    margin-left: 280px;
+}
+
+.layout.sidebar-collapsed .content {
     margin-left: 0;
+}
+
+.content {
+    padding: 40px;
 }
 
 /* 移动设备适配 */
@@ -121,3 +127,4 @@
         transform: none;
     }
 }
+

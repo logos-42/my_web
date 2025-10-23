@@ -11,33 +11,29 @@ export default function HomePage() {
         <Sidebar />
         
         <main className="content">
-          <h1>欢迎来到我的个人网站</h1>
-          <p className="intro">
-            这里是我记录思考、分享知识的地方。在这里，你可以找到我关于技术、艺术、哲学等多个领域的思考和创作。
-          </p>
+          <div className="hero-section">
+            <div className="hero-content">
+              <div className="avatar-container">
+                <img 
+                  src="/images/liuyuanjie.png" 
+                  alt="个人头像" 
+                  className="avatar"
+                />
+              </div>
+              <div className="hero-text">
+                <h1>欢迎来到我的个人网站</h1>
+                <p className="intro">
+                  这里是我记录思考、分享知识的地方。在这里，你可以找到我关于技术、艺术、哲学等多个领域的思考和创作。
+                </p>
+              </div>
+            </div>
+          </div>
           
           <div className="article-category-section">
             <h2>最新文章</h2>
             <ArticleList articles={articles} limit={10} />
           </div>
           
-          <div className="social-section">
-            <h2>关注我</h2>
-            <div className="social-content">
-              <div className="social-item">
-                <h3>公众号</h3>
-                <div className="qrcode">
-                  <img src="/images/wechat-qrcode.jpg" alt="公众号二维码" width="200" height="200" />
-                </div>
-              </div>
-              <div className="social-item">
-                <h3>知识星球</h3>
-                <div className="qrcode">
-                  <img src="/images/zsxq-qrcode.jpg" alt="知识星球二维码" width="200" height="200" />
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div className="links-section">
             <h2>我的其他平台</h2>

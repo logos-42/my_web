@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -11,6 +11,18 @@ export default function Sidebar() {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  // 更新body的class来控制布局
+  useEffect(() => {
+    const layout = document.querySelector('.layout');
+    if (layout) {
+      if (isCollapsed) {
+        layout.classList.add('sidebar-collapsed');
+      } else {
+        layout.classList.remove('sidebar-collapsed');
+      }
+    }
+  }, [isCollapsed]);
 
   const navItems = [
     { href: '/', label: '首页' },
