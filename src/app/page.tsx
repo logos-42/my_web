@@ -60,14 +60,22 @@ export default function HomePage() {
                 </a>
               </div>
               <div className="link-item">
-                <h3>Mirror</h3>
+                <h3>paragraph</h3>
                 <p>深度文章和Web3内容</p>
-                <a href="https://mirror.xyz/0xb4e9dCF79055A8232670ebb1c8c664Dff4E70066" target="_blank" rel="noopener noreferrer" className="platform-link">
-                  查看我的Mirror
+                <a href="https://paragraph.com/dashboard/@logos-42" target="_blank" rel="noopener noreferrer" className="platform-link">
+                  查看我的paragraph
                 </a>
               </div>
             </div>
           </div>
+
+          <section className="subscribe-section">
+            <h3>订阅更新</h3>
+            <p>点击下方链接订阅最新文章推送</p>
+            <a href="mailto:your-email@example.com?subject=订阅更新" className="subscribe-link">
+              订阅最新文章
+            </a>
+          </section>
 
           <section className="backlinks">
             <h3>反向链接</h3>

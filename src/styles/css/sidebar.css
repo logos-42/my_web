@@ -1,13 +1,13 @@
 /* 侧边栏切换按钮样式 */
 .sidebar-toggle {
     position: fixed;
-    right: 0;
+    left: 280px;
     top: 20px;
     width: 32px;
     height: 32px;
     background: rgba(0, 0, 0, 0.6);
     border: none;
-    border-radius: 4px 0 0 4px;
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
     padding: 6px;
     display: flex;
@@ -15,6 +15,13 @@
     justify-content: center;
     z-index: 1001;
     transition: all 0.3s ease;
+}
+
+/* 侧边栏收起时按钮位置 - 始终显示在左侧边缘 */
+.sidebar.collapsed ~ .sidebar-toggle,
+.sidebar.collapsed + .sidebar-toggle,
+.sidebar-toggle {
+    left: 0;
 }
 
 .sidebar-toggle:hover {

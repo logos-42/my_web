@@ -26,9 +26,10 @@ export default function Sidebar() {
 
   const navItems = [
     { href: '/', label: '首页' },
-    { href: '/essays', label: '文章' },
+    { href: '/essays', label: '随笔' },
     { href: '/blog', label: '博客' },
     { href: '/projects', label: '新奇项目' },
+    { href: '/articles', label: '文章' },
     { href: '/philosophy', label: '哲科' },
     { href: '/music', label: '音乐' },
     { href: '/art', label: '绘画' },

@@ -1,5 +1,5 @@
 ---
-title: 博客文章
+title: 精选文章
 date: 2025-01-01
 category: blogs
 ---
