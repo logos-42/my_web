@@ -42,9 +42,13 @@ export default function Sidebar() {
         <button 
           className="sidebar-toggle" 
           onClick={toggleSidebar}
-          aria-label="切换侧边栏"
+          aria-label={isCollapsed ? "展开侧边栏" : "收起侧边栏"}
         >
-          <span className="toggle-icon"></span>
+          <img 
+            src={isCollapsed ? "/images/方向-收缩-右.png" : "/images/方向-收缩-左.png"} 
+            alt={isCollapsed ? "展开" : "收起"}
+            className="toggle-arrow"
+          />
         </button>
 
         <div className="nav-section">

@@ -1,15 +1,15 @@
 /* 侧边栏切换按钮样式 */
 .sidebar-toggle {
     position: fixed;
-    left: 280px;
+    right: 20px;
     top: 20px;
     width: 32px;
     height: 32px;
     background: rgba(0, 0, 0, 0.6);
     border: none;
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px;
     cursor: pointer;
-    padding: 6px;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,59 +17,14 @@
     transition: all 0.3s ease;
 }
 
-/* 侧边栏收起时按钮位置 - 始终显示在左侧边缘 */
-.sidebar.collapsed ~ .sidebar-toggle,
-.sidebar.collapsed + .sidebar-toggle,
-.sidebar-toggle {
-    left: 0;
-}
-
 .sidebar-toggle:hover {
     background: rgba(0, 0, 0, 0.8);
-    width: 36px;
 }
 
-.toggle-icon {
-    position: relative;
-    width: 16px;
-    height: 2px;
-    background-color: white;
-    transition: all 0.3s ease;
-}
-
-.toggle-icon::before,
-.toggle-icon::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 2px;
-    background-color: white;
-    transition: all 0.3s ease;
-}
-
-.toggle-icon::before {
-    transform: translateY(-5px);
-}
-
-.toggle-icon::after {
-    transform: translateY(5px);
-}
-
-/* 侧边栏展开时的按钮样式 */
-.sidebar:not(.collapsed) .sidebar-toggle {
-    right: 20px;
-}
-
-.sidebar:not(.collapsed) .toggle-icon {
-    background-color: transparent;
-}
-
-.sidebar:not(.collapsed) .toggle-icon::before {
-    transform: rotate(45deg);
-}
-
-.sidebar:not(.collapsed) .toggle-icon::after {
-    transform: rotate(-45deg);
+.toggle-arrow {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
 
 /* 侧边栏样式 */
@@ -88,26 +43,16 @@
     transition: transform 0.3s ease;
 }
 
-/* 侧边栏收起状态 */
+/* 侧边栏收起状态 - 移出视口 */
 .sidebar.collapsed {
     transform: translateX(-280px);
 }
 
-/* 内容区域样式 */
-.layout {
-    transition: margin-left 0.3s ease;
-}
-
-.layout:not(.sidebar-collapsed) .content {
-    margin-left: 280px;
-}
-
-.layout.sidebar-collapsed .content {
-    margin-left: 0;
-}
-
+/* 内容区域样式 - 始终固定在右侧，不受侧边栏影响 */
 .content {
+    margin-left: 280px;
     padding: 40px;
+    transition: none;
 }
 
 /* 移动设备适配 */
@@ -115,10 +60,6 @@
     .content {
         margin-left: 0;
         padding: 20px;
-    }
-    
-    .sidebar.collapsed ~ .content {
-        margin-left: 0;
     }
     
     .sidebar {
@@ -130,8 +71,7 @@
         transform: none;
     }
     
-    .sidebar:not(.collapsed) {
-        transform: none;
+    .sidebar-toggle {
+        display: none;
     }
 }
-
