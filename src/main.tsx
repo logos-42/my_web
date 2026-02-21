@@ -14,9 +14,12 @@ import ArtPage from './pages/ArtPage';
 import WechatPage from './pages/WechatPage';
 import './styles/globals.css';
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -32,5 +35,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

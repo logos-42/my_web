@@ -1,4 +1,6 @@
 
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
+
 const socialLinks = [
   { label: 'GitHub', url: 'https://github.com/logos-42', icon: '⌘' },
   { label: 'Firefly', url: 'https://firefly.social/profile/lens/logos42', icon: '🦋' },
@@ -22,6 +24,7 @@ export default function Header() {
           </a>
         ))}
       </div>
+      <ThemeToggle />
     </header>
   );
 }
