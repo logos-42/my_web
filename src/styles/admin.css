@@ -14,9 +14,10 @@
   width: 100%;
   max-width: 400px;
   padding: 40px;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   border-radius: 12px;
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
   text-align: center;
 }
 
@@ -39,33 +40,56 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  background-color: var(--bg-secondary);
+  padding: 16px 24px;
+  background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
 }
 
 .admin-header h1 {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-primary);
+}
+
+.admin-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .admin-user-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .admin-avatar {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
 }
 
 .admin-username {
   font-size: 14px;
-  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 主题切换按钮 */
+.admin-theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
+}
+
+.admin-theme-toggle:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--accent-color);
   color: var(--text-primary);
 }
 
@@ -80,10 +104,11 @@
 
 .admin-import-section,
 .admin-imported-section {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
+  border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
 }
 
@@ -149,7 +174,7 @@
 /* 按钮样式 */
 .admin-btn {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border: none;
   border-radius: 6px;
   font-size: 14px;
@@ -198,8 +223,8 @@
   justify-content: center;
   gap: 8px;
   background-color: #24292e;
-  padding: 14px 28px;
-  font-size: 16px;
+  padding: 12px 24px;
+  font-size: 15px;
   color: #fff;
 }
 
@@ -264,13 +289,19 @@
 
 /* 页脚 */
 .admin-footer {
-  padding: 20px 24px;
+  padding: 16px 24px;
   text-align: center;
   border-top: 1px solid var(--border-color);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
 }
 
 /* 暗夜模式 */
+[data-theme="dark"] .admin-login-box,
+[data-theme="dark"] .admin-import-section,
+[data-theme="dark"] .admin-imported-section {
+  background-color: var(--bg-secondary);
+}
+
 [data-theme="dark"] .admin-message-success {
   background-color: #1b3d1b;
   color: #81c784;
@@ -285,11 +316,11 @@
 @media (max-width: 768px) {
   .admin-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     text-align: center;
   }
 
-  .admin-user-info {
+  .admin-header-right {
     width: 100%;
     justify-content: center;
   }

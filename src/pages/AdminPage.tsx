@@ -1,5 +1,6 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTheme } from '@/context/ThemeContext';
 
 interface User {
   id: string;
@@ -25,6 +26,7 @@ const API_BASE = '/api';
 export default function AdminPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { theme, toggleTheme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [url, setUrl] = useState('');
@@ -52,7 +54,6 @@ export default function AdminPage() {
   }, []);
 
   const checkAuth = async () => {
-    // Check localStorage for cached user info
     const cachedUser = localStorage.getItem("admin_user");
     if (cachedUser) {
       try {
@@ -104,7 +105,7 @@ export default function AdminPage() {
     }
   };
 
-const handleLogin = () => {
+  const handleLogin = () => {
     window.location.href = `${API_BASE}/oauth`;
   };
 
@@ -181,12 +182,14 @@ const handleLogin = () => {
               {message.text}
             </p>
           )}
-          <button
-            onClick={() => navigate('/')}
-            className="admin-btn admin-btn-link"
-          >
-            返回首页
-          </button>
+          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '16px' }}>
+            <button onClick={toggleTheme} className="admin-theme-toggle">
+              {theme === 'dark' ? '🌙 夜间' : '☀️ 日间'}
+            </button>
+            <button onClick={() => navigate('/')} className="admin-btn admin-btn-link">
+              返回首页
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -196,12 +199,17 @@ const handleLogin = () => {
     <div className="admin-page-container">
       <header className="admin-header">
         <h1>内容导入管理</h1>
-        <div className="admin-user-info">
-          <img src={user.avatar_url} alt={user.login} className="admin-avatar" />
-          <span className="admin-username">{user.login}</span>
-          <button onClick={handleLogout} className="admin-btn admin-btn-secondary">
-            退出登录
+        <div className="admin-header-right">
+          <button onClick={toggleTheme} className="admin-theme-toggle">
+            {theme === 'dark' ? '🌙 夜间' : '☀️ 日间'}
           </button>
+          <div className="admin-user-info">
+            <img src={user.avatar_url} alt={user.login} className="admin-avatar" />
+            <span className="admin-username">{user.login}</span>
+            <button onClick={handleLogout} className="admin-btn admin-btn-secondary">
+              退出
+            </button>
+          </div>
         </div>
       </header>
 
