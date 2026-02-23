@@ -1,256 +1,386 @@
-/* 管理后台页面样式 */
-.admin-page {
+/* Admin Page Styles */
+
+.admin-login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
+  background: var(--bg-primary, #f5f5f5);
 }
 
-/* 登录页面样式 */
-.admin-login {
+.admin-login-box {
+  width: 100%;
   max-width: 400px;
-  margin: 100px auto;
   padding: 40px;
-  background: var(--bg-secondary);
+  background: var(--bg-secondary, #ffffff);
   border-radius: 12px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.admin-login h2 {
-  margin-bottom: 30px;
-  color: var(--text-primary);
+.admin-login-box h1 {
+  margin: 0 0 24px;
   font-size: 24px;
+  color: var(--text-primary, #1a1a1a);
 }
 
-.login-form {
+.admin-page-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  background: var(--bg-primary, #f5f5f5);
 }
 
-.login-form input {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 16px;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-.login-form input:focus {
-  outline: none;
-  border-color: var(--accent-color);
-}
-
-.login-form button {
-  padding: 12px 24px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.login-form button:hover {
-  background: #1e70a7;
-}
-
-.error-message {
-  color: #e74c3c;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-/* 管理界面头部 */
 .admin-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: var(--bg-secondary, #ffffff);
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
 }
 
 .admin-header h1 {
   margin: 0;
-  font-size: 28px;
-  color: var(--text-primary);
-}
-
-.logout-btn {
-  padding: 8px 20px;
-  background: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.logout-btn:hover {
-  background: #e74c3c;
-  border-color: #e74c3c;
-  color: white;
-}
-
-/* 导入区域 */
-.import-section {
-  background: var(--bg-secondary);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 30px;
-}
-
-.import-section h2 {
-  margin: 0 0 20px 0;
   font-size: 20px;
-  color: var(--text-primary);
+  color: var(--text-primary, #1a1a1a);
 }
 
-.form-group {
-  margin-bottom: 20px;
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.form-group label {
+.admin-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color, #e0e0e0);
+}
+
+.admin-username {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.admin-main {
+  flex: 1;
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-import-section,
+.admin-imported-section {
+  background: var(--bg-secondary, #ffffff);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-import-section h2,
+.admin-imported-section h2 {
+  margin: 0 0 20px;
+  font-size: 18px;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.admin-form-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.admin-form-group label {
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
-  color: var(--text-secondary);
+  font-weight: 500;
+  color: var(--text-secondary, #666);
 }
 
-.form-group input,
-.form-group select {
+.admin-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 16px;
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-primary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.admin-input:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border-color: var(--accent-color, #0066cc);
 }
 
-.import-btn {
-  padding: 12px 30px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
+.admin-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-primary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
   cursor: pointer;
-  transition: background 0.3s;
+  box-sizing: border-box;
 }
 
-.import-btn:hover:not(:disabled) {
-  background: #1e70a7;
+.admin-select:focus {
+  outline: none;
+  border-color: var(--accent-color, #0066cc);
 }
 
-.import-btn:disabled {
+.admin-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.message {
-  margin-top: 15px;
-  padding: 10px 15px;
-  border-radius: 6px;
+.admin-btn-primary {
+  background: var(--accent-color, #0066cc);
+  color: #ffffff;
+}
+
+.admin-btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover, #0052a3);
+}
+
+.admin-btn-secondary {
+  background: var(--bg-primary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+  border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.admin-btn-secondary:hover:not(:disabled) {
+  background: var(--border-color, #e0e0e0);
+}
+
+.admin-btn-link {
+  background: none;
+  color: var(--accent-color, #0066cc);
+  padding: 8px 12px;
+}
+
+.admin-btn-link:hover {
+  text-decoration: underline;
+}
+
+.admin-btn-github {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #24292e;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+
+.admin-btn-github:hover:not(:disabled) {
+  background: #1a1e22;
+}
+
+.admin-message {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
   font-size: 14px;
 }
 
-.message.success {
-  background: #d4edda;
-  color: #155724;
+.admin-message-success {
+  background: #e6f7e6;
+  color: #2e7d32;
 }
 
-.message.error {
-  background: #f8d7da;
-  color: #721c24;
+.admin-message-error {
+  background: #ffebee;
+  color: #c62828;
 }
 
-/* 已导入文章列表 */
-.imported-section {
-  background: var(--bg-secondary);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-}
-
-.imported-section h2 {
-  margin: 0 0 20px 0;
-  font-size: 20px;
-  color: var(--text-primary);
-}
-
-.empty-message {
-  color: var(--text-muted);
+.admin-empty {
+  color: var(--text-secondary, #666);
+  font-size: 14px;
   text-align: center;
-  padding: 30px;
+  padding: 40px 0;
 }
 
-.imported-list {
+.admin-imported-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.imported-item {
+.admin-imported-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
 }
 
-.imported-item:last-child {
+.admin-imported-item:last-child {
   border-bottom: none;
 }
 
-.item-title {
-  flex: 1;
-  font-size: 16px;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.item-source {
-  color: var(--text-secondary);
+.admin-imported-title {
   font-size: 14px;
-  margin: 0 20px;
+  color: var(--text-primary, #1a1a1a);
 }
 
-.item-date {
-  color: var(--text-muted);
-  font-size: 14px;
+.admin-imported-date {
+  font-size: 12px;
+  color: var(--text-secondary, #666);
 }
 
-/* 响应式 */
-@media (max-width: 768px) {
-  .admin-page {
-    padding: 15px;
+.admin-footer {
+  padding: 20px 24px;
+  text-align: center;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+  background: var(--bg-secondary, #ffffff);
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+  .admin-login-container,
+  .admin-page-container {
+    background: var(--bg-primary, #1a1a1a);
   }
 
+  .admin-login-box,
+  .admin-header,
+  .admin-import-section,
+  .admin-imported-section,
+  .admin-footer {
+    background: var(--bg-secondary, #2a2a2a);
+  }
+
+  .admin-login-box h1,
+  .admin-header h1,
+  .admin-import-section h2,
+  .admin-imported-section h2,
+  .admin-imported-title {
+    color: var(--text-primary, #e0e0e0);
+  }
+
+  .admin-form-group label,
+  .admin-empty,
+  .admin-imported-date {
+    color: var(--text-secondary, #888);
+  }
+
+  .admin-input,
+  .admin-select {
+    background: var(--bg-primary, #1a1a1a);
+    color: var(--text-primary, #e0e0e0);
+    border-color: var(--border-color, #444);
+  }
+
+  .admin-btn-secondary {
+    background: var(--bg-primary, #1a1a1a);
+    color: var(--text-primary, #e0e0e0);
+    border-color: var(--border-color, #444);
+  }
+
+  .admin-imported-item {
+    border-color: var(--border-color, #444);
+  }
+
+  .admin-message-success {
+    background: #1b3d1b;
+    color: #81c784;
+  }
+
+  .admin-message-error {
+    background: #3d1b1b;
+    color: #ef9a9a;
+  }
+}
+
+[data-theme="dark"] .admin-login-container,
+[data-theme="dark"] .admin-page-container {
+  background: var(--bg-primary, #1a1a1a);
+}
+
+[data-theme="dark"] .admin-login-box,
+[data-theme="dark"] .admin-header,
+[data-theme="dark"] .admin-import-section,
+[data-theme="dark"] .admin-imported-section,
+[data-theme="dark"] .admin-footer {
+  background: var(--bg-secondary, #2a2a2a);
+}
+
+[data-theme="dark"] .admin-login-box h1,
+[data-theme="dark"] .admin-header h1,
+[data-theme="dark"] .admin-import-section h2,
+[data-theme="dark"] .admin-imported-section h2,
+[data-theme="dark"] .admin-imported-title {
+  color: var(--text-primary, #e0e0e0);
+}
+
+[data-theme="dark"] .admin-form-group label,
+[data-theme="dark"] .admin-empty,
+[data-theme="dark"] .admin-imported-date {
+  color: var(--text-secondary, #888);
+}
+
+[data-theme="dark"] .admin-input,
+[data-theme="dark"] .admin-select {
+  background: var(--bg-primary, #1a1a1a);
+  color: var(--text-primary, #e0e0e0);
+  border-color: var(--border-color, #444);
+}
+
+[data-theme="dark"] .admin-btn-secondary {
+  background: var(--bg-primary, #1a1a1a);
+  color: var(--text-primary, #e0e0e0);
+  border-color: var(--border-color, #444);
+}
+
+[data-theme="dark"] .admin-imported-item {
+  border-color: var(--border-color, #444);
+}
+
+[data-theme="dark"] .admin-message-success {
+  background: #1b3d1b;
+  color: #81c784;
+}
+
+[data-theme="dark"] .admin-message-error {
+  background: #3d1b1b;
+  color: #ef9a9a;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
   .admin-header {
     flex-direction: column;
-    gap: 15px;
-    text-align: center;
+    gap: 16px;
   }
 
-  .imported-item {
+  .admin-user-info {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-imported-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
-  }
-
-  .item-source,
-.item-date {
-    margin: 0;
+    gap: 4px;
   }
 }

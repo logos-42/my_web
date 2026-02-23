@@ -1,5 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+﻿import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+interface User {
+  id: string;
+  login: string;
+  avatar_url: string;
+}
 
 interface Category {
   id: string;
@@ -18,9 +24,9 @@ const API_BASE = '/api';
 
 export default function AdminPage() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
-  const [password, setPassword] = useState('');
+  const [searchParams] = useSearchParams();
+  const [user, setUser] = useState<User | null>(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [url, setUrl] = useState('');
   const [category, setCategory] = useState('blog');
   const [categories, setCategories] = useState<Category[]>([]);
@@ -29,14 +35,52 @@ export default function AdminPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
-    fetchCategories();
-    const savedToken = localStorage.getItem('admin_token');
-    if (savedToken) {
-      setToken(savedToken);
-      setIsAuthenticated(true);
-      fetchImportedArticles(savedToken);
+    const loginSuccess = searchParams.get("login");
+    if (loginSuccess === "success") {
+      setMessage({ type: "success", text: "登录成功" });
     }
+
+    const errorParam = searchParams.get('error');
+    if (errorParam) {
+      setMessage({ type: 'error', text: decodeURIComponent(errorParam) });
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    checkAuth();
+    fetchCategories();
   }, []);
+
+  const checkAuth = async () => {
+    // Check localStorage for cached user info
+    const cachedUser = localStorage.getItem("admin_user");
+    if (cachedUser) {
+      try {
+        const userData = JSON.parse(cachedUser);
+        setUser(userData);
+        fetchImportedArticles();
+        setCheckingAuth(false);
+        return;
+      } catch (e) {
+        localStorage.removeItem("admin_user");
+      }
+    }
+    try {
+      const res = await fetch(`${API_BASE}/me`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.user) {
+          setUser(data.user);
+          localStorage.setItem("admin_user", JSON.stringify(data.user));
+          fetchImportedArticles();
+        }
+      }
+    } catch (error) {
+      console.error('Failed to check auth:', error);
+    } finally {
+      setCheckingAuth(false);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -48,11 +92,9 @@ export default function AdminPage() {
     }
   };
 
-  const fetchImportedArticles = async (authToken: string) => {
+  const fetchImportedArticles = async () => {
     try {
-      const res = await fetch(`${API_BASE}/imported`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+      const res = await fetch(`${API_BASE}/imported`);
       if (res.ok) {
         const data = await res.json();
         setImportedArticles(data.urls || {});
@@ -62,56 +104,18 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogin = async () => {
-    if (!password.trim()) {
-      setMessage({ type: 'error', text: '请输入密码' });
-      return;
-    }
-
-    setLoading(true);
-    setMessage(null);
-
-    try {
-      const res = await fetch(`${API_BASE}/auth`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setToken(data.token);
-        setIsAuthenticated(true);
-        localStorage.setItem('admin_token', data.token);
-        fetchImportedArticles(data.token);
-        setMessage({ type: 'success', text: '登录成功' });
-      } else {
-        setMessage({ type: 'error', text: data.error || '登录失败' });
-      }
-    } catch (error) {
-      setMessage({ type: 'error', text: '网络错误，请稍后重试' });
-    } finally {
-      setLoading(false);
-    }
+  const handleLogin = () => {
+    window.location.href = `${API_BASE}/auth`;
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    setToken(null);
-    localStorage.removeItem('admin_token');
-    setPassword('');
-    setMessage(null);
+    localStorage.removeItem("admin_user");
+    window.location.href = `${API_BASE}/logout`;
   };
 
   const handleImport = async () => {
     if (!url.trim()) {
       setMessage({ type: 'error', text: '请输入文章链接' });
-      return;
-    }
-
-    if (!token) {
-      setMessage({ type: 'error', text: '请先登录' });
       return;
     }
 
@@ -123,7 +127,6 @@ export default function AdminPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ url, category }),
       });
@@ -133,7 +136,7 @@ export default function AdminPage() {
       if (res.ok && data.success) {
         setMessage({ type: 'success', text: `导入成功: ${data.article?.title}` });
         setUrl('');
-        fetchImportedArticles(token);
+        fetchImportedArticles();
       } else {
         setMessage({ type: 'error', text: data.error || '导入失败' });
       }
@@ -152,28 +155,26 @@ export default function AdminPage() {
     }
   };
 
-  if (!isAuthenticated) {
+  if (checkingAuth) {
     return (
       <div className="admin-login-container">
         <div className="admin-login-box">
-          <h1>管理员登录</h1>
-          <p className="admin-subtitle">请输入密码以访问内容导入功能</p>
-          <div className="admin-form-group">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              placeholder="输入密码"
-              className="admin-input"
-            />
-          </div>
+          <p>检查登录状态...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="admin-login-container">
+        <div className="admin-login-box">
+          <h1>内容导入管理</h1>
           <button
             onClick={handleLogin}
-            disabled={loading}
-            className="admin-btn admin-btn-primary"
+            className="admin-btn admin-btn-primary admin-btn-github"
           >
-            {loading ? '登录中...' : '登录'}
+            使用 GitHub 登录
           </button>
           {message && (
             <p className={`admin-message admin-message-${message.type}`}>
@@ -195,9 +196,13 @@ export default function AdminPage() {
     <div className="admin-page-container">
       <header className="admin-header">
         <h1>内容导入管理</h1>
-        <button onClick={handleLogout} className="admin-btn admin-btn-secondary">
-          退出登录
-        </button>
+        <div className="admin-user-info">
+          <img src={user.avatar_url} alt={user.login} className="admin-avatar" />
+          <span className="admin-username">{user.login}</span>
+          <button onClick={handleLogout} className="admin-btn admin-btn-secondary">
+            退出登录
+          </button>
+        </div>
       </header>
 
       <main className="admin-main">
