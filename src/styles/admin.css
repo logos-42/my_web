@@ -1,50 +1,53 @@
-/* Admin Page Styles */
+/* Admin Page Styles - 使用全局 CSS 变量 */
 
+/* 登录页面容器 */
 .admin-login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: var(--bg-primary, #f5f5f5);
+  background-color: var(--bg-primary);
 }
 
 .admin-login-box {
   width: 100%;
   max-width: 400px;
   padding: 40px;
-  background: var(--bg-secondary, #ffffff);
+  background-color: var(--bg-secondary);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   text-align: center;
 }
 
 .admin-login-box h1 {
   margin: 0 0 24px;
   font-size: 24px;
-  color: var(--text-primary, #1a1a1a);
+  color: var(--text-primary);
 }
 
+/* 管理页面容器 */
 .admin-page-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg-primary, #f5f5f5);
+  background-color: var(--bg-primary);
 }
 
+/* 头部 */
 .admin-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  background: var(--bg-secondary, #ffffff);
-  border-bottom: 1px solid var(--border-color, #e0e0e0);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .admin-header h1 {
   margin: 0;
   font-size: 20px;
-  color: var(--text-primary, #1a1a1a);
+  color: var(--text-primary);
 }
 
 .admin-user-info {
@@ -57,15 +60,16 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid var(--border-color, #e0e0e0);
+  border: 2px solid var(--border-color);
 }
 
 .admin-username {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-primary, #1a1a1a);
+  color: var(--text-primary);
 }
 
+/* 主内容区 */
 .admin-main {
   flex: 1;
   padding: 24px;
@@ -76,20 +80,21 @@
 
 .admin-import-section,
 .admin-imported-section {
-  background: var(--bg-secondary, #ffffff);
+  background-color: var(--bg-secondary);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .admin-import-section h2,
 .admin-imported-section h2 {
   margin: 0 0 20px;
   font-size: 18px;
-  color: var(--text-primary, #1a1a1a);
+  color: var(--text-primary);
 }
 
+/* 表单元素 */
 .admin-form-group {
   margin-bottom: 16px;
   text-align: left;
@@ -100,52 +105,57 @@
   margin-bottom: 8px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-secondary, #666);
+  color: var(--text-secondary);
 }
 
 .admin-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--border-color, #e0e0e0);
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   font-size: 14px;
-  background: var(--bg-primary, #f5f5f5);
-  color: var(--text-primary, #1a1a1a);
-  transition: border-color 0.2s;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.3s;
   box-sizing: border-box;
 }
 
 .admin-input:focus {
   outline: none;
-  border-color: var(--accent-color, #0066cc);
+  border-color: var(--accent-color);
+}
+
+.admin-input::placeholder {
+  color: var(--text-muted);
 }
 
 .admin-select {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--border-color, #e0e0e0);
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   font-size: 14px;
-  background: var(--bg-primary, #f5f5f5);
-  color: var(--text-primary, #1a1a1a);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   cursor: pointer;
   box-sizing: border-box;
 }
 
 .admin-select:focus {
   outline: none;
-  border-color: var(--accent-color, #0066cc);
+  border-color: var(--accent-color);
 }
 
+/* 按钮样式 */
 .admin-btn {
   display: inline-block;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.3s;
 }
 
 .admin-btn:disabled {
@@ -154,27 +164,27 @@
 }
 
 .admin-btn-primary {
-  background: var(--accent-color, #0066cc);
-  color: #ffffff;
+  background-color: var(--accent-color);
+  color: #fff;
 }
 
 .admin-btn-primary:hover:not(:disabled) {
-  background: var(--accent-hover, #0052a3);
+  background-color: #1e70a7;
 }
 
 .admin-btn-secondary {
-  background: var(--bg-primary, #f5f5f5);
-  color: var(--text-primary, #1a1a1a);
-  border: 1px solid var(--border-color, #e0e0e0);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
 .admin-btn-secondary:hover:not(:disabled) {
-  background: var(--border-color, #e0e0e0);
+  background-color: var(--border-color);
 }
 
 .admin-btn-link {
   background: none;
-  color: var(--accent-color, #0066cc);
+  color: var(--accent-color);
   padding: 8px 12px;
 }
 
@@ -187,39 +197,43 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #24292e;
+  background-color: #24292e;
   padding: 14px 28px;
   font-size: 16px;
+  color: #fff;
 }
 
 .admin-btn-github:hover:not(:disabled) {
-  background: #1a1e22;
+  background-color: #1a1e22;
 }
 
+/* 消息提示 */
 .admin-message {
   margin-top: 16px;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
 }
 
 .admin-message-success {
-  background: #e6f7e6;
-  color: #2e7d32;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .admin-message-error {
-  background: #ffebee;
-  color: #c62828;
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
+/* 空状态 */
 .admin-empty {
-  color: var(--text-secondary, #666);
+  color: var(--text-muted);
   font-size: 14px;
   text-align: center;
   padding: 40px 0;
 }
 
+/* 已导入列表 */
 .admin-imported-list {
   list-style: none;
   padding: 0;
@@ -231,7 +245,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid var(--border-color, #e0e0e0);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .admin-imported-item:last-child {
@@ -240,142 +254,53 @@
 
 .admin-imported-title {
   font-size: 14px;
-  color: var(--text-primary, #1a1a1a);
+  color: var(--text-primary);
 }
 
 .admin-imported-date {
   font-size: 12px;
-  color: var(--text-secondary, #666);
+  color: var(--text-muted);
 }
 
+/* 页脚 */
 .admin-footer {
   padding: 20px 24px;
   text-align: center;
-  border-top: 1px solid var(--border-color, #e0e0e0);
-  background: var(--bg-secondary, #ffffff);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
 }
 
-/* Dark Theme Support */
-@media (prefers-color-scheme: dark) {
-  .admin-login-container,
-  .admin-page-container {
-    background: var(--bg-primary, #1a1a1a);
-  }
-
-  .admin-login-box,
-  .admin-header,
-  .admin-import-section,
-  .admin-imported-section,
-  .admin-footer {
-    background: var(--bg-secondary, #2a2a2a);
-  }
-
-  .admin-login-box h1,
-  .admin-header h1,
-  .admin-import-section h2,
-  .admin-imported-section h2,
-  .admin-imported-title {
-    color: var(--text-primary, #e0e0e0);
-  }
-
-  .admin-form-group label,
-  .admin-empty,
-  .admin-imported-date {
-    color: var(--text-secondary, #888);
-  }
-
-  .admin-input,
-  .admin-select {
-    background: var(--bg-primary, #1a1a1a);
-    color: var(--text-primary, #e0e0e0);
-    border-color: var(--border-color, #444);
-  }
-
-  .admin-btn-secondary {
-    background: var(--bg-primary, #1a1a1a);
-    color: var(--text-primary, #e0e0e0);
-    border-color: var(--border-color, #444);
-  }
-
-  .admin-imported-item {
-    border-color: var(--border-color, #444);
-  }
-
-  .admin-message-success {
-    background: #1b3d1b;
-    color: #81c784;
-  }
-
-  .admin-message-error {
-    background: #3d1b1b;
-    color: #ef9a9a;
-  }
-}
-
-[data-theme="dark"] .admin-login-container,
-[data-theme="dark"] .admin-page-container {
-  background: var(--bg-primary, #1a1a1a);
-}
-
-[data-theme="dark"] .admin-login-box,
-[data-theme="dark"] .admin-header,
-[data-theme="dark"] .admin-import-section,
-[data-theme="dark"] .admin-imported-section,
-[data-theme="dark"] .admin-footer {
-  background: var(--bg-secondary, #2a2a2a);
-}
-
-[data-theme="dark"] .admin-login-box h1,
-[data-theme="dark"] .admin-header h1,
-[data-theme="dark"] .admin-import-section h2,
-[data-theme="dark"] .admin-imported-section h2,
-[data-theme="dark"] .admin-imported-title {
-  color: var(--text-primary, #e0e0e0);
-}
-
-[data-theme="dark"] .admin-form-group label,
-[data-theme="dark"] .admin-empty,
-[data-theme="dark"] .admin-imported-date {
-  color: var(--text-secondary, #888);
-}
-
-[data-theme="dark"] .admin-input,
-[data-theme="dark"] .admin-select {
-  background: var(--bg-primary, #1a1a1a);
-  color: var(--text-primary, #e0e0e0);
-  border-color: var(--border-color, #444);
-}
-
-[data-theme="dark"] .admin-btn-secondary {
-  background: var(--bg-primary, #1a1a1a);
-  color: var(--text-primary, #e0e0e0);
-  border-color: var(--border-color, #444);
-}
-
-[data-theme="dark"] .admin-imported-item {
-  border-color: var(--border-color, #444);
-}
-
+/* 暗夜模式 */
 [data-theme="dark"] .admin-message-success {
-  background: #1b3d1b;
+  background-color: #1b3d1b;
   color: #81c784;
 }
 
 [data-theme="dark"] .admin-message-error {
-  background: #3d1b1b;
+  background-color: #3d1b1b;
   color: #ef9a9a;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
+/* 响应式 */
+@media (max-width: 768px) {
   .admin-header {
     flex-direction: column;
     gap: 16px;
+    text-align: center;
   }
 
   .admin-user-info {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+  }
+
+  .admin-main {
+    padding: 16px;
+  }
+
+  .admin-import-section,
+  .admin-imported-section {
+    padding: 16px;
   }
 
   .admin-imported-item {
