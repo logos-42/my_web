@@ -1,1 +1,22 @@
-﻿import type { VercelRequest, VercelResponse } from '@vercel/node';\n\nconst CATEGORIES = [\n  'blogs',\n  'essays',\n  'philosophy',\n  'projects',\n  'music'\n];\n\nexport default async function handler(req: VercelRequest, res: VercelResponse) {\n  res.setHeader('Access-Control-Allow-Origin', '*');\n  \n  if (req.method !== 'GET') {\n    return res.status(405).json({ error: 'Method not allowed' });\n  }\n\n  return res.status(200).json({ categories: CATEGORIES });\n}\n
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+const CATEGORIES = [
+  { id: 'blog', name: '博客' },
+  { id: 'essays', name: '随笔' },
+  { id: 'projects', name: '项目' },
+  { id: 'podcast', name: '播客' },
+  { id: 'philosophy', name: '哲科' },
+  { id: 'music', name: '音乐' },
+  { id: 'art', name: '绘画' },
+  { id: 'imported', name: '导入文章' },
+];
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  return res.status(200).json({ categories: CATEGORIES });
+}
