@@ -104,8 +104,8 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogin = () => {
-    window.location.href = `${API_BASE}/auth`;
+const handleLogin = () => {
+    window.location.href = `${API_BASE}/oauth`;
   };
 
   const handleLogout = () => {
