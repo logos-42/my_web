@@ -1,1 +1,0 @@
-const fs=require("fs");let c=fs.readFileSync("src/pages/AdminPage.tsx");c=c.toString().replace(/className=\{\`message/gi,"className={message");fs.writeFileSync("src/pages/AdminPage.tsx",c);console.log("fixed");
