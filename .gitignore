@@ -26,3 +26,4 @@ dist-ssr
 # Next.js 相关文件（已移除）
 .next/
 .out/
+".env"  
