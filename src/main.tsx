@@ -12,7 +12,9 @@ import PhilosophyPage from './pages/PhilosophyPage';
 import MusicPage from './pages/MusicPage';
 import ArtPage from './pages/ArtPage';
 import WechatPage from './pages/WechatPage';
+import AdminPage from './pages/AdminPage';
 import './styles/globals.css';
+import './styles/admin.css';
 
 import { ThemeProvider } from '@/context/ThemeContext';
 
@@ -21,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <BrowserRouter>
       <Routes>
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path="essays" element={<EssaysPage />} />
