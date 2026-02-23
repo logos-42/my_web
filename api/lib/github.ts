@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ParsedArticle } from './parsers';
+import type { ParsedArticle } from './parsers.js';
 
 export interface ManifestEntry {
   title: string;

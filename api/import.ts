@@ -1,4 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { parseArticle, detectPlatform } from './lib/parsers.js';
+import { saveArticle, isUrlImported } from './lib/github.js';
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
   try {
@@ -46,13 +48,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // 动态导入解析器
-    const { parseArticle, detectPlatform } = await import('./lib/parsers');
-    const { saveArticle, isUrlImported } = await import('./lib/github');
-
     const platform = detectPlatform(url);
     if (!platform) {
-      return res.status(400).json({ error: '不支持的平台' });
+      return res.status(400).json({ error: '不支持的平台，支持：微信公众号、知乎、Paragraph、Substack' });
     }
 
     const alreadyImported = await isUrlImported(url);
