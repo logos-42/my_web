@@ -4,14 +4,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "env": {
-    "GITHUB_CLIENT_ID": "@github-client-id",
-    "GITHUB_CLIENT_SECRET": "@github-client-secret",
-    "ADMIN_GITHUB_ID": "@admin-github-id",
-    "GITHUB_REPO": "@github-repo",
-    "GITHUB_BRANCH": "@github-branch",
-    "GITHUB_TOKEN": "@github-token"
-  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
