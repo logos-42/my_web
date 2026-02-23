@@ -1,19 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseArticle, detectPlatform } from './lib/parsers';
-import { saveArticle, isUrlImported } from './lib/github';
-
-export const config = {
-  api: {
-    externalResolver: true,
-  },
-};
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
-  const userCookie = req.cookies?.user;
-  if (!userCookie) return null;
-  
   try {
-    const userInfo = JSON.parse(Buffer.from(userCookie, 'base64').toString());
+    const cookies = req.headers.cookie;
+    if (!cookies) return null;
+    
+    const userMatch = cookies.match(/user=([^;]+)/);
+    if (!userMatch) return null;
+    
+    const userInfo = JSON.parse(Buffer.from(userMatch[1], 'base64').toString());
     const adminGithubId = process.env.ADMIN_GITHUB_ID;
     
     if (userInfo.login !== adminGithubId) {
@@ -30,7 +25,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -42,7 +36,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const user = getUserFromCookie(req);
   if (!user) {
-    return res.status(401).json({ error: '未授权，请先登录' });
+    return res.status(401).json({ error: '请先登录' });
   }
 
   const { url, category } = req.body;
@@ -52,9 +46,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    // 动态导入解析器
+    const { parseArticle, detectPlatform } = await import('./lib/parsers');
+    const { saveArticle, isUrlImported } = await import('./lib/github');
+
     const platform = detectPlatform(url);
     if (!platform) {
-      return res.status(400).json({ error: '不支持的平台，支持：微信公众号、知乎、Paragraph、Substack' });
+      return res.status(400).json({ error: '不支持的平台' });
     }
 
     const alreadyImported = await isUrlImported(url);

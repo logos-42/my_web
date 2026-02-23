@@ -1,12 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getImportedUrls } from './lib/github';
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
-  const userCookie = req.cookies?.user;
-  if (!userCookie) return null;
-  
   try {
-    const userInfo = JSON.parse(Buffer.from(userCookie, 'base64').toString());
+    const cookies = req.headers.cookie;
+    if (!cookies) return null;
+    
+    const userMatch = cookies.match(/user=([^;]+)/);
+    if (!userMatch) return null;
+    
+    const userInfo = JSON.parse(Buffer.from(userMatch[1], 'base64').toString());
     const adminGithubId = process.env.ADMIN_GITHUB_ID;
     
     if (userInfo.login !== adminGithubId) {
@@ -22,7 +24,6 @@ function getUserFromCookie(req: VercelRequest): { login: string } | null {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -34,9 +35,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const { getImportedUrls } = await import('./lib/github');
     const urls = await getImportedUrls();
     return res.status(200).json({ urls });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(200).json({ urls: {} });
   }
 }
