@@ -157,12 +157,21 @@ async function saveFile(
 }
 
 async function getManifest(): Promise<Manifest> {
+  const now = Date.now();
+  if (manifestCache && (now - manifestCache.timestamp) < MANIFEST_CACHE_TTL) {
+    return manifestCache.data;
+  }
+
   try {
     const content = await getFile(MANIFEST_PATH);
-    return JSON.parse(content);
+    const data = JSON.parse(content);
+    manifestCache = { data, timestamp: now };
+    return data;
   } catch (error) {
     if (error instanceof Error && error.message === 'File not found') {
-      return { urls: {} };
+      const emptyManifest = { urls: {} };
+      manifestCache = { data: emptyManifest, timestamp: now };
+      return emptyManifest;
     }
     throw error;
   }
@@ -170,7 +179,13 @@ async function getManifest(): Promise<Manifest> {
 
 async function updateManifest(data: Manifest): Promise<{ success: boolean; error?: string }> {
   const content = JSON.stringify(data, null, 2);
-  return saveFile(MANIFEST_PATH, content, 'Update import manifest');
+  const result = await saveFile(MANIFEST_PATH, content, 'Update import manifest');
+  
+  if (result.success) {
+    manifestCache = { data, timestamp: Date.now() };
+  }
+  
+  return result;
 }
 
 export function generateFileName(title: string): string {
