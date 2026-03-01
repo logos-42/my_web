@@ -2,6 +2,7 @@ import { parseWechat } from './wechat';
 import { parseZhihu } from './zhihu';
 import { parseParagraph } from './paragraph';
 import { parseSubstack } from './substack';
+import { parseMedium } from './medium';
 
 export interface ParsedArticle {
   title: string;
@@ -25,6 +26,7 @@ const parsers: Parser[] = [
   { name: 'zhihu', patterns: [/zhuanlan\.zhihu\.com\/p\//], parse: parseZhihu },
   { name: 'paragraph', patterns: [/paragraph\.xyz\/@/], parse: parseParagraph },
   { name: 'substack', patterns: [/\.substack\.com\/p\//], parse: parseSubstack },
+  { name: 'medium', patterns: [/medium\.com\//], parse: parseMedium },
 ];
 
 export function detectPlatform(url: string): Parser | null {
@@ -46,4 +48,4 @@ export async function parseArticle(url: string): Promise<ParsedArticle> {
   return parser.parse(url);
 }
 
-export { parseWechat, parseZhihu, parseParagraph, parseSubstack };
+export { parseWechat, parseZhihu, parseParagraph, parseSubstack, parseMedium };

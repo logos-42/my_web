@@ -215,6 +215,7 @@ export function detectPlatform(url: string): Parser | null {
     { name: 'zhihu', patterns: [/zhuanlan\.zhihu\.com\/p\//], parse: parseZhihu },
     { name: 'paragraph', patterns: [/paragraph\.xyz\/@/], parse: parseParagraph },
     { name: 'substack', patterns: [/\.substack\.com\/p\//], parse: parseSubstack },
+    { name: 'medium', patterns: [/medium\.com\/@|medium\.com\/[a-z0-9\-]+\/[a-z0-9\-]+/], parse: parseMedium },
   ];
 
   for (const parser of parsers) {
@@ -630,6 +631,94 @@ export async function parseSubstack(url: string): Promise<ParsedArticle> {
       }
       if (error.response?.status === 403) {
         throw new Error('该文章需要订阅才能查看');
+      }
+      throw new Error(`请求失败: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+export async function parseMedium(url: string): Promise<ParsedArticle> {
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        'Referer': 'https://medium.com/',
+      },
+      timeout: TIMEOUT,
+    });
+
+    const $ = cheerio.load(response.data);
+    const jsonLd = extractJsonLd($);
+
+    const title = 
+      $('meta[property="og:title"]').attr('content') ||
+      $('meta[name="twitter:title"]').attr('content') ||
+      $('h1').first().text().trim() ||
+      (jsonLd?.headline as string) ||
+      $('title').text().replace(' - Medium', '').trim();
+
+    const author = 
+      $('meta[property="article:author"]').attr('content') ||
+      $('meta[name="author"]').attr('content') ||
+      $('[rel="author"]').text().trim() ||
+      ((jsonLd?.author as { name?: string })?.name) ||
+      undefined;
+
+    let publishDate = 
+      $('meta[property="article:published_time"]').attr('content') ||
+      $('time[datetime]').attr('datetime') ||
+      (jsonLd?.datePublished as string);
+    
+    if (publishDate) {
+      publishDate = new Date(publishDate).toISOString().split('T')[0];
+    }
+
+    const coverImage = 
+      $('meta[property="og:image"]').attr('content') ||
+      $('meta[name="twitter:image"]').attr('content') ||
+      (jsonLd?.image as string) ||
+      undefined;
+
+    let contentHtml = '';
+    const articleEl = $('article').first();
+    if (articleEl.length) {
+      articleEl.find('script, style, noscript, [class*="subscription"], [class*="promo"], nav, header, footer').remove();
+      contentHtml = articleEl.html() || '';
+    } else {
+      const mainEl = $('main').first();
+      if (mainEl.length) {
+        contentHtml = mainEl.html() || '';
+      }
+    }
+
+    const content = htmlToMarkdownCheerio(contentHtml);
+
+    if (!title) {
+      throw new Error('无法解析文章标题');
+    }
+
+    return {
+      title,
+      content,
+      author,
+      publishDate,
+      source: 'Medium',
+      sourceUrl: url,
+      coverImage,
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('请求超时，请稍后重试');
+      }
+      if (error.response?.status === 404) {
+        throw new Error('文章不存在或已被删除');
+      }
+      if (error.response?.status === 403) {
+        throw new Error('Medium拒绝访问，可能需要登录');
       }
       throw new Error(`请求失败: ${error.message}`);
     }

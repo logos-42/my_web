@@ -14,6 +14,11 @@ export interface Manifest {
 const API_BASE = 'https://api.github.com';
 const MANIFEST_PATH = 'src/content/imported/.manifest.json';
 
+const REQUEST_DELAY_MS = 2000;
+
+let manifestCache: { data: Manifest; timestamp: number } | null = null;
+const MANIFEST_CACHE_TTL = 60000;
+
 interface GitHubConfig {
   token: string;
   owner: string;
@@ -46,6 +51,22 @@ export function initGitHubConfig(): GitHubConfig {
   return cachedConfig;
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+let lastRequestTime = 0;
+async function delayBetweenRequests(): Promise<void> {
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastRequestTime;
+  
+  if (timeSinceLastRequest < REQUEST_DELAY_MS) {
+    await sleep(REQUEST_DELAY_MS - timeSinceLastRequest);
+  }
+  
+  lastRequestTime = Date.now();
+}
+
 async function githubApi<T = unknown>(
   path: string,
   method: 'GET' | 'PUT' | 'DELETE' = 'GET',
@@ -55,6 +76,8 @@ async function githubApi<T = unknown>(
   const url = `${API_BASE}/repos/${config.owner}/${config.repo}/contents/${path}`;
 
   try {
+    await delayBetweenRequests();
+    
     const response = await axios<T>(url, {
       method,
       headers: {
