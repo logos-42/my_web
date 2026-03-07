@@ -1,40 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
-
-interface ImportedArticle {
-  url: string;
-  title: string;
-  content: string;
-  source: string;
-  sourceUrl: string;
-  author?: string;
-  publishDate?: string;
-  coverImage?: string;
-  tags?: string[];
-  category: string;
-  importedAt: string;
-}
+import { useImportedArticles, ImportedArticle } from '@/hooks/useImportedArticles';
 
 export default function ImportedPage() {
-  const [articles, setArticles] = useState<ImportedArticle[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const urlParam = searchParams.get('url');
+  const { articles, loading } = useImportedArticles();
   const [selectedArticle, setSelectedArticle] = useState<ImportedArticle | null>(null);
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
-    try {
-      const res = await fetch('/api/articles');
-      const data = await res.json();
-      setArticles(data.articles || []);
-    } catch (error) {
-      console.error('Failed to fetch articles:', error);
-    } finally {
-      setLoading(false);
+    if (urlParam && articles.length > 0) {
+      const article = articles.find(a => encodeURIComponent(a.url) === urlParam);
+      if (article) {
+        setSelectedArticle(article);
+      }
     }
-  };
+  }, [urlParam, articles]);
 
   const formatDate = (dateStr: string) => {
     try {
@@ -57,7 +40,10 @@ export default function ImportedPage() {
     return (
       <div className="imported-page">
         <button 
-          onClick={() => setSelectedArticle(null)}
+          onClick={() => {
+            setSelectedArticle(null);
+            navigate('/imported');
+          }}
           className="back-button"
         >
           ← 返回列表
@@ -116,7 +102,10 @@ export default function ImportedPage() {
             <div 
               key={article.url} 
               className="article-card"
-              onClick={() => setSelectedArticle(article)}
+              onClick={() => {
+                setSelectedArticle(article);
+                navigate(`/imported?url=${encodeURIComponent(article.url)}`);
+              }}
             >
               {article.coverImage && (
                 <img src={article.coverImage} alt={article.title} className="card-cover" />
