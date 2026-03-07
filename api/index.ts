@@ -14,7 +14,8 @@ const CATEGORIES = [
   { id: 'podcast', name: '播客' },
   { id: 'philosophy', name: '哲科' },
   { id: 'music', name: '音乐' },
-  { id: 'art', name: '绘画' }
+  { id: 'art', name: '绘画' },
+  { id: 'imported', name: '导入文章' }
 ];
 
 // ==================== 工具函数 ====================
@@ -343,6 +344,9 @@ async function handleImport(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: '缺少 URL 参数' });
   }
 
+  // 默认分类为 blog
+  const targetCategory = category || 'blog';
+
   try {
     const platform = detectPlatform(url);
     if (!platform) {
@@ -365,7 +369,7 @@ async function handleImport(req: VercelRequest, res: VercelResponse) {
       publish_date: article.publishDate,
       cover_image: article.coverImage,
       tags: article.tags,
-      category: category || 'imported'
+      category: targetCategory
     });
 
     if (result.success) {

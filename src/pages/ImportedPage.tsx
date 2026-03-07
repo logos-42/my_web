@@ -12,6 +12,7 @@ const CATEGORIES = [
   { id: 'philosophy', name: '哲科' },
   { id: 'music', name: '音乐' },
   { id: 'art', name: '绘画' },
+  { id: 'imported', name: '导入文章' },
 ];
 
 export default function ImportedPage() {
