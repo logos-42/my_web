@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { supabase } from './lib/supabase.js';
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
   try {
@@ -29,16 +30,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // 任何登录用户都可以查看已导入的文章
   const user = getUserFromCookie(req);
-  if (!user) {
-    return res.status(200).json({ urls: {} });
-  }
 
   try {
-    const { getImportedUrls } = await import('./lib/github');
-    const urls = await getImportedUrls();
-    return res.status(200).json({ urls });
+    const { data } = await supabase
+      .from('imported_manifest')
+      .select('data')
+      .single();
+    
+    return res.status(200).json({ urls: data?.data?.urls || {} });
   } catch (error) {
+    console.error('Failed to get imported articles:', error);
     return res.status(200).json({ urls: {} });
   }
 }

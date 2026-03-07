@@ -13,6 +13,7 @@ import MusicPage from './pages/MusicPage';
 import ArtPage from './pages/ArtPage';
 import WechatPage from './pages/WechatPage';
 import AdminPage from './pages/AdminPage';
+import ImportedPage from './pages/ImportedPage';
 import './styles/globals.css';
 import './styles/admin.css';
 
@@ -34,6 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="music" element={<MusicPage />} />
           <Route path="art" element={<ArtPage />} />
           <Route path="wechat" element={<WechatPage />} />
+          <Route path="imported" element={<ImportedPage />} />
           <Route path=":category/:slug" element={<ArticlePage />} />
         </Route>
       </Routes>

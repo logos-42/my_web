@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { supabase } from './supabase.js';
 import type { ParsedArticle } from './parsers.js';
 
 export interface ManifestEntry {
@@ -12,12 +13,8 @@ export interface Manifest {
 }
 
 const API_BASE = 'https://api.github.com';
-const MANIFEST_PATH = 'src/content/imported/.manifest.json';
 
 const REQUEST_DELAY_MS = 2000;
-
-let manifestCache: { data: Manifest; timestamp: number } | null = null;
-const MANIFEST_CACHE_TTL = 60000;
 
 interface GitHubConfig {
   token: string;
@@ -157,35 +154,26 @@ async function saveFile(
 }
 
 async function getManifest(): Promise<Manifest> {
-  const now = Date.now();
-  if (manifestCache && (now - manifestCache.timestamp) < MANIFEST_CACHE_TTL) {
-    return manifestCache.data;
+  const { data, error } = await supabase
+    .from('imported_manifest')
+    .select('data')
+    .single();
+  
+  if (error || !data) {
+    return { urls: {} };
   }
-
-  try {
-    const content = await getFile(MANIFEST_PATH);
-    const data = JSON.parse(content);
-    manifestCache = { data, timestamp: now };
-    return data;
-  } catch (error) {
-    if (error instanceof Error && error.message === 'File not found') {
-      const emptyManifest = { urls: {} };
-      manifestCache = { data: emptyManifest, timestamp: now };
-      return emptyManifest;
-    }
-    throw error;
-  }
+  return data.data as Manifest;
 }
 
 async function updateManifest(data: Manifest): Promise<{ success: boolean; error?: string }> {
-  const content = JSON.stringify(data, null, 2);
-  const result = await saveFile(MANIFEST_PATH, content, 'Update import manifest');
+  const { error } = await supabase
+    .from('imported_manifest')
+    .upsert({ id: 'main', data }, { onConflict: 'id' });
   
-  if (result.success) {
-    manifestCache = { data, timestamp: Date.now() };
+  if (error) {
+    return { success: false, error: error.message };
   }
-  
-  return result;
+  return { success: true };
 }
 
 export function generateFileName(title: string): string {

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { parseArticle, detectPlatform } from './lib/parsers.js';
-import { saveArticle, isUrlImported } from './lib/github.js';
+import { saveArticle, isUrlImported } from './lib/db.js';
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
   try {
@@ -20,39 +20,6 @@ function getUserFromCookie(req: VercelRequest): { login: string } | null {
     return { login: userInfo.login };
   } catch {
     return null;
-  }
-}
-
-async function triggerDeploy(): Promise<void> {
-  const vercelToken = process.env.VERCEL_API_TOKEN;
-  const projectId = 'prj_vMidJRUt8JStL25UsUMeWBqPypY0';
-  
-  if (!vercelToken) {
-    console.log('VERCEL_API_TOKEN not set, skipping deploy trigger');
-    return;
-  }
-
-  try {
-    const response = await fetch('https://api.vercel.com/v13/deployments', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${vercelToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: 'liuyuanjie',
-        projectId: projectId,
-        target: 'production',
-      }),
-    });
-    
-    if (response.ok) {
-      console.log('Deploy triggered successfully');
-    } else {
-      console.log('Deploy trigger failed:', response.status);
-    }
-  } catch (error) {
-    console.error('Deploy trigger error:', error);
   }
 }
 
@@ -92,20 +59,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const article = await parseArticle(url);
-    const result = await saveArticle(article, category || 'imported');
+    const result = await saveArticle({
+      url: article.sourceUrl,
+      title: article.title,
+      content: article.content,
+      source: article.source,
+      source_url: article.sourceUrl,
+      author: article.author,
+      publish_date: article.publishDate,
+      cover_image: article.coverImage,
+      tags: article.tags,
+      category: category || 'imported'
+    });
     
     if (result.success) {
-      // 触发重新部署
-      triggerDeploy().catch(console.error);
-      
       return res.status(200).json({ 
         success: true, 
         article: {
           title: article.title,
-          path: result.path,
           source: article.source
         },
-        message: '文章已导入，正在重新部署网站...'
+        message: '文章已导入成功！'
       });
     } else {
       return res.status(500).json({ error: result.error || '保存失败' });
