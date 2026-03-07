@@ -14,8 +14,7 @@ const CATEGORIES = [
   { id: 'podcast', name: '播客' },
   { id: 'philosophy', name: '哲科' },
   { id: 'music', name: '音乐' },
-  { id: 'art', name: '绘画' },
-  { id: 'imported', name: '导入文章' }
+  { id: 'art', name: '绘画' }
 ];
 
 // ==================== 工具函数 ====================
