@@ -32,6 +32,7 @@ const FALLBACK_CATEGORIES = [
   { id: 'philosophy', name: '哲科' },
   { id: 'music', name: '音乐' },
   { id: 'art', name: '绘画' },
+  { id: 'imported', name: '导入' },
 ];
 
 export default function AdminPage() {
@@ -260,7 +261,7 @@ export default function AdminPage() {
           <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '夜间模式' : '日间模式'}>
             <img 
               src={theme === 'dark' ? '/images/night.png' : '/images/day.png'} 
-              alt={theme === 'dark' ? '夜间' : '日间'}}
+              alt={theme === 'dark' ? '夜间' : '日间'}
               style={{ width: '18px', height: '18px' }}
             />
           </button>
