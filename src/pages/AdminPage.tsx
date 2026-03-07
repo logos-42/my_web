@@ -236,10 +236,10 @@ export default function AdminPage() {
             </p>
           )}
           <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '16px' }}>
-            <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '日间模式' : '夜间模式'}>
+            <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '夜间模式' : '日间模式'}>
               <img 
-                src={theme === 'dark' ? '/images/day.png' : '/images/night.png'} 
-                alt={theme === 'dark' ? '日间' : '夜间'}
+                src={theme === 'dark' ? '/images/night.png' : '/images/day.png'} 
+                alt={theme === 'dark' ? '夜间' : '日间'}
                 style={{ width: '18px', height: '18px' }}
               />
             </button>
@@ -257,10 +257,10 @@ export default function AdminPage() {
       <header className="admin-header">
         <h1>内容导入管理</h1>
         <div className="admin-header-right">
-          <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '日间模式' : '夜间模式'}>
+          <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '夜间模式' : '日间模式'}>
             <img 
-              src={theme === 'dark' ? '/images/day.png' : '/images/night.png'} 
-              alt={theme === 'dark' ? '日间' : '夜间'}
+              src={theme === 'dark' ? '/images/night.png' : '/images/day.png'} 
+              alt={theme === 'dark' ? '夜间' : '日间'}}
               style={{ width: '18px', height: '18px' }}
             />
           </button>
