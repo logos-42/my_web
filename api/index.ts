@@ -479,8 +479,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
+  // 获取路径并规范化处理
   const path = req.path || '';
-  const normalizedPath = path.replace(/^\/api/, '').replace(/^\/+/, '');
+  // 移除 /api 前缀，去除多余斜杠，并移除尾部斜杠
+  let normalizedPath = path.replace(/^\/api\//, '/').replace(/\/+/g, '/').replace(/\/$/, '');
+  // 移除开头的斜杠
+  normalizedPath = normalizedPath.replace(/^\//, '');
+  
+  console.log('API Request:', req.method, path, '-> normalized:', normalizedPath);
 
   // OAuth 相关
   if (normalizedPath === 'oauth') {

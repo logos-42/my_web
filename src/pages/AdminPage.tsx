@@ -110,9 +110,15 @@ export default function AdminPage() {
       const data = await res.json();
       console.log('Categories response:', data);
       console.log('Categories list:', data.categories);
-      setCategories(data.categories || []);
+      if (data.categories && data.categories.length > 0) {
+        setCategories(data.categories);
+      } else {
+        console.log('API 返回空分类，使用备用列表');
+        setCategories(FALLBACK_CATEGORIES);
+      }
     } catch (error) {
-      console.error('Failed to fetch categories:', error);
+      console.error('Failed to fetch categories, using fallback:', error);
+      setCategories(FALLBACK_CATEGORIES);
     }
   };
 
