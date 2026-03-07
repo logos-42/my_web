@@ -10,10 +10,13 @@
 - **语言**: TypeScript
 - **样式**: CSS
 - **Markdown 处理**: Vite import.meta.glob
+- **数据库**: Supabase (PostgreSQL) - 用于存储导入文章
+- **部署**: Vercel
 
 ## ✨ 主要功能
 
 - **文章系统**：支持多分类的文章展示
+- **导入文章**：从微信公众号、知乎、Paragraph、Substack 等平台导入文章
 - **画廊功能**：图片展示、排序、分页
 - **响应式设计**：适配各种设备
 - **SEO 优化**：页面元数据配置
@@ -30,6 +33,8 @@ src/
 │   └── Sidebar/
 ├── data/          # 数据模块
 │   └── articles.ts
+├── hooks/         # React hooks
+│   └── useImportedArticles.ts
 ├── pages/         # 页面组件
 │   ├── HomePage.tsx
 │   ├── ArticlePage.tsx
@@ -40,7 +45,10 @@ src/
 │   ├── MusicPage.tsx
 │   ├── PhilosophyPage.tsx
 │   ├── ArtPage.tsx
-│   └── WechatPage.tsx
+│   ├── WechatPage.tsx
+│   ├── PodcastPage.tsx
+│   ├── AdminPage.tsx
+│   └── ImportedPage.tsx
 ├── styles/        # 样式文件
 └── content/       # Markdown 文章内容
     ├── blogs/
@@ -86,6 +94,8 @@ npm run lint
 
 ## 📝 添加文章
 
+### 方式一：本地 Markdown 文件
+
 在 `src/content/` 对应分类目录下创建 `.md` 文件：
 
 ```markdown
@@ -99,6 +109,42 @@ excerpt: 文章摘要
 
 这里是文章内容...
 ```
+
+### 方式二：导入外部文章
+
+访问 `/admin` 页面，使用 GitHub 登录后，可导入外部平台的文章：
+
+- **微信公众号文章**
+- **知乎专栏**
+- **Paragraph**
+- **Substack**
+
+导入的文章存储在 Supabase 数据库中，无需重新部署即可实时显示。
+
+## 📥 导入文章功能
+
+### 支持平台
+
+| 平台 | 说明 |
+|------|------|
+| 微信公众号 | 通过文章链接导入 |
+| 知乎专栏 | 通过专栏文章链接导入 |
+| Paragraph | 通过文章链接导入 |
+| Substack | 通过文章链接导入 |
+
+### 使用步骤
+
+1. 访问 `/admin` 页面
+2. 点击 "使用 GitHub 登录"
+3. 输入文章链接，选择分类
+4. 点击 "导入文章"
+5. 导入成功后，文章会自动显示在首页和对应分类页面
+
+### 管理导入文章
+
+- 在 `/admin` 页面可查看已导入的文章列表
+- 可删除已导入的文章
+- 删除后可重新导入
 
 ## 🔄 从 Next.js 迁移说明
 
@@ -119,6 +165,26 @@ excerpt: 文章摘要
 
 1. 连接 GitHub 仓库
 2. 自动构建部署
+
+### 环境变量
+
+部署时需要在 Vercel 配置以下环境变量：
+
+```
+# GitHub OAuth
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
+ADMIN_GITHUB_ID=your_github_username
+
+# GitHub 仓库（用于存储文章内容）
+GITHUB_REPO=owner/repo
+GITHUB_BRANCH=main
+GITHUB_TOKEN=your_github_token
+
+# Supabase（用于存储导入文章记录）
+SUPABASE_URL=your_supabase_url
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
 
 ### 其他平台
 
