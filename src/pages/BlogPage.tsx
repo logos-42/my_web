@@ -11,7 +11,7 @@ export default function BlogPage() {
 
   useEffect(() => {
     const categoryImported = importedArticles
-      .filter(imp => (imp.category || 'imported') === 'blogs')
+      .filter(imp => (imp.category || 'imported') === 'blog')
       .map(imp => ({
         slug: encodeURIComponent(imp.url),
         title: imp.title,

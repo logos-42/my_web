@@ -1,5 +1,5 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import { getDatabaseProvider, isDatabaseConfigured } from './config.js';
+import { getDatabaseProvider, getMySqlPool } from './config.js';
 import type { ImportedArticle } from './db_supabase.js';
 
 // 内存存储（开发用/备用）
@@ -9,11 +9,11 @@ const memoryStore: Record<string, ImportedArticle> = {};
 function getSupabaseClient() {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
+
   if (!supabaseUrl || !supabaseKey) {
     return null;
   }
-  
+
   return createSupabaseClient(supabaseUrl, supabaseKey);
 }
 
@@ -28,16 +28,18 @@ async function getKvClient() {
 // 获取所有导入的文章
 export async function getImportedArticles(): Promise<Record<string, ImportedArticle>> {
   const provider = getDatabaseProvider();
-  
+
   switch (provider) {
     case 'supabase':
       return getImportedArticlesSupabase();
     case 'kv':
       return getImportedArticlesKv();
+    case 'mysql':
+      return getImportedArticlesMysql();
     case 'memory':
       return { ...memoryStore };
     default:
-      console.warn(`未知的数据库类型: ${provider}，使用内存存储`);
+      console.warn(`未知的数据库类型：${provider}，使用内存存储`);
       return { ...memoryStore };
   }
 }
@@ -45,12 +47,14 @@ export async function getImportedArticles(): Promise<Record<string, ImportedArti
 // 检查 URL 是否已导入
 export async function isUrlImported(url: string): Promise<boolean> {
   const provider = getDatabaseProvider();
-  
+
   switch (provider) {
     case 'supabase':
       return isUrlImportedSupabase(url);
     case 'kv':
       return isUrlImportedKv(url);
+    case 'mysql':
+      return isUrlImportedMysql(url);
     case 'memory':
       return !!memoryStore[url];
     default:
@@ -63,12 +67,14 @@ export async function saveArticle(
   article: Omit<ImportedArticle, 'id' | 'imported_at'>
 ): Promise<{ success: boolean; error?: string }> {
   const provider = getDatabaseProvider();
-  
+
   switch (provider) {
     case 'supabase':
       return saveArticleSupabase(article);
     case 'kv':
       return saveArticleKv(article);
+    case 'mysql':
+      return saveArticleMysql(article);
     case 'memory':
       return saveArticleMemory(article);
     default:
@@ -79,12 +85,14 @@ export async function saveArticle(
 // 根据 URL 获取文章
 export async function getArticleByUrl(url: string): Promise<ImportedArticle | null> {
   const provider = getDatabaseProvider();
-  
+
   switch (provider) {
     case 'supabase':
       return getArticleByUrlSupabase(url);
     case 'kv':
       return getArticleByUrlKv(url);
+    case 'mysql':
+      return getArticleByUrlMysql(url);
     case 'memory':
       return memoryStore[url] || null;
     default:
@@ -206,7 +214,7 @@ async function saveArticleKv(
   try {
     const kv = await getKvClient();
     const articles = await getImportedArticlesKv();
-    
+
     if (articles[article.url]) {
       return { success: false, error: '该文章已导入过' };
     }
@@ -229,6 +237,157 @@ async function getArticleByUrlKv(url: string): Promise<ImportedArticle | null> {
   return articles[url] || null;
 }
 
+// ==================== MySQL 实现 ====================
+
+const MYSQL_TABLE = 'imported_articles';
+
+interface MysqlArticleRow {
+  id: number;
+  url: string;
+  title: string;
+  content: string;
+  source: string;
+  source_url: string;
+  author: string | null;
+  publish_date: string | null;
+  cover_image: string | null;
+  tags: string | null;
+  category: string;
+  imported_at: string;
+}
+
+function mysqlRowToArticle(row: MysqlArticleRow): ImportedArticle {
+  return {
+    id: row.id,
+    url: row.url,
+    title: row.title,
+    content: row.content,
+    source: row.source,
+    source_url: row.source_url,
+    author: row.author || undefined,
+    publish_date: row.publish_date || undefined,
+    cover_image: row.cover_image || undefined,
+    tags: row.tags ? JSON.parse(row.tags) : undefined,
+    category: row.category,
+    imported_at: row.imported_at
+  };
+}
+
+async function getImportedArticlesMysql(): Promise<Record<string, ImportedArticle>> {
+  const pool = getMySqlPool();
+  if (!pool) return {};
+
+  try {
+    const result = await new Promise<MysqlArticleRow[]>((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM ${MYSQL_TABLE} ORDER BY imported_at DESC`,
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results as MysqlArticleRow[]);
+        }
+      );
+    });
+
+    const articles: Record<string, ImportedArticle> = {};
+    for (const row of result) {
+      articles[row.url] = mysqlRowToArticle(row);
+    }
+    return articles;
+  } catch (error) {
+    console.error('MySQL fetch error:', error);
+    return {};
+  }
+}
+
+async function isUrlImportedMysql(url: string): Promise<boolean> {
+  const pool = getMySqlPool();
+  if (!pool) return false;
+
+  try {
+    const result = await new Promise<MysqlArticleRow[]>((resolve, reject) => {
+      pool.query(
+        `SELECT url FROM ${MYSQL_TABLE} WHERE url = ? LIMIT 1`,
+        [url],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results as MysqlArticleRow[]);
+        }
+      );
+    });
+    return result.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+async function saveArticleMysql(
+  article: Omit<ImportedArticle, 'id' | 'imported_at'>
+): Promise<{ success: boolean; error?: string }> {
+  const pool = getMySqlPool();
+  if (!pool) return { success: false, error: 'MySQL 未配置' };
+
+  // 先检查是否已存在
+  if (await isUrlImportedMysql(article.url)) {
+    return { success: false, error: '该文章已导入过' };
+  }
+
+  try {
+    const importedAt = new Date().toISOString();
+    const tagsJson = article.tags ? JSON.stringify(article.tags) : null;
+
+    await new Promise<void>((resolve, reject) => {
+      pool.query(
+        `INSERT INTO ${MYSQL_TABLE} (url, title, content, source, source_url, author, publish_date, cover_image, tags, category, imported_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          article.url,
+          article.title,
+          article.content,
+          article.source,
+          article.source_url,
+          article.author || null,
+          article.publish_date || null,
+          article.cover_image || null,
+          tagsJson,
+          article.category,
+          importedAt
+        ],
+        (err) => {
+          if (err) reject(err);
+          else resolve();
+        }
+      );
+    });
+
+    return { success: true };
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: msg };
+  }
+}
+
+async function getArticleByUrlMysql(url: string): Promise<ImportedArticle | null> {
+  const pool = getMySqlPool();
+  if (!pool) return null;
+
+  try {
+    const result = await new Promise<MysqlArticleRow[]>((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM ${MYSQL_TABLE} WHERE url = ? LIMIT 1`,
+        [url],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results as MysqlArticleRow[]);
+        }
+      );
+    });
+
+    if (result.length === 0) return null;
+    return mysqlRowToArticle(result[0]);
+  } catch {
+    return null;
+  }
+}
+
 // ==================== 内存存储实现 ====================
 
 function saveArticleMemory(
@@ -237,11 +396,11 @@ function saveArticleMemory(
   if (memoryStore[article.url]) {
     return { success: false, error: '该文章已导入过' };
   }
-  
+
   memoryStore[article.url] = {
     ...article,
     imported_at: new Date().toISOString()
   } as ImportedArticle;
-  
+
   return { success: true };
 }
