@@ -41,7 +41,6 @@ export default function CategoryPage() {
     music: '音乐',
     blogs: '博客',
     projects: '新奇项目',
-    imported: '导入文章',
   };
 
   return (

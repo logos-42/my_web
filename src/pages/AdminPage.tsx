@@ -95,6 +95,7 @@ export default function AdminPage() {
     try {
       const res = await fetch(`${API_BASE}/categories`);
       const data = await res.json();
+      console.log('Categories response:', data);
       setCategories(data.categories || []);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
@@ -104,8 +105,9 @@ export default function AdminPage() {
   const fetchImportedArticles = async () => {
     try {
       const res = await fetch(`${API_BASE}/imported`);
+      const data = await res.json();
+      console.log('Imported articles response:', data);
       if (res.ok) {
-        const data = await res.json();
         setImportedArticles(data.urls || {});
       }
     } catch (error) {
