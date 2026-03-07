@@ -23,6 +23,17 @@ type ImportedUrls = Record<string, ImportedArticle>;
 
 const API_BASE = '/api';
 
+// 备用分类列表（当 API 不可用时使用）
+const FALLBACK_CATEGORIES = [
+  { id: 'blog', name: '博客' },
+  { id: 'essays', name: '随笔' },
+  { id: 'projects', name: '项目' },
+  { id: 'podcast', name: '播客' },
+  { id: 'philosophy', name: '哲科' },
+  { id: 'music', name: '音乐' },
+  { id: 'art', name: '绘画' },
+];
+
 export default function AdminPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -93,9 +104,12 @@ export default function AdminPage() {
 
   const fetchCategories = async () => {
     try {
+      console.log('Fetching categories from:', `${API_BASE}/categories`);
       const res = await fetch(`${API_BASE}/categories`);
+      console.log('Categories response status:', res.status);
       const data = await res.json();
       console.log('Categories response:', data);
+      console.log('Categories list:', data.categories);
       setCategories(data.categories || []);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
