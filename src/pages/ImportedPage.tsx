@@ -207,16 +207,6 @@ export default function ImportedPage() {
                 <p className="card-excerpt">
                   {article.content.replace(/[#*`]/g, '').substring(0, 100)}...
                 </p>
-                {isAdmin && (
-                  <button 
-                    onClick={(e) => handleDelete(article.url, e)}
-                    disabled={deleting === article.url}
-                    className="delete-btn"
-                    style={{ marginTop: '10px' }}
-                  >
-                    {deleting === article.url ? '删除中...' : '删除'}
-                  </button>
-                )}
               </div>
             </div>
           ))}
