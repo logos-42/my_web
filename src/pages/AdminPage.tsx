@@ -114,6 +114,29 @@ export default function AdminPage() {
     window.location.href = `${API_BASE}/logout`;
   };
 
+  const handleDelete = async (articleUrl: string) => {
+    if (!confirm('确定要删除这篇文章吗？')) return;
+    
+    try {
+      const res = await fetch(`${API_BASE}/delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: articleUrl }),
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        setMessage({ type: 'success', text: '文章已删除' });
+        fetchImportedArticles();
+      } else {
+        setMessage({ type: 'error', text: data.error || '删除失败' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: '网络错误' });
+    }
+  };
+
   const handleImport = async () => {
     if (!url.trim()) {
       setMessage({ type: 'error', text: '请输入文章链接' });
@@ -274,6 +297,13 @@ export default function AdminPage() {
                   <span className="admin-imported-date">
                     {formatDate(article.importedAt)}
                   </span>
+                  <button 
+                    onClick={() => handleDelete(articleUrl)}
+                    className="admin-btn admin-btn-danger"
+                    style={{ marginLeft: '10px', padding: '4px 8px', fontSize: '12px' }}
+                  >
+                    删除
+                  </button>
                 </li>
               ))}
             </ul>
