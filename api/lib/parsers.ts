@@ -15,13 +15,17 @@ export interface ParsedArticle {
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 const TIMEOUT = 15000;
 
+/**
+ * 将 HTML 转换为 Markdown（使用 Cheerio）
+ */
 function htmlToMarkdownCheerio(html: string): string {
   const $ = cheerio.load(html);
-  
+
+  // 移除脚本和样式
   $('script, style, noscript').remove();
-  
+
   let markdown = '';
-  
+
   function processNode(el: unknown): void {
     const node = el as { type?: string; name?: string };
     if (node.type === 'text') {
@@ -29,12 +33,12 @@ function htmlToMarkdownCheerio(html: string): string {
       if (text.trim()) markdown += text;
       return;
     }
-    
+
     if (node.type !== 'tag') return;
-    
+
     const tag = (el as cheerio.TagElement).name?.toLowerCase() || '';
     const $el = $(el as cheerio.Element);
-    
+
     switch (tag) {
       case 'h1':
         markdown += `# ${$el.text().trim()}\n\n`;
@@ -134,73 +138,12 @@ function htmlToMarkdownCheerio(html: string): string {
         $el.contents().each((_, child) => processNode(child));
     }
   }
-  
+
   $('body').contents().each((_, el) => processNode(el));
-  
+
   return markdown
     .replace(/\n{3,}/g, '\n\n')
     .replace(/^\s+|\s+$/g, '');
-}
-
-function htmlToMarkdownRegex(html: string): string {
-  let markdown = html;
-  
-  markdown = markdown.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
-  markdown = markdown.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
-  markdown = markdown.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n');
-  markdown = markdown.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n\n');
-  
-  markdown = markdown.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n');
-  
-  markdown = markdown.replace(/<img[^>]*src=["']([^"']+)["'][^>]*alt=["']([^"']*)["'][^>]*\/?>/gi, '![$2]($1)\n\n');
-  markdown = markdown.replace(/<img[^>]*alt=["']([^"']*)["'][^>]*src=["']([^"']+)["'][^>]*\/?>/gi, '![$1]($2)\n\n');
-  markdown = markdown.replace(/<img[^>]*src=["']([^"']+)["'][^>]*\/?>/gi, '![]($1)\n\n');
-  
-  markdown = markdown.replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, (_, content) => {
-    const lines = content.replace(/<[^>]+>/g, '').trim().split('\n');
-    return lines.map((line: string) => `> ${line.trim()}`).join('\n') + '\n\n';
-  });
-  
-  markdown = markdown.replace(/<ul[^>]*>(.*?)<\/ul>/gi, (_, content) => {
-    const items = content.match(/<li[^>]*>(.*?)<\/li>/gi) || [];
-    return items.map((item: string) => `- ${item.replace(/<[^>]+>/g, '').trim()}`).join('\n') + '\n\n';
-  });
-  
-  markdown = markdown.replace(/<ol[^>]*>(.*?)<\/ol>/gi, (_, content) => {
-    const items = content.match(/<li[^>]*>(.*?)<\/li>/gi) || [];
-    return items.map((item: string, i: number) => `${i + 1}. ${item.replace(/<[^>]+>/g, '').trim()}`).join('\n') + '\n\n';
-  });
-  
-  markdown = markdown.replace(/<pre[^>]*><code[^>]*>(.*?)<\/code><\/pre>/gi, '```\n$1\n```\n\n');
-  markdown = markdown.replace(/<pre[^>]*>(.*?)<\/pre>/gi, '```\n$1\n```\n\n');
-  
-  markdown = markdown.replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
-  
-  markdown = markdown.replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**');
-  markdown = markdown.replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**');
-  markdown = markdown.replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*');
-  markdown = markdown.replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*');
-  
-  markdown = markdown.replace(/<a[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, '[$2]($1)');
-  
-  markdown = markdown.replace(/<br\s*\/?>/gi, '\n');
-  markdown = markdown.replace(/<hr\s*\/?>/gi, '\n---\n\n');
-  
-  markdown = markdown.replace(/<[^>]+>/g, '');
-  
-  markdown = markdown
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
-  
-  markdown = markdown
-    .replace(/\n{3,}/g, '\n\n')
-    .replace(/^\s+|\s+$/g, '');
-
-  return markdown;
 }
 
 export interface Parser {
@@ -231,11 +174,14 @@ export function detectPlatform(url: string): Parser | null {
 export async function parseArticle(url: string): Promise<ParsedArticle> {
   const parser = detectPlatform(url);
   if (!parser) {
-    throw new Error(`不支持的平台: ${url}`);
+    throw new Error(`不支持的平台：${url}`);
   }
   return parser.parse(url);
 }
 
+/**
+ * 解析微信公众号文章
+ */
 export async function parseWechat(url: string): Promise<ParsedArticle> {
   try {
     const response = await axios.get(url, {
@@ -245,51 +191,86 @@ export async function parseWechat(url: string): Promise<ParsedArticle> {
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
       },
       timeout: TIMEOUT,
+      maxRedirects: 0,
     });
 
-    const $ = cheerio.load(response.data);
+    const html = response.data;
+    const $ = cheerio.load(html);
 
-    const title = 
+    // 提取标题
+    const title =
       $('#activity-name').text().trim() ||
       $('#rich_media_title').text().trim() ||
       $('meta[property="og:title"]').attr('content') ||
+      $('h1').first().text().trim() ||
       $('title').text().trim();
 
-    const author = 
+    // 提取作者
+    const author =
       $('#js_name').text().trim() ||
       $('meta[name="author"]').attr('content') ||
-      $('#js_author_name').text().trim();
+      $('#js_author_name').text().trim() ||
+      $('.rich_media_meta_nickname').text().trim() ||
+      undefined;
 
-    let publishDate = 
+    // 提取发布时间
+    let publishDate =
       $('#publish_time').text().trim() ||
       $('meta[property="article:published_time"]').attr('content') ||
-      $('meta[name="publish_time"]').attr('content');
-    
+      $('meta[name="publish_time"]').attr('content') ||
+      $('.rich_media_meta_text').text().trim();
+
     if (publishDate && !publishDate.includes('-')) {
-      publishDate = publishDate.replace(/(\d{4})年(\d{1,2})月(\d{1,2})日/, '$1-$2-$3');
+      publishDate = publishDate.replace(/(\d{4}) 年 (\d{1,2}) 月 (\d{1,2}) 日/, '$1-$2-$3');
     }
 
-    const coverImage = 
+    // 提取封面图（可选）
+    const coverImage =
       $('meta[property="og:image"]').attr('content') ||
-      $('meta[name="twitter:image"]').attr('content');
+      $('meta[name="twitter:image"]').attr('content') ||
+      undefined;
 
-    const contentEl = $('#js_content');
-    let content = '';
-    
-    if (contentEl.length) {
-      content = htmlToMarkdownCheerio(contentEl.html() || '');
-    } else {
-      content = htmlToMarkdownCheerio($('body').html() || '');
+    // 提取内容 - 尝试多种选择器
+    let contentHtml = '';
+    const contentSelectors = [
+      '#js_content',
+      '.rich_media_content',
+      '#js_article',
+      'article',
+      '.content',
+      'body',
+    ];
+
+    for (const selector of contentSelectors) {
+      const el = $(selector);
+      if (el.length > 0) {
+        contentHtml = el.html() || '';
+        if (contentHtml.trim()) {
+          break;
+        }
+      }
     }
 
+    if (!contentHtml.trim()) {
+      throw new Error('无法解析文章内容，可能是公众号文章需要登录才能查看');
+    }
+
+    // 转换为 Markdown
+    const content = htmlToMarkdownCheerio(contentHtml);
+
+    // 提取标签
     const tags: string[] = [];
     $('meta[property="article:tag"]').each((_, el) => {
       const tag = $(el).attr('content');
       if (tag) tags.push(tag);
     });
 
-    if (!title) {
+    if (!title || title.length < 1) {
       throw new Error('无法解析文章标题');
+    }
+
+    if (!content || content.trim().length < 10) {
+      throw new Error('无法解析文章内容，内容太短');
     }
 
     return {
@@ -310,12 +291,18 @@ export async function parseWechat(url: string): Promise<ParsedArticle> {
       if (error.response?.status === 404) {
         throw new Error('文章不存在或已被删除');
       }
-      throw new Error(`请求失败: ${error.message}`);
+      if (error.response?.status === 302) {
+        throw new Error('公众号文章需要登录才能查看');
+      }
+      throw new Error(`请求失败：${error.message}`);
     }
     throw error;
   }
 }
 
+/**
+ * 解析知乎专栏文章
+ */
 export async function parseZhihu(url: string): Promise<ParsedArticle> {
   const match = url.match(/zhuanlan\.zhihu\.com\/p\/(\d+)/);
   if (!match) {
@@ -341,9 +328,9 @@ export async function parseZhihu(url: string): Promise<ParsedArticle> {
     }
 
     const title = data.title;
-    const content = htmlToMarkdownRegex(data.content || '');
+    const content = htmlToMarkdownCheerio(data.content || '');
     const author = data.author?.name || data.author?.headline;
-    
+
     let publishDate: string | undefined;
     if (data.created) {
       publishDate = new Date(data.created * 1000).toISOString().split('T')[0];
@@ -381,7 +368,7 @@ export async function parseZhihu(url: string): Promise<ParsedArticle> {
       if (error.response?.status === 403) {
         throw new Error('无权访问该文章');
       }
-      throw new Error(`请求失败: ${error.message}`);
+      throw new Error(`请求失败：${error.message}`);
     }
     throw error;
   }
@@ -389,7 +376,7 @@ export async function parseZhihu(url: string): Promise<ParsedArticle> {
 
 function extractJsonLd($: ReturnType<typeof cheerio.load>): Record<string, unknown> | null {
   let jsonLd: Record<string, unknown> | null = null;
-  
+
   try {
     const scripts = $('script[type="application/ld+json"]');
     for (let i = 0; i < scripts.length; i++) {
@@ -412,10 +399,13 @@ function extractJsonLd($: ReturnType<typeof cheerio.load>): Record<string, unkno
   } catch {
     // 忽略错误
   }
-  
+
   return jsonLd;
 }
 
+/**
+ * 解析 Paragraph 文章
+ */
 export async function parseParagraph(url: string): Promise<ParsedArticle> {
   try {
     const response = await axios.get(url, {
@@ -430,29 +420,29 @@ export async function parseParagraph(url: string): Promise<ParsedArticle> {
     const $ = cheerio.load(response.data);
     const jsonLd = extractJsonLd($);
 
-    const title = 
+    const title =
       $('h1').first().text().trim() ||
       $('meta[property="og:title"]').attr('content') ||
       $('meta[name="twitter:title"]').attr('content') ||
       (jsonLd?.headline as string) ||
       $('title').text().trim();
 
-    const author = 
+    const author =
       $('meta[name="author"]').attr('content') ||
       $('[rel="author"]').text().trim() ||
       (jsonLd?.author as { name?: string })?.name ||
       undefined;
 
-    let publishDate = 
+    let publishDate =
       $('meta[property="article:published_time"]').attr('content') ||
       $('time[datetime]').attr('datetime') ||
       (jsonLd?.datePublished as string);
-    
+
     if (publishDate) {
       publishDate = new Date(publishDate).toISOString().split('T')[0];
     }
 
-    const coverImage = 
+    const coverImage =
       $('meta[property="og:image"]').attr('content') ||
       $('meta[name="twitter:image"]').attr('content') ||
       (jsonLd?.image as string) ||
@@ -507,12 +497,15 @@ export async function parseParagraph(url: string): Promise<ParsedArticle> {
       if (error.response?.status === 404) {
         throw new Error('文章不存在或已被删除');
       }
-      throw new Error(`请求失败: ${error.message}`);
+      throw new Error(`请求失败：${error.message}`);
     }
     throw error;
   }
 }
 
+/**
+ * 解析 Substack 文章
+ */
 export async function parseSubstack(url: string): Promise<ParsedArticle> {
   try {
     const response = await axios.get(url, {
@@ -527,26 +520,26 @@ export async function parseSubstack(url: string): Promise<ParsedArticle> {
     const $ = cheerio.load(response.data);
     const jsonLd = extractJsonLd($);
 
-    const title = 
+    const title =
       $('meta[property="og:title"]').attr('content') ||
       $('h1.post-title').text().trim() ||
       $('h1').first().text().trim() ||
       (jsonLd?.headline as string) ||
       $('title').text().replace(' - Substack', '').trim();
 
-    const author = 
+    const author =
       $('meta[name="author"]').attr('content') ||
       $('.author-name').text().trim() ||
       $('[class*="author"]').first().text().trim() ||
       ((jsonLd?.author as { name?: string })?.name) ||
       undefined;
 
-    let publishDate = 
+    let publishDate =
       $('.post-date').text().trim() ||
       $('meta[property="article:published_time"]').attr('content') ||
       $('time[datetime]').attr('datetime') ||
       (jsonLd?.datePublished as string);
-    
+
     if (publishDate) {
       if (publishDate.includes(',') || !publishDate.includes('-')) {
         const parsed = new Date(publishDate);
@@ -566,7 +559,7 @@ export async function parseSubstack(url: string): Promise<ParsedArticle> {
       const jsonImage = jsonLd?.image;
       coverImage = Array.isArray(jsonImage) ? jsonImage[0] as string : jsonImage as string;
     }
-    
+
     if (!coverImage) {
       const articleImg = $('article img, .post-content img').first();
       if (articleImg.length) {
@@ -585,7 +578,7 @@ export async function parseSubstack(url: string): Promise<ParsedArticle> {
     if (!contentEl.length) {
       contentEl = $('main').first();
     }
-    
+
     if (contentEl.length) {
       contentEl.find('script, style, noscript, .subscribe-widget, .share-dialog, nav, header, footer').remove();
       contentEl.find('[class*="subscribe"], [class*="share"], [class*="comment"]').remove();
@@ -632,12 +625,15 @@ export async function parseSubstack(url: string): Promise<ParsedArticle> {
       if (error.response?.status === 403) {
         throw new Error('该文章需要订阅才能查看');
       }
-      throw new Error(`请求失败: ${error.message}`);
+      throw new Error(`请求失败：${error.message}`);
     }
     throw error;
   }
 }
 
+/**
+ * 解析 Medium 文章
+ */
 export async function parseMedium(url: string): Promise<ParsedArticle> {
   try {
     const response = await axios.get(url, {
@@ -653,30 +649,30 @@ export async function parseMedium(url: string): Promise<ParsedArticle> {
     const $ = cheerio.load(response.data);
     const jsonLd = extractJsonLd($);
 
-    const title = 
+    const title =
       $('meta[property="og:title"]').attr('content') ||
       $('meta[name="twitter:title"]').attr('content') ||
       $('h1').first().text().trim() ||
       (jsonLd?.headline as string) ||
       $('title').text().replace(' - Medium', '').trim();
 
-    const author = 
+    const author =
       $('meta[property="article:author"]').attr('content') ||
       $('meta[name="author"]').attr('content') ||
       $('[rel="author"]').text().trim() ||
       ((jsonLd?.author as { name?: string })?.name) ||
       undefined;
 
-    let publishDate = 
+    let publishDate =
       $('meta[property="article:published_time"]').attr('content') ||
       $('time[datetime]').attr('datetime') ||
       (jsonLd?.datePublished as string);
-    
+
     if (publishDate) {
       publishDate = new Date(publishDate).toISOString().split('T')[0];
     }
 
-    const coverImage = 
+    const coverImage =
       $('meta[property="og:image"]').attr('content') ||
       $('meta[name="twitter:image"]').attr('content') ||
       (jsonLd?.image as string) ||
@@ -718,9 +714,9 @@ export async function parseMedium(url: string): Promise<ParsedArticle> {
         throw new Error('文章不存在或已被删除');
       }
       if (error.response?.status === 403) {
-        throw new Error('Medium拒绝访问，可能需要登录');
+        throw new Error('Medium 拒绝访问，可能需要登录');
       }
-      throw new Error(`请求失败: ${error.message}`);
+      throw new Error(`请求失败：${error.message}`);
     }
     throw error;
   }
