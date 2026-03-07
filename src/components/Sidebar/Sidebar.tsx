@@ -29,7 +29,6 @@ export default function Sidebar({ onToggle }: SidebarProps) {
     { path: '/music', label: '音乐' },
     { path: '/art', label: '绘画' },
     { path: '/wechat', label: '公众号' },
-    { path: '/imported', label: '导入文章' },
   ];
 
   return (

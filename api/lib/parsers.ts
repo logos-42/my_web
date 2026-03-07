@@ -59,7 +59,7 @@ function htmlToMarkdownCheerio(html: string): string {
         markdown += '\n\n';
         return;
       case 'img':
-        const src = $el.attr('src') || $el.attr('data-src');
+        const src = $el.attr('data-src') || $el.attr('src') || $el.attr('data-src-s');
         const alt = $el.attr('alt') || '';
         if (src) markdown += `![${alt}](${src})\n\n`;
         return;
