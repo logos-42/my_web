@@ -16,7 +16,7 @@ interface Category {
 interface ImportedArticle {
   title: string;
   importedAt: string;
-  path: string;
+  category: string;
 }
 
 type ImportedUrls = Record<string, ImportedArticle>;
@@ -31,6 +31,7 @@ export default function AdminPage() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [url, setUrl] = useState('');
   const [category, setCategory] = useState('blog');
+  const [filterCategory, setFilterCategory] = useState<string>('all');
   const [categories, setCategories] = useState<Category[]>([]);
   const [importedArticles, setImportedArticles] = useState<ImportedUrls>({});
   const [loading, setLoading] = useState(false);
@@ -52,6 +53,13 @@ export default function AdminPage() {
     checkAuth();
     fetchCategories();
   }, []);
+
+  // 登录成功后加载已导入文章
+  useEffect(() => {
+    if (user) {
+      fetchImportedArticles();
+    }
+  }, [user]);
 
   const checkAuth = async () => {
     const cachedUser = localStorage.getItem("admin_user");
@@ -286,28 +294,58 @@ export default function AdminPage() {
         </section>
 
         <section className="admin-imported-section">
-          <h2>已导入文章 ({Object.keys(importedArticles).length})</h2>
-          {Object.keys(importedArticles).length === 0 ? (
-            <p className="admin-empty">暂无已导入的文章</p>
-          ) : (
-            <ul className="admin-imported-list">
-              {Object.entries(importedArticles).map(([articleUrl, article]) => (
-                <li key={articleUrl} className="admin-imported-item">
-                  <span className="admin-imported-title">{article.title}</span>
-                  <span className="admin-imported-date">
-                    {formatDate(article.importedAt)}
-                  </span>
-                  <button 
-                    onClick={() => handleDelete(articleUrl)}
-                    className="admin-btn admin-btn-danger"
-                    style={{ marginLeft: '10px', padding: '4px 8px', fontSize: '12px' }}
-                  >
-                    删除
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="admin-section-header">
+            <h2>已导入文章</h2>
+            <div className="admin-filter-group">
+              <label>栏目筛选：</label>
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="admin-select"
+                style={{ width: 'auto', display: 'inline-block', marginLeft: '8px' }}
+              >
+                <option value="all">全部栏目</option>
+                {categories.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {(() => {
+            const filteredArticles = filterCategory === 'all'
+              ? importedArticles
+              : Object.fromEntries(
+                  Object.entries(importedArticles).filter(([_, article]) => article.category === filterCategory)
+                );
+            const count = Object.keys(filteredArticles).length;
+
+            if (count === 0) {
+              return <p className="admin-empty">暂无已导入的文章{filterCategory !== 'all' ? `（${categories.find(c => c.id === filterCategory)?.name}）` : ''}</p>;
+            }
+
+            return (
+              <ul className="admin-imported-list">
+                {Object.entries(filteredArticles).map(([articleUrl, article]) => (
+                  <li key={articleUrl} className="admin-imported-item">
+                    <span className="admin-imported-title">{article.title}</span>
+                    <span className="admin-imported-meta">
+                      <span className="admin-imported-category">{categories.find(c => c.id === article.category)?.name || article.category}</span>
+                      <span className="admin-imported-date">{formatDate(article.importedAt)}</span>
+                    </span>
+                    <button
+                      onClick={() => handleDelete(articleUrl)}
+                      className="admin-btn admin-btn-danger"
+                      style={{ marginLeft: '10px', padding: '4px 8px', fontSize: '12px' }}
+                    >
+                      删除
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            );
+          })()}
         </section>
       </main>
 

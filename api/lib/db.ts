@@ -100,6 +100,24 @@ export async function getArticleByUrl(url: string): Promise<ImportedArticle | nu
   }
 }
 
+// 删除文章
+export async function deleteArticle(url: string): Promise<{ success: boolean; error?: string }> {
+  const provider = getDatabaseProvider();
+
+  switch (provider) {
+    case 'supabase':
+      return deleteArticleSupabase(url);
+    case 'kv':
+      return deleteArticleKv(url);
+    case 'mysql':
+      return deleteArticleMysql(url);
+    case 'memory':
+      return deleteArticleMemory(url);
+    default:
+      return { success: false, error: '未配置的数据库' };
+  }
+}
+
 // ==================== Supabase 实现 ====================
 
 async function getImportedArticlesSupabase(): Promise<Record<string, ImportedArticle>> {
@@ -188,6 +206,24 @@ async function getArticleByUrlSupabase(url: string): Promise<ImportedArticle | n
   }
 }
 
+async function deleteArticleSupabase(url: string): Promise<{ success: boolean; error?: string }> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return { success: false, error: 'Supabase 未配置' };
+
+  try {
+    const { error } = await supabase
+      .from('imported_articles')
+      .delete()
+      .eq('url', url);
+
+    if (error) throw error;
+    return { success: true };
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: msg };
+  }
+}
+
 // ==================== Vercel KV 实现 ====================
 
 const KV_ARTICLES_KEY = 'imported_articles';
@@ -235,6 +271,24 @@ async function saveArticleKv(
 async function getArticleByUrlKv(url: string): Promise<ImportedArticle | null> {
   const articles = await getImportedArticlesKv();
   return articles[url] || null;
+}
+
+async function deleteArticleKv(url: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const kv = await getKvClient();
+    const articles = await getImportedArticlesKv();
+    
+    if (!articles[url]) {
+      return { success: false, error: '文章不存在' };
+    }
+    
+    delete articles[url];
+    await kv.set(KV_ARTICLES_KEY, articles);
+    return { success: true };
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: msg };
+  }
 }
 
 // ==================== MySQL 实现 ====================
@@ -385,6 +439,29 @@ async function getArticleByUrlMysql(url: string): Promise<ImportedArticle | null
     return mysqlRowToArticle(result[0]);
   } catch {
     return null;
+  }
+}
+
+async function deleteArticleMysql(url: string): Promise<{ success: boolean; error?: string }> {
+  const pool = getMySqlPool();
+  if (!pool) return { success: false, error: 'MySQL 未配置' };
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      pool.query(
+        `DELETE FROM ${MYSQL_TABLE} WHERE url = ?`,
+        [url],
+        (err) => {
+          if (err) reject(err);
+          else resolve();
+        }
+      );
+    });
+
+    return { success: true };
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: msg };
   }
 }
 

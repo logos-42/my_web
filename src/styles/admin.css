@@ -119,6 +119,32 @@
   color: var(--text-primary);
 }
 
+/* 栏目筛选 */
+.admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-section-header h2 {
+  margin: 0;
+}
+
+.admin-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-filter-group label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
 /* 表单元素 */
 .admin-form-group {
   margin-bottom: 16px;
@@ -280,6 +306,23 @@
 .admin-imported-title {
   font-size: 14px;
   color: var(--text-primary);
+  flex: 1;
+}
+
+.admin-imported-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 12px;
+}
+
+.admin-imported-category {
+  font-size: 12px;
+  color: var(--accent-color);
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
 .admin-imported-date {

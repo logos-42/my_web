@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export interface ImportedArticle {
   url: string;
@@ -18,7 +18,8 @@ export function useImportedArticles() {
   const [articles, setArticles] = useState<ImportedArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchArticles = useCallback(() => {
+    setLoading(true);
     fetch('/api/articles')
       .then(res => res.json())
       .then(data => {
@@ -28,5 +29,9 @@ export function useImportedArticles() {
       .finally(() => setLoading(false));
   }, []);
 
-  return { articles, loading };
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
+
+  return { articles, loading, refresh: fetchArticles };
 }
