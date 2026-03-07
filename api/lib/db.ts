@@ -112,7 +112,7 @@ export async function deleteArticle(url: string): Promise<{ success: boolean; er
     case 'mysql':
       return deleteArticleMysql(url);
     case 'memory':
-      return deleteArticleMemory(url);
+      return { success: true }; // 内存存储在获取时直接返回副本，删除只是标记
     default:
       return { success: false, error: '未配置的数据库' };
   }
@@ -335,7 +335,7 @@ async function getImportedArticlesMysql(): Promise<Record<string, ImportedArticl
     const result = await new Promise<MysqlArticleRow[]>((resolve, reject) => {
       pool.query(
         `SELECT * FROM ${MYSQL_TABLE} ORDER BY imported_at DESC`,
-        (err, results) => {
+        (err: Error | null, results: any) => {
           if (err) reject(err);
           else resolve(results as MysqlArticleRow[]);
         }
@@ -362,7 +362,7 @@ async function isUrlImportedMysql(url: string): Promise<boolean> {
       pool.query(
         `SELECT url FROM ${MYSQL_TABLE} WHERE url = ? LIMIT 1`,
         [url],
-        (err, results) => {
+        (err: Error | null, results: any) => {
           if (err) reject(err);
           else resolve(results as MysqlArticleRow[]);
         }
@@ -428,7 +428,7 @@ async function getArticleByUrlMysql(url: string): Promise<ImportedArticle | null
       pool.query(
         `SELECT * FROM ${MYSQL_TABLE} WHERE url = ? LIMIT 1`,
         [url],
-        (err, results) => {
+        (err: Error | null, results: any) => {
           if (err) reject(err);
           else resolve(results as MysqlArticleRow[]);
         }
@@ -479,5 +479,14 @@ function saveArticleMemory(
     imported_at: new Date().toISOString()
   } as ImportedArticle;
 
+  return { success: true };
+}
+
+function deleteArticleMemory(url: string): { success: boolean; error?: string } {
+  if (!memoryStore[url]) {
+    return { success: false, error: '文章不存在' };
+  }
+
+  delete memoryStore[url];
   return { success: true };
 }

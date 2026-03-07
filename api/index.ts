@@ -304,7 +304,7 @@ async function handleArticle(req: VercelRequest, res: VercelResponse) {
 /**
  * 处理已导入文章列表请求
  */
-async function handleImported(req: VercelRequest, res: VercelResponse) {
+async function handleImported(_req: VercelRequest, res: VercelResponse) {
   try {
     const articles = await getImportedArticles();
 
@@ -433,7 +433,7 @@ async function handleDelete(req: VercelRequest, res: VercelResponse) {
         return res.status(500).json({ error: 'MySQL 未配置' });
       }
       await new Promise<void>((resolve, reject) => {
-        pool.query('DELETE FROM imported_articles WHERE url = ?', [url], (err) => {
+        pool.query('DELETE FROM imported_articles WHERE url = ?', [url], (err: Error | null) => {
           if (err) reject(err);
           else resolve();
         });
@@ -479,8 +479,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
-  // 获取路径并规范化处理
-  const path = req.path || '';
+  // 获取路径并规范化处理 - 使用 req.url 而不是 req.path
+  const urlPath = req.url || '/';
+  // 从 URL 中提取路径部分（去掉查询参数）
+  const path = urlPath.split('?')[0];
   // 移除 /api 前缀，去除多余斜杠，并移除尾部斜杠
   let normalizedPath = path.replace(/^\/api\//, '/').replace(/\/+/g, '/').replace(/\/$/, '');
   // 移除开头的斜杠
