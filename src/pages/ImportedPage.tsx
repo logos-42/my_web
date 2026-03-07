@@ -19,23 +19,13 @@ export default function ImportedPage() {
   const navigate = useNavigate();
   const urlParam = searchParams.get('url');
   const categoryParam = searchParams.get('category') || 'all';
-  const { articles, loading, refresh } = useImportedArticles();
+  const { articles, loading } = useImportedArticles();
   const [selectedArticle, setSelectedArticle] = useState<ImportedArticle | null>(null);
   const [filteredCategory, setFilteredCategory] = useState(categoryParam);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [deleting, setDeleting] = useState<string | null>(null);
-
-  // 检查管理员权限
-  useEffect(() => {
-    const cachedUser = localStorage.getItem('admin_user');
-    if (cachedUser) {
-      setIsAdmin(true);
-    }
-  }, []);
 
   // 过滤分类
-  const filteredArticles = filteredCategory === 'all' 
-    ? articles 
+  const filteredArticles = filteredCategory === 'all'
+    ? articles
     : articles.filter(article => article.category === filteredCategory);
 
   useEffect(() => {
@@ -57,38 +47,6 @@ export default function ImportedPage() {
       }
       return prev;
     });
-  };
-
-  const handleDelete = async (url: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!confirm('确定要删除这篇文章吗？')) return;
-    
-    setDeleting(url);
-    try {
-      const res = await fetch('/api/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-      });
-      
-      const data = await res.json();
-      
-      if (res.ok && data.success) {
-        alert('文章已删除');
-        refresh();
-        // 如果当前查看的文章被删除了，返回列表
-        if (selectedArticle?.url === url) {
-          setSelectedArticle(null);
-          navigate('/imported');
-        }
-      } else {
-        alert(data.error || '删除失败');
-      }
-    } catch (error) {
-      alert('网络错误');
-    } finally {
-      setDeleting(null);
-    }
   };
 
   const formatDate = (dateStr: string) => {

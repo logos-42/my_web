@@ -32,7 +32,6 @@ const FALLBACK_CATEGORIES = [
   { id: 'philosophy', name: '哲科' },
   { id: 'music', name: '音乐' },
   { id: 'art', name: '绘画' },
-  { id: 'imported', name: '导入' },
 ];
 
 export default function AdminPage() {
@@ -357,13 +356,15 @@ export default function AdminPage() {
                       <span className="admin-imported-category">{categories.find(c => c.id === article.category)?.name || article.category}</span>
                       <span className="admin-imported-date">{formatDate(article.importedAt)}</span>
                     </span>
-                    <button
-                      onClick={() => handleDelete(articleUrl)}
-                      className="admin-btn admin-btn-danger"
-                      style={{ marginLeft: '10px', padding: '4px 8px', fontSize: '12px' }}
-                    >
-                      删除
-                    </button>
+                    {user && (
+                      <button
+                        onClick={() => handleDelete(articleUrl)}
+                        className="admin-btn admin-btn-danger"
+                        style={{ marginLeft: '10px', padding: '4px 8px', fontSize: '12px' }}
+                      >
+                        删除
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
