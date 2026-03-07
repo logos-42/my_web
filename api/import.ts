@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { parseArticle, detectPlatform } from './lib/parsers.js';
 import { saveArticle, isUrlImported } from './lib/db.js';
+import { getDatabaseProvider, getDatabaseProviderLabel } from './lib/config.js';
 
 function getUserFromCookie(req: VercelRequest): { login: string } | null {
   try {
@@ -79,7 +80,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           title: article.title,
           source: article.source
         },
-        message: '文章已导入成功！'
+        message: `文章已导入成功！（存储：${getDatabaseProviderLabel()}）`
       });
     } else {
       return res.status(500).json({ error: result.error || '保存失败' });

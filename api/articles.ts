@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getImportedArticles } from './lib/db.js';
+import { getDatabaseProviderLabel } from './lib/config.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,9 +38,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       new Date(b.importedAt).getTime() - new Date(a.importedAt).getTime()
     );
     
-    return res.status(200).json({ articles: articlesList });
+    return res.status(200).json({ 
+      articles: articlesList,
+      provider: getDatabaseProviderLabel()
+    });
   } catch (error) {
     console.error('Failed to get articles:', error);
-    return res.status(200).json({ articles: [] });
+    return res.status(200).json({ articles: [], provider: getDatabaseProviderLabel() });
   }
 }
