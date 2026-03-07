@@ -112,12 +112,6 @@ interface GitHubFileResponse {
   encoding: string;
 }
 
-async function getFile(path: string): Promise<string> {
-  const data = await githubApi<GitHubFileResponse>(path, 'GET');
-  const decoded = Buffer.from(data.content, 'base64').toString('utf-8');
-  return decoded;
-}
-
 async function saveFile(
   path: string,
   content: string,

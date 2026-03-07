@@ -30,9 +30,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // 任何登录用户都可以查看已导入的文章
-  const user = getUserFromCookie(req);
-
   try {
     const { data } = await supabase
       .from('imported_manifest')

@@ -66,7 +66,7 @@ export async function isUrlImported(url: string): Promise<boolean> {
   if (!supabase) return false;
 
   try {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('imported_articles')
       .select('url')
       .eq('url', url)
