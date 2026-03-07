@@ -339,12 +339,16 @@ async function handleImport(req: VercelRequest, res: VercelResponse) {
 
   const { url, category } = req.body;
 
+  console.log('Import request:', { url, category });
+
   if (!url) {
     return res.status(400).json({ error: '缺少 URL 参数' });
   }
 
   // 默认分类为 blog
   const targetCategory = category || 'blog';
+  
+  console.log('Target category:', targetCategory);
 
   try {
     const platform = detectPlatform(url);
@@ -358,6 +362,8 @@ async function handleImport(req: VercelRequest, res: VercelResponse) {
     }
 
     const article = await parseArticle(url);
+    console.log('Parsed article:', { title: article.title, category: targetCategory });
+    
     const result = await saveArticle({
       url: article.sourceUrl,
       title: article.title,
@@ -370,6 +376,8 @@ async function handleImport(req: VercelRequest, res: VercelResponse) {
       tags: article.tags,
       category: targetCategory
     });
+
+    console.log('Save result:', result);
 
     if (result.success) {
       return res.status(200).json({
