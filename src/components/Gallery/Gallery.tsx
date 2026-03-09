@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
+import { loadImageBindings, getBoundArticleUrl } from '@/lib/artImages';
 
 interface GalleryImage {
   number: number;
   path: string;
   wantCount?: number;
+  boundArticleUrl?: string;  // 绑定的文章 URL
+  isBound?: boolean;          // 是否已绑定
 }
 
 interface GalleryProps {
@@ -141,12 +144,18 @@ export default function Gallery({ totalImages = 1000, itemsPerPage = 24 }: Galle
   }, []);
 
   useEffect(() => {
-    const initGallery = () => {
+    const initGallery = async () => {
+      // 加载绑定关系
+      await loadImageBindings();
+      
       const allImages: GalleryImage[] = [];
       for (let i = 1; i <= totalImages; i++) {
+        const boundArticleUrl = getBoundArticleUrl(i);
         allImages.push({
           number: i,
-          path: `/finish/thumbnail_${i}.jpg`
+          path: `/finish/thumbnail_${i}.jpg`,
+          boundArticleUrl,
+          isBound: !!boundArticleUrl
         });
       }
       setImages(allImages);
@@ -238,17 +247,27 @@ export default function Gallery({ totalImages = 1000, itemsPerPage = 24 }: Galle
 
       <div className="gallery">
         {paginatedImages.map((image) => (
-          <div key={image.number} className="gallery-item">
-            <img
-              src={image.path}
-              alt={`作品 #${image.number}`}
-              onClick={() => showFullscreen(image.path)}
-              style={{ cursor: 'pointer' }}
-              loading="lazy"
-            />
+          <div key={image.number} className={`gallery-item ${image.isBound ? 'bound' : ''}`}>
+            <div className="gallery-image-wrapper">
+              <img
+                src={image.path}
+                alt={`作品 #${image.number}`}
+                onClick={() => showFullscreen(image.path)}
+                style={{ cursor: 'pointer' }}
+                loading="lazy"
+              />
+              {image.isBound && (
+                <span className="bound-badge" title="已绑定文章">
+                  🔗
+                </span>
+              )}
+            </div>
 
             <div className="gallery-item-info">
-              <h3 className="gallery-item-title">作品 #{image.number}</h3>
+              <h3 className="gallery-item-title">
+                作品 #{image.number}
+                {image.isBound && <span className="bound-indicator">已绑定</span>}
+              </h3>
 
               <div className="gallery-buttons">
                 <button

@@ -4,8 +4,6 @@
  * 未绑定的图片将随机显示
  */
 
-import type { ImageBinding } from './types';
-
 const TOTAL_IMAGES = 1000;
 const API_BASE = '/api';
 

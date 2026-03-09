@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
 import { useImportedArticles, ImportedArticle } from '@/hooks/useImportedArticles';
+import { loadImageBindings, getArtImageForArticle, getRandomArtImageForArticle, clearBindingsCache } from '@/lib/artImages';
 
 const CATEGORIES = [
   { id: 'all', name: '全部' },
@@ -22,6 +23,53 @@ export default function ImportedPage() {
   const { articles, loading } = useImportedArticles();
   const [selectedArticle, setSelectedArticle] = useState<ImportedArticle | null>(null);
   const [filteredCategory, setFilteredCategory] = useState(categoryParam);
+  const [processedContent, setProcessedContent] = useState<string>('');
+  const [artImage, setArtImage] = useState<string>('');
+  const [bindingsLoaded, setBindingsLoaded] = useState(false);
+
+  // 加载图片绑定关系
+  useEffect(() => {
+    loadImageBindings().then(() => {
+      setBindingsLoaded(true);
+    });
+  }, []);
+
+  // 处理文章内容，替换微信图片为艺术品图片
+  useEffect(() => {
+    if (selectedArticle && bindingsLoaded) {
+      // 移除所有 Markdown 图片语法
+      let processed = selectedArticle.content.replace(/!\[([^\]]*)\]\([^)]+\)/g, '');
+      // 移除所有 HTML img 标签
+      processed = processed.replace(/<img[^>]*>/g, '');
+
+      // 获取图片：优先绑定，其次随机
+      const boundImage = getArtImageForArticle(selectedArticle.url);
+      const randomImage = getRandomArtImageForArticle(selectedArticle.url);
+      const finalImage = boundImage || randomImage;
+      setArtImage(finalImage);
+
+      // 在内容前添加艺术品图片
+      processed = `![artwork](${finalImage})\n\n` + processed;
+      setProcessedContent(processed);
+    }
+  }, [selectedArticle, bindingsLoaded]);
+
+  // 判断是否是从列表页点击进入的详情页
+  const isDetailView = !!urlParam;
+
+  const handleBack = () => {
+    if (isDetailView) {
+      // 从列表页进入的详情页，返回列表页（去掉 URL 参数）
+      setSearchParams(prev => {
+        prev.delete('url');
+        return prev;
+      });
+      setSelectedArticle(null);
+    } else {
+      // 直接从侧边栏或首页进入的详情页，返回首页
+      navigate('/');
+    }
+  };
 
   // 过滤分类
   const filteredArticles = filteredCategory === 'all'
@@ -69,11 +117,8 @@ export default function ImportedPage() {
   if (selectedArticle) {
     return (
       <div className="imported-page">
-        <button 
-          onClick={() => {
-            setSelectedArticle(null);
-            navigate('/imported');
-          }}
+        <button
+          onClick={handleBack}
           className="back-button"
         >
           ← 返回列表
@@ -88,8 +133,8 @@ export default function ImportedPage() {
               <span>分类: {CATEGORIES.find(c => c.id === selectedArticle.category)?.name || selectedArticle.category}</span>
               <span>导入时间: {formatDate(selectedArticle.importedAt)}</span>
             </div>
-            {selectedArticle.coverImage && (
-              <img src={selectedArticle.coverImage} alt={selectedArticle.title} className="cover-image" />
+            {artImage && (
+              <img src={artImage} alt="封面图片" className="cover-image" />
             )}
             {selectedArticle.tags && selectedArticle.tags.length > 0 && (
               <div className="tags">
@@ -101,7 +146,7 @@ export default function ImportedPage() {
           </header>
           <div 
             className="article-content"
-            dangerouslySetInnerHTML={{ __html: marked.parse(selectedArticle.content) as string }}
+            dangerouslySetInnerHTML={{ __html: marked.parse(processedContent || selectedArticle.content) as string }}
           />
           <footer>
             <a 

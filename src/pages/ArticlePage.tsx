@@ -1,6 +1,20 @@
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getArticleBySlug } from '@/data/articles';
 import SEO from '@/components/SEO/SEO';
+import { marked } from 'marked';
+
+interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  tags?: string[];
+  htmlContent?: string;
+  url?: string;
+  source?: string;
+}
 
 export default function ArticlePage() {
   const navigate = useNavigate();

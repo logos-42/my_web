@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import axios from 'axios';
 import crypto from 'crypto';
-import { getImportedArticles, isUrlImported, saveArticle, getArticleByUrl } from './lib/db.js';
+import { getImportedArticles, isUrlImported, saveArticle, getArticleByUrl, deleteArticle, getImageBindings, bindImage, unbindImage, deleteBindingsByArticleUrl, updateArticle } from './lib/db.js';
 import { parseArticle, detectPlatform } from './lib/parsers.js';
 import { getDatabaseProvider, getDatabaseProviderLabel } from './lib/config.js';
 
@@ -452,6 +452,9 @@ async function handleDelete(req: VercelRequest, res: VercelResponse) {
       delete articles[url];
     }
 
+    // 删除文章时同步删除绑定的图片关系
+    await deleteBindingsByArticleUrl(url);
+
     return res.status(200).json({
       success: true,
       message: '文章已删除',
@@ -461,6 +464,137 @@ async function handleDelete(req: VercelRequest, res: VercelResponse) {
   } catch (error: any) {
     console.error('Delete error:', error);
     return res.status(500).json({ error: error.message || '删除失败' });
+  }
+}
+
+/**
+ * 处理更新文章请求
+ */
+async function handleUpdateArticle(req: VercelRequest, res: VercelResponse) {
+  const user = getUserFromRequest(req);
+  if (!user) {
+    return res.status(401).json({ error: '请先登录' });
+  }
+
+  const { url, title, content } = req.body;
+
+  if (!url) {
+    return res.status(400).json({ error: '缺少 URL 参数' });
+  }
+
+  try {
+    const updates: { title?: string; content?: string } = {};
+    if (title !== undefined) updates.title = title;
+    if (content !== undefined) updates.content = content;
+
+    const result = await updateArticle(url, updates);
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '文章已更新',
+        provider: getDatabaseProviderLabel(),
+        databaseProvider: getDatabaseProvider()
+      });
+    } else {
+      return res.status(500).json({ error: result.error || '更新失败' });
+    }
+  } catch (error: any) {
+    console.error('Update error:', error);
+    return res.status(500).json({ error: error.message || '更新失败' });
+  }
+}
+
+/**
+ * 处理图片绑定列表请求
+ */
+async function handleImageBindings(req: VercelRequest, res: VercelResponse) {
+  try {
+    const bindings = await getImageBindings();
+    
+    const bindingsList = Object.entries(bindings).map(([imageNumber, binding]) => ({
+      imageNumber: parseInt(imageNumber, 10),
+      articleUrl: binding.articleUrl,
+      articleTitle: binding.articleTitle,
+      boundAt: binding.boundAt
+    }));
+
+    return res.status(200).json({
+      bindings: bindingsList,
+      totalImages: 1000
+    });
+  } catch (error) {
+    console.error('Failed to get image bindings:', error);
+    return res.status(200).json({ bindings: [], totalImages: 1000 });
+  }
+}
+
+/**
+ * 处理绑定图片请求
+ */
+async function handleBindImage(req: VercelRequest, res: VercelResponse) {
+  const user = getUserFromRequest(req);
+  if (!user) {
+    return res.status(401).json({ error: '请先登录' });
+  }
+
+  const { imageNumber, articleUrl, articleTitle } = req.body;
+
+  if (!imageNumber || !articleUrl || !articleTitle) {
+    return res.status(400).json({ error: '缺少必要参数' });
+  }
+
+  try {
+    const result = await bindImage(imageNumber, articleUrl, articleTitle);
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '绑定成功',
+        binding: {
+          imageNumber,
+          articleUrl,
+          articleTitle
+        }
+      });
+    } else {
+      return res.status(500).json({ error: result.error || '绑定失败' });
+    }
+  } catch (error: any) {
+    console.error('Bind error:', error);
+    return res.status(500).json({ error: error.message || '绑定失败' });
+  }
+}
+
+/**
+ * 处理解绑图片请求
+ */
+async function handleUnbindImage(req: VercelRequest, res: VercelResponse) {
+  const user = getUserFromRequest(req);
+  if (!user) {
+    return res.status(401).json({ error: '请先登录' });
+  }
+
+  const { imageNumber } = req.body;
+
+  if (!imageNumber) {
+    return res.status(400).json({ error: '缺少图片编号' });
+  }
+
+  try {
+    const result = await unbindImage(imageNumber);
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '解绑成功'
+      });
+    } else {
+      return res.status(500).json({ error: result.error || '解绑失败' });
+    }
+  } catch (error: any) {
+    console.error('Unbind error:', error);
+    return res.status(500).json({ error: error.message || '解绑失败' });
   }
 }
 
@@ -570,6 +704,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(405).json({ error: 'Method not allowed' });
     }
     return handleDelete(req, res);
+  }
+
+  // 更新文章
+  if (normalizedPath === 'update-article') {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+    return handleUpdateArticle(req, res);
+  }
+
+  // 图片绑定相关
+  if (normalizedPath === 'image-bindings') {
+    if (req.method !== 'GET') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+    return handleImageBindings(req, res);
+  }
+
+  if (normalizedPath === 'bind-image') {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+    return handleBindImage(req, res);
+  }
+
+  if (normalizedPath === 'unbind-image') {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+    return handleUnbindImage(req, res);
   }
 
   // 未知路径
