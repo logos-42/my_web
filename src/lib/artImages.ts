@@ -124,18 +124,14 @@ export function getRandomArtImageForArticle(articleUrl: string): string {
  * 替换文章内容中的微信图片为艺术品图片
  * 优先使用绑定的图片，如果没有绑定则随机分配
  */
-export function replaceWechatImages(content: string, articleUrl: string): string {
+export function replaceWechatImages(content: string, _articleUrl: string): string {
   // 移除所有 Markdown 图片语法
   let processed = content.replace(/!\[([^\]]*)\]\([^)]+\)/g, '');
 
   // 移除所有 HTML img 标签
   processed = processed.replace(/<img[^>]*>/g, '');
 
-  // 获取图片：优先绑定，其次随机
-  const artImage = getArtImageForArticle(articleUrl) || getRandomArtImageForArticle(articleUrl);
-  processed = `![artwork](${artImage})\n\n` + processed;
-
-  return processed;
+  return processed.trim();
 }
 
 /**

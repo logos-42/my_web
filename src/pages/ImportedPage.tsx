@@ -133,6 +133,7 @@ export default function ImportedPage() {
               <span>分类: {CATEGORIES.find(c => c.id === selectedArticle.category)?.name || selectedArticle.category}</span>
               <span>导入时间: {formatDate(selectedArticle.importedAt)}</span>
             </div>
+            {/* 只显示艺术品图片作为封面 */}
             {artImage && (
               <img src={artImage} alt="封面图片" className="cover-image" />
             )}
@@ -197,9 +198,10 @@ export default function ImportedPage() {
                 navigate(`/imported?url=${encodeURIComponent(article.url)}`);
               }}
             >
-              {article.coverImage && (
-                <img src={article.coverImage} alt={article.title} className="card-cover" />
-              )}
+              {/* 列表也显示艺术品图片作为封面 */}
+              <div className="card-cover" style={{ backgroundColor: '#f0f0f0', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: '#999' }}>点击查看</span>
+              </div>
               <div className="card-content">
                 <h2>{article.title}</h2>
                 <div className="card-meta">
