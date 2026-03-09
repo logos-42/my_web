@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getArticleBySlug } from '@/data/articles';
 import SEO from '@/components/SEO/SEO';
 
 export default function ArticlePage() {
+  const navigate = useNavigate();
   const { category = '', slug = '' } = useParams<{ category: string; slug: string }>();
   const article = getArticleBySlug(slug, category);
 
@@ -17,11 +18,14 @@ export default function ArticlePage() {
 
   return (
     <>
-      <SEO 
+      <SEO
         title={article.title}
         description={article.excerpt}
       />
       <article className="article-detail">
+        <button onClick={() => navigate('/')} className="article-back-btn">
+          ← 首页
+        </button>
         <h1>{article.title}</h1>
         <div className="article-meta">
           <time>{new Date(article.date).toLocaleDateString('zh-CN')}</time>

@@ -256,11 +256,15 @@ export default function AdminPage() {
   return (
     <div className="admin-page-container">
       <header className="admin-header">
-        <h1>内容导入管理</h1>
+        <div className="admin-header-left">
+          <button onClick={() => navigate('/')} className="admin-btn admin-btn-link admin-home-link">
+            首页
+          </button>
+        </div>
         <div className="admin-header-right">
           <button onClick={toggleTheme} className="admin-theme-toggle" title={theme === 'dark' ? '夜间模式' : '日间模式'}>
-            <img 
-              src={theme === 'dark' ? '/images/night.png' : '/images/day.png'} 
+            <img
+              src={theme === 'dark' ? '/images/night.png' : '/images/day.png'}
               alt={theme === 'dark' ? '夜间' : '日间'}
               style={{ width: '18px', height: '18px' }}
             />
@@ -374,11 +378,6 @@ export default function AdminPage() {
         </section>
       </main>
 
-      <footer className="admin-footer">
-        <button onClick={() => navigate('/')} className="admin-btn admin-btn-link">
-          返回首页
-        </button>
-      </footer>
     </div>
   );
 }

@@ -45,10 +45,20 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.admin-header-left {
+  display: flex;
+  align-items: center;
+}
+
 .admin-header h1 {
   margin: 0;
   font-size: 18px;
   color: var(--text-primary);
+}
+
+.admin-home-link {
+  padding: 8px 12px;
+  font-size: 14px;
 }
 
 .admin-header-right {
