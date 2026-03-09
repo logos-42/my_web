@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
 import { useImportedArticles, ImportedArticle } from '@/hooks/useImportedArticles';
-import { loadImageBindings, getArtImageForArticle, getRandomArtImageForArticle, clearBindingsCache } from '@/lib/artImages';
+import { loadImageBindings, getArtImageForArticle, getRandomArtImageForArticle } from '@/lib/artImages';
 
 const CATEGORIES = [
   { id: 'all', name: '全部' },

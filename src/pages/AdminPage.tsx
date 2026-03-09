@@ -360,10 +360,10 @@ export default function AdminPage() {
   // 更新预览图片
   const updatePreviewImage = (articleUrl: string) => {
     loadImageBindings().then(bindings => {
-      // 检查是否有绑定
-      const boundImage = Object.entries(bindings).find(([_, binding]) => binding.articleUrl === articleUrl);
-      if (boundImage) {
-        setPreviewImage(`/finish/thumbnail_${boundImage[0]}.jpg`);
+      // 检查是否有绑定 - bindings 是 Record<number, string> 即 imageNumber -> articleUrl
+      const boundImageNumber = Object.entries(bindings).find(([, url]) => url === articleUrl)?.[0];
+      if (boundImageNumber) {
+        setPreviewImage(`/finish/thumbnail_${boundImageNumber}.jpg`);
       } else {
         // 随机图片（使用URL生成固定随机数）
         let hash = 0;
@@ -381,9 +381,8 @@ export default function AdminPage() {
   // 刷新当前文章的随机图片
   const handleRefreshImage = () => {
     if (currentArticleList.length === 0) return;
-    const articleUrl = currentArticleList[currentArticleIndex];
     
-    // 先生成一个新的随机图片
+    // 生成一个新的随机图片
     const newIndex = Math.floor(Math.random() * 1000) + 1;
     const newImage = `/finish/thumbnail_${newIndex}.jpg`;
     setPreviewImage(newImage);
